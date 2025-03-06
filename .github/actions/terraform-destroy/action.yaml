@@ -1,0 +1,48 @@
+name: Terraform destroy
+
+inputs:
+  environment:
+    required: true
+  github_repo:
+    required: true
+  region:
+    required: true
+  release:
+    required: true
+  tfvars:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform init with S3 backend
+      # working-directory: ${{ env.tf_working_dir != '' && env.tf_working_dir || env.GITHUB_WORKSPACE }}
+      # if: ${{ env.tf_local_backend == 'false' }}
+      shell: bash
+      run: |
+        terraform init \
+          -backend-config="bucket=storm-github-terraform-backend" \
+          -backend-config="profile=backend" \
+          -backend-config="key=${{inputs.github_repo}}/${{inputs.environment}}" \
+          -backend-config="region=${{inputs.region}}" \
+          -backend-config="use_lockfile=true"
+
+    - name: Terraform destroy
+      shell: bash
+      run: |
+        unset AWS_SECRET_ACCESS_KEY
+        unset AWS_SESSION_TOKEN
+        unset AWS_ACCESS_KEY_ID
+
+        export AWS_PROFILE=oidc
+        echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
+
+        terraform version
+        terraform destroy \
+          -auto-approve \
+          -input=false \
+          -var-file=<(cat ${{inputs.tfvars}} github.tfvars)

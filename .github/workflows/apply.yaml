@@ -1,0 +1,72 @@
+name: Apply
+
+permissions: write-all
+
+on:
+  workflow_call:
+    inputs:
+      account_id:
+        type: string
+        required: true
+        default: 123456789012
+      environment:
+        type: string
+        required: true
+        default: prod
+      region:
+        type: string
+        required: true
+        default: eu-central-1
+      release:
+        type: string
+        required: false
+        default: prod
+      tfvars:
+        type: string
+        required: false
+        default: ""
+
+      # role_duration_seconds:
+      #   type: number
+      #   required: false
+      #   default: 3600
+      # tfstate_file:
+      #   type: string
+      #   required: false
+      #   default: ""
+
+jobs:
+
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download tfplan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repository
+        id: prepare-repository
+        with:
+          environment: ${{inputs.environment}}
+          release: ${{inputs.release}}
+
+      - name: Setup roles
+        uses: ./.github/actions/setup-roles
+        with:
+          account_id: ${{inputs.account_id}}
+          region: ${{inputs.region}}
+
+      - name: Terraform apply
+        uses: ./.github/actions/terraform-apply
+        with:
+          environment: ${{ inputs.environment }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo  }}
+          region: ${{ inputs.region }}
+          release: ${{ inputs.release }}
+          tfvars: $${{ inputs.tfvars}}
