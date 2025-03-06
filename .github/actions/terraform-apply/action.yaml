@@ -16,6 +16,11 @@ runs:
   using: "composite"
   steps:
 
+    - name: Download tfplan
+      uses: actions/download-artifact@v4
+      with:
+        name: tfplan
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
