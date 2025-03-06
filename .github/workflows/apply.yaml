@@ -50,20 +50,20 @@ jobs:
           name: tfplan
 
       - name: Prepare repository
-        uses: ./.github/actions/prepare-repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
         id: prepare-repository
         with:
           environment: ${{inputs.environment}}
           release: ${{inputs.release}}
 
       - name: Setup roles
-        uses: ./.github/actions/setup-roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
         with:
           account_id: ${{inputs.account_id}}
           region: ${{inputs.region}}
 
       - name: Terraform apply
-        uses: ./.github/actions/terraform-apply
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
           environment: ${{ inputs.environment }}
           github_repo: ${{ steps.prepare-repository.outputs.github_repo  }}
