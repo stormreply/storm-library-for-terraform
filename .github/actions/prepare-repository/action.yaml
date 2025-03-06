@@ -1,0 +1,54 @@
+name: Prepare repository
+
+inputs:
+  environment:
+    required: true
+  release:
+    required: true
+
+outputs:
+  deployment:
+    value: ${{ steps.create_github_tfvars.outputs.deployment }}
+  github_repo:
+    value: ${{ steps.create_github_tfvars.outputs.github_repo  }}
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{toJson(github)}}
+      shell: bash
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: Create github tfvars
+      id: create_github_tfvars
+      shell: bash
+      run: |
+        github_repository="${{ github.repository }}"
+        github_repo="${github_repository##*/}"
+        deployment="storm-${github_repo}-${{ inputs.environment }}"
+
+        echo "github_repo=${github_repo}" >> $GITHUB_OUTPUT
+        echo "deployment=${deployment}"   >> $GITHUB_OUTPUT
+
+        cat << EOF >> github.tfvars
+        deployment="$deployment"
+        environment="${{inputs.environment}}"
+        github_actor="${{github.actor}}"
+        github_deployed_at="$(date)"
+        github_ref="${{github.ref}}"
+        github_ref_name="${{github.ref_name}}"
+        github_release="${{inputs.release}}"
+        github_repo="$github_repo"
+        github_repository="${{github.repository}}"
+        github_sha="${{github.sha}}"
+        EOF
+
+        echo $GITHUB_OUTPUT
+        cat  $GITHUB_OUTPUT
+
+        ls -la
+
+        cat github.tfvars
