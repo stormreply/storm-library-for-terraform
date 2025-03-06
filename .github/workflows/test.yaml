@@ -1,0 +1,133 @@
+name: Apply
+
+permissions: write-all
+
+on:
+  workflow_call:
+    inputs:
+      account_id:
+        type: string
+        required: true
+        default: 123456789012
+      environment:
+        type: string
+        required: true
+        default: prod
+      region:
+        type: string
+        required: true
+        default: eu-central-1
+      release:
+        type: string
+        required: false
+        default: prod
+      tfvars:
+        type: string
+        required: false
+        default: ""
+
+      # role_duration_seconds:
+      #   type: number
+      #   required: false
+      #   default: 3600
+      # tfstate_file:
+      #   type: string
+      #   required: false
+      #   default: ""
+
+jobs:
+
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
+        id: prepare-repository
+        with:
+          environment: ${{ inputs.environment }}
+          release: ${{ inputs.release }}
+
+      - name: Setup roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+
+      - name: Terraform plan
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
+        with:
+          environment: ${{ inputs.environment }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
+          region: ${{ inputs.region }}
+          release: ${{ inputs.release }}
+          tfvars: $${{ inputs.tfvars }}
+
+  apply:
+    needs: plan
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download tfplan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
+      - name: Prepare repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
+        id: prepare-repository
+        with:
+          environment: ${{ inputs.environment }}
+          release: ${{ inputs.release }}
+
+      - name: Setup roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+
+      - name: Terraform apply
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
+        with:
+          environment: ${{ inputs.environment }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
+          region: ${{ inputs.region }}
+          release: ${{ inputs.release }}
+          tfvars: $${{ inputs.tfvars }}
+
+  destroy:
+    needs: apply
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
+        id: prepare-repository
+        with:
+          environment: ${{ inputs.environment }}
+          release: ${{ inputs.release }}
+
+      - name: Setup roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+
+      - name: Terraform destroy
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
+        with:
+          environment: ${{ inputs.environment }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
+          region: ${{ inputs.region }}
+          release: ${{ inputs.release }}
+          tfvars: $${{ inputs.tfvars }}
