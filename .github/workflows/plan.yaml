@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare repository
-        uses: stromreply/terraform-workflow-controller/.github/actions/prepare-repository@v1.0.0
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
         id: prepare-repository
         with:
           environment: ${{inputs.environment}}
