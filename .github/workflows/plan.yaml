@@ -52,13 +52,13 @@ jobs:
           release: ${{inputs.release}}
 
       - name: Setup roles
-        uses: ./.github/actions/setup-roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
         with:
           account_id: ${{inputs.account_id}}
           region: ${{inputs.region}}
 
       - name: Terraform plan
-        uses: ./.github/actions/terraform-plan
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
           environment: ${{ inputs.environment }}
           github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
