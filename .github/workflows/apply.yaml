@@ -37,7 +37,37 @@ on:
 
 jobs:
 
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
+        id: prepare-repository
+        with:
+          environment: ${{ inputs.environment }}
+          release: ${{ inputs.release }}
+
+      - name: Setup roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+
+      - name: Terraform plan
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
+        with:
+          environment: ${{ inputs.environment }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
+          region: ${{ inputs.region }}
+          release: ${{ inputs.release }}
+          tfvars: $${{ inputs.tfvars }}
+
   apply:
+    needs: apply
     runs-on: ubuntu-latest
     steps:
 
@@ -53,20 +83,20 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
         id: prepare-repository
         with:
-          environment: ${{inputs.environment}}
-          release: ${{inputs.release}}
+          environment: ${{ inputs.environment }}
+          release: ${{ inputs.release }}
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
         with:
-          account_id: ${{inputs.account_id}}
-          region: ${{inputs.region}}
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
 
       - name: Terraform apply
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
           environment: ${{ inputs.environment }}
-          github_repo: ${{ steps.prepare-repository.outputs.github_repo  }}
+          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
-          tfvars: $${{ inputs.tfvars}}
+          tfvars: $${{ inputs.tfvars }}
