@@ -67,7 +67,7 @@ jobs:
           tfvars: $${{ inputs.tfvars }}
 
   apply:
-    needs: apply
+    needs: plan
     runs-on: ubuntu-latest
     steps:
 
