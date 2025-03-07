@@ -52,3 +52,12 @@ runs:
         ls -la
 
         cat github.tfvars
+
+    - name: Download providers
+      shell: bash
+      run: |
+        curl \
+          -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          -H "Accept: application/vnd.github.raw" \
+          -o providers.tf \
+          https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
