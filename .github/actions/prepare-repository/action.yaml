@@ -27,21 +27,21 @@ runs:
       shell: bash
       run: |
         # github_repo="${github_repository##*/}"
-        # deployment_name="storm-${github_repo}-${{ inputs.environment }}"
-        # echo "deployment=${ deployment_name }"     >> $GITHUB_OUTPUT
+        name="storm-${github_repo}-${{ inputs.environment }}"
+        # echo "deployment=${deployment_name}"     >> $GITHUB_OUTPUT
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {
           actor       = "${{ github.actor }}"
           environment = "${{ inputs.environment }}"
-          name        = "${  deployment_name }"
+          name        = "${name}"
           ref         = "${{ github.ref }}"
           ref_name    = "${{ github.ref_name }}"
           release     = "${{ inputs.release }}"
           repository  = "${{ github.repository }}"
           sha         = "${{ github.sha }}"
-          time        = "$(  date )"
+          time        = "$(date)"
         }
         EOF
 
