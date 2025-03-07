@@ -16,13 +16,13 @@ runs:
       with:
         aws-region: ${{inputs.region}}
         role-session-name: GitHubBackendSession
-        role-to-assume: arn:aws:iam::${{inputs.account_id}}:role/gh-terraform-backend-role
+        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/gh-terraform-backend-role
 
     - name: Configure gh-terraform-backend-role
       # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
-        aws configure set profile.backend.region ${{inputs.region}}
+        aws configure set profile.backend.region ${{ inputs.region }}
         aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
         aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
         aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
@@ -30,14 +30,14 @@ runs:
     - name: Assume gh-oidc-deployment-role
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: ${{inputs.region}}
+        aws-region: ${{ inputs.region }}
         role-session-name: GitHubOIDCSession
-        role-to-assume: arn:aws:iam::${{inputs.account_id}}:role/gh-oidc-deployment-role
+        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/gh-oidc-deployment-role
 
     - name: Configure gh-oidc-deployment-role
       shell: bash
       run: |
-        aws configure set profile.oidc.region ${{inputs.region}}
+        aws configure set profile.oidc.region ${{ inputs.region }}
         aws configure set profile.oidc.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
         aws configure set profile.oidc.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
         aws configure set profile.oidc.aws_session_token $(echo ${AWS_SESSION_TOKEN})

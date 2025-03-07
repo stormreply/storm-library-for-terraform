@@ -7,10 +7,10 @@ inputs:
     required: true
 
 outputs:
-  deployment:
-    value: ${{ steps.create_github_tfvars.outputs.deployment }}
-  github_repo:
-    value: ${{ steps.create_github_tfvars.outputs.github_repo  }}
+  # deployment:
+  #   value: ${{ steps.create_github_tfvars.outputs.deployment }}
+  repository:
+    value: ${{ steps.create_github_tfvars.outputs.repository }}
 
 runs:
   using: "composite"
@@ -18,7 +18,7 @@ runs:
 
     - name: Dump GitHub context
       env:
-        GITHUB_CONTEXT: ${{toJson(github)}}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
       shell: bash
       run: echo "$GITHUB_CONTEXT"
 
@@ -26,24 +26,23 @@ runs:
       id: create_github_tfvars
       shell: bash
       run: |
-        github_repository="${{ github.repository }}"
-        github_repo="${github_repository##*/}"
-        deployment="storm-${github_repo}-${{ inputs.environment }}"
-
-        echo "github_repo=${github_repo}" >> $GITHUB_OUTPUT
-        echo "deployment=${deployment}"   >> $GITHUB_OUTPUT
+        # github_repo="${github_repository##*/}"
+        # deployment_name="storm-${github_repo}-${{ inputs.environment }}"
+        # echo "deployment=${ deployment_name }"     >> $GITHUB_OUTPUT
+        echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
-        deployment="$deployment"
-        environment="${{inputs.environment}}"
-        github_actor="${{github.actor}}"
-        github_deployed_at="$(date)"
-        github_ref="${{github.ref}}"
-        github_ref_name="${{github.ref_name}}"
-        github_release="${{inputs.release}}"
-        github_repo="$github_repo"
-        github_repository="${{github.repository}}"
-        github_sha="${{github.sha}}"
+        deployment = {
+          actor       = "${{ github.actor }}"
+          environment = "${{ inputs.environment }}"
+          name        = "${  deployment_name }"
+          ref         = "${{ github.ref }}"
+          ref_name    = "${{ github.ref_name }}"
+          release     = "${{ inputs.release }}"
+          repository  = "${{ github.repository }}"
+          sha         = "${{ github.sha }}"
+          time        = "$(  date )"
+        }
         EOF
 
         echo $GITHUB_OUTPUT

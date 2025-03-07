@@ -3,11 +3,11 @@ name: Terraform plan
 inputs:
   environment:
     required: true
-  github_repo:
-    required: true
   region:
     required: true
   release:
+    required: true
+  repository:
     required: true
   tfvars:
     required: true
@@ -27,8 +27,8 @@ runs:
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{inputs.github_repo}}/${{inputs.environment}}" \
-          -backend-config="region=${{inputs.region}}" \
+          -backend-config="key=${{ inputs.repository }}/${{ inputs.environment }}" \
+          -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
 
     - name: Terraform plan
@@ -45,7 +45,7 @@ runs:
         terraform plan \
           -input=false \
           -out=tfplan \
-          -var-file=<(cat ${{inputs.tfvars}} github.tfvars) \
+          -var-file=<(cat ${{ inputs.tfvars }} github.tfvars) \
         && terraform show tfplan
 
     - name: Upload tfplan
