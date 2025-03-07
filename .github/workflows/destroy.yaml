@@ -26,15 +26,6 @@ on:
         required: false
         default: ""
 
-      # role_duration_seconds:
-      #   type: number
-      #   required: false
-      #   default: 3600
-      # tfstate_file:
-      #   type: string
-      #   required: false
-      #   default: ""
-
 jobs:
 
   destroy:
@@ -61,7 +52,7 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
         with:
           environment: ${{ inputs.environment }}
-          github_repo: ${{ steps.prepare-repository.outputs.github_repo }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
+          repository: ${{ steps.prepare-repository.outputs.repository }}
           tfvars: $${{ inputs.tfvars }}

@@ -26,9 +26,9 @@ runs:
       id: create_github_tfvars
       shell: bash
       run: |
-        # github_repo="${github_repository##*/}"
-        name="storm-${github_repo}-${{ inputs.environment }}"
-        # echo "deployment=${deployment_name}"     >> $GITHUB_OUTPUT
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        name="storm-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
@@ -39,6 +39,7 @@ runs:
           ref         = "${{ github.ref }}"
           ref_name    = "${{ github.ref_name }}"
           release     = "${{ inputs.release }}"
+          repo        = "${repo}"
           repository  = "${{ github.repository }}"
           sha         = "${{ github.sha }}"
           time        = "$(date)"
