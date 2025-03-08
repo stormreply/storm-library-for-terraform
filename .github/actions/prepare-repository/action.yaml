@@ -57,7 +57,7 @@ runs:
       shell: bash
       run: |
         curl \
-          -H "Authorization: token ${{ inputs.token }}" \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
           https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
@@ -68,5 +68,3 @@ runs:
 
         cat token
         cat providers.tf
-
-#           -L "https://raw.githubusercontent.com/stormreply/terraform-workflow-controller/main/.github/workflows/apply.yaml"
