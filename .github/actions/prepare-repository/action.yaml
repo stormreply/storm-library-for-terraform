@@ -5,6 +5,8 @@ inputs:
     required: true
   release:
     required: true
+  token:
+    required: true
 
 outputs:
   repository:
@@ -55,7 +57,7 @@ runs:
       shell: bash
       run: |
         curl \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Authorization: token ${{ inputs.token }}" \
           -o providers.tf \
           -L "https://raw.githubusercontent.com/stormreply/terraform-workflow-controller/main/.github/workflows/apply.yaml"
 
