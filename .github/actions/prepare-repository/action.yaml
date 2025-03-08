@@ -61,7 +61,7 @@ runs:
         curl \
           -H "Authorization: Bearer ${{ inputs.token }}" \
           -o providers.tf \
-          -L "https://raw.githubusercontent.com/stormreply/terraform-workflow-controller/main/providers.tf"
+          -L "https://raw.githubusercontent.com/stormreply/terraform-build-controller/main/controller.tf"
 
         ls -la
 
