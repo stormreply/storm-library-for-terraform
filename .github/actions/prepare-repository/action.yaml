@@ -62,7 +62,7 @@ runs:
           -H "Authorization: token ${{ inputs.token }}" \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
-          https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
+          https://api.github.com/repos/stormreply/terraform-workflow-controller/blob/main/providers.tf
 
         ls -la
 
