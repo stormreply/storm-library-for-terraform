@@ -55,17 +55,17 @@ runs:
 
         cat github.tfvars
 
-    - name: Download providers
-      shell: bash
-      run: |
-        curl \
-          -H "Authorization: Bearer ${{ inputs.token }}" \
-          -o providers.tf \
-          -L "https://raw.githubusercontent.com/stormreply/terraform-workflow-controller/main/.github/workflows/apply.yaml"
+    # - name: Download providers
+    #   shell: bash
+    #   run: |
+    #     curl \
+    #       -H "Authorization: Bearer ${{ inputs.token }}" \
+    #       -o providers.tf \
+    #       -L "https://raw.githubusercontent.com/stormreply/terraform-workflow-controller/main/.github/workflows/apply.yaml"
 
-        ls -la
+    #     ls -la
 
-        echo "${{ inputs.token }}" >> token
+    #     echo "${{ inputs.token }}" >> token
 
-        cat token
-        cat providers.tf
+    #     cat token
+    #     cat providers.tf
