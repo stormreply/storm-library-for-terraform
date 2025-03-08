@@ -5,7 +5,7 @@ inputs:
     required: true
   release:
     required: true
-  token:
+  sshkey:
     required: true
 
 outputs:
@@ -70,6 +70,6 @@ runs:
     #     cat providers.tf
 
     - name: Set up SSH agent
-      uses: webfactory/ssh-agent
+      uses: webfactory/ssh-agent@main
       with:
-        ssh-private-key: ${{ secrets.STORMREPLY_GITHUB }}
+        ssh-private-key: ${{ inputs.sshkey }}

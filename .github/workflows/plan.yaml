@@ -50,7 +50,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           release: ${{ inputs.release }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          sshkey: ${{ secrets.STORMREPLY_GITHUB }}
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
