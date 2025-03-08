@@ -53,18 +53,23 @@ runs:
 
         cat github.tfvars
 
-    - name: Download providers
-      shell: bash
-      run: |
-        curl \
-          -H "Authorization: Bearer ${{ inputs.token }}" \
-          -H "Accept: application/vnd.github.raw" \
-          -o providers.tf \
-          https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
+    # - name: Download providers
+    #   shell: bash
+    #   run: |
+    #     curl \
+    #       -H "Authorization: Bearer ${{ inputs.token }}" \
+    #       -H "Accept: application/vnd.github.raw" \
+    #       -o providers.tf \
+    #       https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
 
-        ls -la
+    #     ls -la
 
-        echo "${{ inputs.token }}" >> token
+    #     echo "${{ inputs.token }}" >> token
 
-        cat token
-        cat providers.tf
+    #     cat token
+    #     cat providers.tf
+
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent
+      with:
+        ssh-private-key: ${{ secrets.STORMREPLY_GITHUB }}
