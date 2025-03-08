@@ -60,9 +60,9 @@ runs:
       run: |
         curl \
           -H "Authorization: token ${{ inputs.token }}" \
-          -H "Accept: application/vnd.github.raw" \
+          -H "Accept: application/vnd.github.raw+json" \
           -o providers.tf \
-          https://api.github.com/repos/stormreply/terraform-workflow-controller/blob/main/providers.tf
+          https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
 
         ls -la
 
