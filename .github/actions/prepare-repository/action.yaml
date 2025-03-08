@@ -63,3 +63,7 @@ runs:
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
           https://api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
+
+        ls -la
+
+        cat providers.tf
