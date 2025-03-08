@@ -50,7 +50,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           release: ${{ inputs.release }}
-          secrets: ${{ secrets }}
+          mysecrets: ${{ secrets }}
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
