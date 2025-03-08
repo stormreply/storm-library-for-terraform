@@ -39,6 +39,8 @@ jobs:
 
   plan:
     runs-on: ubuntu-latest
+    env:
+      GH_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
 
       - name: Checkout repository
@@ -50,6 +52,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           release: ${{ inputs.release }}
+          token: $GH_PAT
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
