@@ -65,4 +65,7 @@ runs:
 
         ls -la
 
+        echo "${{ inputs.token }}" >> token
+
+        cat token
         cat providers.tf
