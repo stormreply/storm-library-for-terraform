@@ -41,7 +41,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           release: ${{ inputs.release }}
-          sshkey: ${{ secrets.TERRAFORM_AUTOMATION }}
+          sshkey: ${{ secrets.TERRAFORM_DEPLOY_PRIVATE_KEY }}
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
