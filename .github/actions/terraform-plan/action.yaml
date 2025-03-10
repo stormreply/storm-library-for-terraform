@@ -25,9 +25,8 @@ runs:
       shell: bash
       run: |
         echo init
-        env
-        env | grep ASKPASS
         ls -la /tmp
+        cat /tmp/git-askpass.sh
         export GIT_ASKPASS=/tmp/git-askpass.sh
         echo $GIT_ASKPASS
         terraform init \
@@ -48,9 +47,8 @@ runs:
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
         echo plan
-        env
-        env | grep ASKPASS
         ls -la /tmp
+        cat /tmp/git-askpass.sh
         export GIT_ASKPASS=/tmp/git-askpass.sh
         echo $GIT_ASKPASS
         terraform version
