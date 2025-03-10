@@ -24,9 +24,12 @@ runs:
       # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
+        echo init
         env
+        env | grep ASKPASS
         ls -la /tmp
         export GIT_ASKPASS=/tmp/git-askpass.sh
+        echo $GIT_ASKPASS
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
@@ -44,6 +47,7 @@ runs:
         export AWS_PROFILE=oidc
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
+        echo plan
         env
         env | grep ASKPASS
         ls -la /tmp
