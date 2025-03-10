@@ -41,6 +41,9 @@ runs:
         export AWS_PROFILE=oidc
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
+        env
+        ls -la /tmp
+
         terraform version
         terraform plan \
           -input=false \
