@@ -60,12 +60,12 @@ runs:
         ls -la
         cat github.tfvars
 
-      - name: Create askpass
-        shell: bash
-        run: |
-          export GIT_ASKPASS=/tmp/git-askpass.sh
-          echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
-          chmod +x /tmp/git-askpass.sh
+    - name: Create askpass
+      shell: bash
+      run: |
+        export GIT_ASKPASS=/tmp/git-askpass.sh
+        echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
+        chmod +x /tmp/git-askpass.sh
 
     # - name: Download providers
     #   shell: bash
