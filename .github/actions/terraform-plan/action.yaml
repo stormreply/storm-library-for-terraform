@@ -24,6 +24,8 @@ runs:
       # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
+        env
+        ls -la /tmp
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
@@ -43,7 +45,6 @@ runs:
 
         env
         ls -la /tmp
-
         terraform version
         terraform plan \
           -input=false \
