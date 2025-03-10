@@ -26,6 +26,7 @@ runs:
       run: |
         env
         ls -la /tmp
+        export GIT_ASKPASS=/tmp/git-askpass.sh
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
