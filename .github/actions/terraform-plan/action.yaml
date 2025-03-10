@@ -45,7 +45,10 @@ runs:
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
         env
+        env | grep ASKPASS
         ls -la /tmp
+        export GIT_ASKPASS=/tmp/git-askpass.sh
+        echo $GIT_ASKPASS
         terraform version
         terraform plan \
           -input=false \
