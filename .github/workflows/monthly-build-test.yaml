@@ -1,0 +1,22 @@
+name: Monthly Build Test
+
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # TODO: check if necessary
+      contents: read
+
+    strategy:
+      matrix:
+        repo:
+          - "stormreply/terraform-build-controller"
+
+    steps:
+      - name: Test ${{ matrix.repo }}
+        uses: stormreply/${{ matrix.repo }}/.github/workflows/test.yaml@main
