@@ -24,6 +24,7 @@ runs:
       # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
+        git config --list --show-origin
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
