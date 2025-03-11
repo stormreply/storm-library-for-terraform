@@ -22,7 +22,7 @@ runs:
     - name: Terraform init with S3 backend
       # working-directory: ${{ env.tf_working_dir != '' && env.tf_working_dir || env.GITHUB_WORKSPACE }}
       # if: ${{ env.tf_local_backend == 'false' }}
-      shell: bash
+<      shell: bash
       run: |
         git config --list --show-origin
         terraform init \
@@ -42,11 +42,14 @@ runs:
         export AWS_PROFILE=oidc
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
+        tfvars=github.tfvars
+        [-n "${{ inputs.tfvars }}"] && tfvars="${{ inputs.tfvars }} $tfvars"
+
         terraform version
         terraform plan \
           -input=false \
           -out=tfplan \
-          -var-file=<(cat ${{ inputs.tfvars }} github.tfvars) \
+          -var-file=<(cat $tfvars) \
         && terraform show tfplan
 
     - name: Upload tfplan
