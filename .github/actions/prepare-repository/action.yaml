@@ -67,7 +67,7 @@ runs:
         echo TOKEN=$TOKEN
         # git config --global url."https://$TOKEN@github.com/".insteadOf "https://github.com/"
         git config --global credential.helper store
-        echo "https://${{ $TOKEN }}@github.com" > ~/.git-credentials
+        echo "https://$TOKEN@github.com" > ~/.git-credentials
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
 
