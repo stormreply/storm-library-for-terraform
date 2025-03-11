@@ -25,14 +25,13 @@ runs:
       run: echo "$GITHUB_CONTEXT"
 
     - uses: actions/create-github-app-token@v1
-      id: app_token
+      id: app-token
       with:
         app-id: ${{ inputs.terraform_app_id }}
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
     - name: Create github tfvars
-      id: create_github_tfvars
       shell: bash
       run: |
         repository=${{ github.repository }}
@@ -59,13 +58,13 @@ runs:
     - name: Set up access token
       shell: bash
       run: |
-        TOKEN=${{ steps.app_token.outputs.token}}
+        TOKEN=${{ steps.app-token.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
     - name: Download providers
       shell: bash
       run: |
-        TOKEN=${{ steps.app_token.outputs.token }}
+        TOKEN=${{ steps.app-token.outputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
