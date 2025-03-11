@@ -60,24 +60,23 @@ runs:
         ls -la
         cat github.tfvars
 
-    # - name: Set up Git credentials
-    #   shell: bash
-    #   run: |
-    #     TOKEN=${{ steps.app_token.outputs.token}}
-    #     echo TOKEN=$TOKEN
-    #     # git config --global url."https://$TOKEN@github.com/".insteadOf "https://github.com/"
-    #     # git config --global --unset-all http.https://github.com/.extraheader
+    - name: Set up Git credentials
+      shell: bash
+      run: |
+        TOKEN=${{ steps.app_token.outputs.token}}
+        echo TOKEN=$TOKEN
+        git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
     #     git config --global credential.helper store
-    #     echo "https://$TOKEN@github.com" > ~/.git-credentials
+    #     echo "https://x-access-token:$TOKEN@github.com" > ~/.git-credentials
     #     git config --global user.email "github-actions@github.com"
     #     git config --global user.name "GitHub Actions"
 
-    - name: Create askpass
-      shell: bash
-      run: |
-        echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
-        chmod +x /tmp/git-askpass.sh
-        echo "GIT_ASKPASS=/tmp/git-askpass.sh" >> $GITHUB_ENV
+    # - name: Create askpass
+    #   shell: bash
+    #   run: |
+    #     echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
+    #     chmod +x /tmp/git-askpass.sh
+    #     echo "GIT_ASKPASS=/tmp/git-askpass.sh" >> $GITHUB_ENV
 
     # - name: Download providers
     #   shell: bash
