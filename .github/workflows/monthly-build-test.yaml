@@ -18,6 +18,7 @@ jobs:
       matrix:
         repo:
           - "stormreply/terraform-build-controller"
+          - "stormreply/sakila-mysql-rds"
 
     steps:
 
@@ -34,9 +35,3 @@ jobs:
       - name: Test
         run: |
           gh workflow run plan.yml --repo ${{ matrix.repo }}
-        # env:
-        #   GH_TOKEN: ${{ env.GH_APP_TOKEN }}
-
-    # steps:
-    #   - name: Test ${{ matrix.repo }}
-    #     uses: stormreply/${{ matrix.repo }}/.github/workflows/test.yaml@main
