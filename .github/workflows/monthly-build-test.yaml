@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build-test:
+  test:
     runs-on: ubuntu-latest
 
     permissions:
@@ -28,8 +28,14 @@ jobs:
           private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
-      - name: Authenticate GitHub CLI
+      - name: Authenticate
         run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
+
+      - name: Test
+        run: |
+          gh workflow run plan.yml --repo ${{ matrix.repo }}
+        # env:
+        #   GH_TOKEN: ${{ env.GH_APP_TOKEN }}
 
     # steps:
     #   - name: Test ${{ matrix.repo }}
