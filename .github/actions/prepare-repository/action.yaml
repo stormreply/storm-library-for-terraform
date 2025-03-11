@@ -56,7 +56,7 @@ runs:
         EOF
         cat github.tfvars
 
-    - name: Set up Git credentials
+    - name: Set up access token
       shell: bash
       run: |
         TOKEN=${{ steps.app_token.outputs.token}}
