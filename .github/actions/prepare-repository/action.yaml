@@ -54,10 +54,6 @@ runs:
           time        = "$(date)"
         }
         EOF
-
-        echo $GITHUB_OUTPUT
-        cat  $GITHUB_OUTPUT
-        ls -la
         cat github.tfvars
 
     - name: Set up Git credentials
