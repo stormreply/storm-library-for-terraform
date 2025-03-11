@@ -31,11 +31,6 @@ runs:
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
-    - name: Set GITHUB_TOKEN
-      shell: bash
-      run: |
-        echo "GITHUB_TOKEN=${{ steps.app_token.outputs.token }}" >> $GITHUB_ENV
-
     - name: Create github tfvars
       id: create_github_tfvars
       shell: bash
@@ -77,13 +72,12 @@ runs:
     #     git config --global user.email "github-actions@github.com"
     #     git config --global user.name "GitHub Actions"
 
-
-    # - name: Create askpass
-    #   shell: bash
-    #   run: |
-    #     export GIT_ASKPASS=/tmp/git-askpass.sh
-    #     echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
-    #     chmod +x /tmp/git-askpass.sh
+    - name: Create askpass
+      shell: bash
+      run: |
+        echo 'echo "x-access-token:${{ steps.app_token.outputs.token }}"' > /tmp/git-askpass.sh
+        chmod +x /tmp/git-askpass.sh
+        echo "GIT_ASKPASS=/tmp/git-askpass.sh" >> $GITHUB_ENV
 
     # - name: Download providers
     #   shell: bash
