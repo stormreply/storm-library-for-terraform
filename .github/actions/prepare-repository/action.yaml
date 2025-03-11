@@ -61,6 +61,7 @@ runs:
         cat github.tfvars
 
     - name: Set up Git credentials
+      shell: bash
       run: |
         TOKEN=${{ steps.app_token.outputs.token}}
         echo TOKEN=$TOKEN
