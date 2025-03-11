@@ -22,8 +22,8 @@ runs:
     - uses: actions/create-github-app-token@v1
       id: app_token
       with:
-        app-id: ${{ inputs.terraform_app_id }}
-        private-key: ${{ inputs.terraform_private_key }}
+        app-id: ${{ vars.TERRAFORM_APP_ID }}
+        private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
         owner: ${{ github.repository_owner }}
 
     - name: Terraform init with S3 backend
