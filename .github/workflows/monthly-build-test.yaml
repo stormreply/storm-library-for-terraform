@@ -6,8 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
+
   build-test:
     runs-on: ubuntu-latest
+
     permissions:
       id-token: write # TODO: check if necessary
       contents: read
@@ -18,5 +20,17 @@ jobs:
           - "stormreply/terraform-build-controller"
 
     steps:
-      - name: Test ${{ matrix.repo }}
-        uses: stormreply/${{ matrix.repo }}/.github/workflows/test.yaml@main
+
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TERRAFORM_APP_ID }}
+          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
+
+    # steps:
+    #   - name: Test ${{ matrix.repo }}
+    #     uses: stormreply/${{ matrix.repo }}/.github/workflows/test.yaml@main
