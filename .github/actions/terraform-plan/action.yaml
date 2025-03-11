@@ -19,18 +19,11 @@ runs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - uses: actions/create-github-app-token@v1
-      id: app_token
-      with:
-        app-id: ${{ vars.TERRAFORM_APP_ID }}
-        private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-        owner: ${{ github.repository_owner }}
-
     - name: Terraform init with S3 backend
       # working-directory: ${{ env.tf_working_dir != '' && env.tf_working_dir || env.GITHUB_WORKSPACE }}
       # if: ${{ env.tf_local_backend == 'false' }}
-      env:
-        GITHUB_TOKEN: ${{ steps.app_token.outputs.token }}
+      # env:
+      #   GITHUB_TOKEN: ${{ steps.app_token.outputs.token }}
       shell: bash
       run: |
         git config --list --show-origin

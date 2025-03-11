@@ -24,12 +24,15 @@ runs:
       shell: bash
       run: echo "$GITHUB_CONTEXT"
 
-    # - uses: actions/create-github-app-token@v1
-    #   id: app_token
-    #   with:
-    #     app-id: ${{ inputs.terraform_app_id }}
-    #     private-key: ${{ inputs.terraform_private_key }}
-    #     owner: ${{ github.repository_owner }}
+    - uses: actions/create-github-app-token@v1
+      id: app_token
+      with:
+        app-id: ${{ inputs.terraform_app_id }}
+        private-key: ${{ inputs.terraform_private_key }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Set GITHUB_TOKEN
+      run: echo "GITHUB_TOKEN=${{ steps.app_token.outputs.token }}" >> $GITHUB_ENV
 
     - name: Create github tfvars
       id: create_github_tfvars
