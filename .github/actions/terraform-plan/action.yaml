@@ -25,6 +25,7 @@ runs:
       shell: bash
       run: |
         git config --list --show-origin
+        echo "key=${{ inputs.repository }}/${{ inputs.environment }}"
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
