@@ -34,4 +34,4 @@ jobs:
 
       - name: Test
         run: |
-          gh workflow run plan.yml --repo ${{ matrix.repo }}
+          gh workflow run plan.yaml --repo ${{ matrix.repo }}
