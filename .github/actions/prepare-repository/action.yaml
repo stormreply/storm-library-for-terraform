@@ -61,7 +61,7 @@ runs:
         TOKEN=${{ steps.app-token.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
-    - name: Download providers
+    - name: Download providers.tf
       shell: bash
       run: |
         TOKEN=${{ steps.app-token.outputs.token }}
@@ -69,3 +69,12 @@ runs:
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
+
+    - name: Download terraform.tf
+      shell: bash
+      run: |
+        TOKEN=${{ steps.app-token.outputs.token }}
+        curl \
+          -H "Accept: application/vnd.github.raw" \
+          -o terraform.tf \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/terraform.tf
