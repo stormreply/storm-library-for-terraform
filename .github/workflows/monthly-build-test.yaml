@@ -2,7 +2,7 @@ name: Monthly Build Test
 
 on:
   schedule:
-    - cron: "15 8 12 * *"
+    - cron: '23 8,9 * * *'
   workflow_dispatch:
 
 jobs:
