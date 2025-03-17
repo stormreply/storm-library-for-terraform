@@ -3,6 +3,8 @@ name: Terraform plan
 inputs:
   environment:
     required: true
+  expires_after: # TODO: remove after testing
+    required: true
   region:
     required: true
   release:
