@@ -11,6 +11,8 @@ inputs:
     required: true
 
 outputs:
+  deployment:
+    value: ${{ steps.create-github-tfvars.outputs.deployment }}
   repository:
     value: ${{ steps.create-github-tfvars.outputs.repository }}
 
@@ -39,6 +41,7 @@ runs:
         repo=${repository##*/}
         name="storm-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
+        echo "deployment=${name}" >> GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {

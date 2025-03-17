@@ -13,6 +13,10 @@ on:
         type: string
         required: true
         default: prod
+      expires_after:
+        type: string
+        required: false
+        default: "1 day"
       region:
         type: string
         required: true
@@ -91,6 +95,7 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
           environment: ${{ inputs.environment }}
+          expires_after: ${{ inputs.expires_after }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
           repository: ${{ steps.prepare-repository.outputs.repository }}
