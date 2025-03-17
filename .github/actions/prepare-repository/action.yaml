@@ -10,10 +10,6 @@ inputs:
   terraform_private_key:
     required: true
 
-outputs:
-  repository:
-    value: ${{ steps.create-github-tfvars.outputs.repository }}
-
 runs:
   using: "composite"
   steps:

@@ -56,5 +56,4 @@ jobs:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
-          repository: ${{ steps.prepare-repository.outputs.repository }}
           tfvars: $${{ inputs.tfvars }}

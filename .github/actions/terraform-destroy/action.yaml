@@ -7,8 +7,6 @@ inputs:
     required: true
   release:
     required: true
-  repository:
-    required: true
   tfvars:
     required: true
 
@@ -27,7 +25,7 @@ runs:
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{ inputs.repository }}/${{ inputs.environment }}" \
+          -backend-config="key=${{ github.repository }}/${{ inputs.environment }}" \
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
 

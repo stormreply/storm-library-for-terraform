@@ -60,7 +60,6 @@ jobs:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
-          repository: ${{ steps.prepare-repository.outputs.repository }}
           tfvars: $${{ inputs.tfvars }}
 
   apply:
@@ -98,5 +97,4 @@ jobs:
           expires_after: ${{ inputs.expires_after }}
           region: ${{ inputs.region }}
           release: ${{ inputs.release }}
-          repository: ${{ steps.prepare-repository.outputs.repository }}
           tfvars: $${{ inputs.tfvars }}
