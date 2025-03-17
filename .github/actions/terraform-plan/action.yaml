@@ -57,3 +57,11 @@ runs:
       with:
         name: tfplan
         path: tfplan
+
+    - name: Register expiry
+      shell: bash
+      run: |
+        deployment=${{ steps.prepare-repository.outputs.deployment }}
+        expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y-%m-%d-%H-%M-%S")
+        expiry_file="${expiry}-${deployment}"
+        aws s3 cp ${expiry_file} s3://storm-github-terraform-backend/expiries/  # TODO: s.o.
