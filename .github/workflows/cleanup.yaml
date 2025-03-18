@@ -42,7 +42,7 @@ jobs:
             | jq -r '.Contents[].Key'
           )
           for e in $expiries ; do
-            f=${e##*/}
+            file=${e##*/} ; f=${file}
             date=${f%%-*} ; f=${f##$date-}
             time=${f%%-*} ; f=${f##$time-}
             account_id=${f%%-*} ; f=${f##$account_id-}
@@ -53,7 +53,7 @@ jobs:
             time="${time:0:2}:${time:2:2}:${time:4:2}"
             expiry=$(date -d "${date} ${time}" +"%s")
             now=$(date -d now +"%s")
-            echo "checking ${f}... "
+            echo -n "checking ${file}... "
             if [ ${expiry} -lt ${now} ] ; then
               echo "EXPIRED"
               gh workflow run plan.yaml \
