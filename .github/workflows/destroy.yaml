@@ -52,3 +52,10 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
+
+      - name: Unregister old deployments
+        uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          environment: ${{ inputs.environment }}
+          region: ${{ inputs.region }}

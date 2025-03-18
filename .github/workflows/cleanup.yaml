@@ -14,6 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Create app token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TERRAFORM_APP_ID }}
+          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Authenticate
+        run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
+
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
         with:
@@ -42,9 +53,13 @@ jobs:
             time="${time:0:2}:${time:2:2}:${time:4:2}"
             expiry=$(date -d "${date} ${time}" +"%s")
             now=$(date -d now +"%s")
+            echo "checking ${f}... "
             if [ ${expiry} -lt ${now} ] ; then
-              echo "${storm}-${repo}-${environment} EXPIRED!"
+              echo "EXPIRED"
+              gh workflow run plan.yaml \
+                --repo "stormreply/${repo}" \
+              & # TODO: handle "stormreply"
             else
-              echo "${storm}-${repo}-${environment} STILL VALID!"
+              echo "ok"
             fi
           done
