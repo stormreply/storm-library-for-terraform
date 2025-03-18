@@ -6,7 +6,8 @@ permissions:
 
 on:
   schedule:
-    - cron: "17 */4 * * *"  # run once every 4 hours
+    # - cron: "17 */4 * * *"  # run once every 4 hours
+    - cron: "*/3 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -57,7 +58,10 @@ jobs:
             if [ ${expiry} -lt ${now} ] ; then
               echo "EXPIRED"
               gh workflow run plan.yaml \
-                --repo "stormreply/${repo}" \
+                --repo stormreply/${repo} \
+                -f account_id=${account_id} \
+                -f environment=${environment} \
+                -f region=${region} \
               & # TODO: handle "stormreply"
             else
               echo "ok"
