@@ -17,6 +17,7 @@ runs:
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
+        region=${{ inputs.region }}
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment="storm-${repo}-${{ inputs.environment }}"
