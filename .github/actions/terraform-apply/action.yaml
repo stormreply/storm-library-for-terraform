@@ -25,8 +25,9 @@ runs:
       # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
+        # TODO: bootstrap repo and retrieve bucket from vars
         terraform init \
-          -backend-config="bucket=storm-github-terraform-backend" \  # TODO: bootstrap per repo via vars
+          -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
           -backend-config="key=${{ github.repository }}/${{ inputs.environment }}" \
           -backend-config="region=${{ inputs.region }}" \
