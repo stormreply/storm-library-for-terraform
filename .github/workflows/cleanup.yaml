@@ -6,8 +6,8 @@ permissions:
 
 on:
   schedule:
-    # - cron: "17 */4 * * *"  # run once every 4 hours
-    - cron: "*/3 * * * *"
+    - cron: "17 */4 * * *"  # run once every 4 hours
+    # - cron: "*/3 * * * *"
   workflow_dispatch:
 
 jobs:
