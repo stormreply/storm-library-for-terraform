@@ -51,6 +51,5 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
           environment: ${{ inputs.environment }}
-          expires_after: ${{ inputs.expires_after }} # TODO: remove after testing
           region: ${{ inputs.region }}
           tfvars: $${{ inputs.tfvars }}
