@@ -1,6 +1,8 @@
 name: Destroy
 
-permissions: write-all
+permissions:
+  contents: read
+  id-token: write
 
 on:
   workflow_call:

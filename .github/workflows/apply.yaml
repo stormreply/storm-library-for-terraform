@@ -1,6 +1,8 @@
 name: Apply
 
-permissions: write-all
+permissions:
+  contents: read
+  id-token: write
 
 on:
   workflow_call:
@@ -90,7 +92,14 @@ jobs:
           region: ${{ inputs.region }}
           tfvars: $${{ inputs.tfvars }}
 
-      - name: Register
+      - name: Unregister old deployments
+        uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          environment: ${{ inputs.environment }}
+          region: ${{ inputs.region }}
+
+      - name: Register new deployment
         uses: stormreply/terraform-workflow-controller/.github/actions/register@main
         with:
           account_id: ${{ inputs.account_id }}

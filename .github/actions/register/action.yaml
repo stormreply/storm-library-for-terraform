@@ -25,4 +25,5 @@ runs:
         expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y%m%d-%H%M%S")
         expiry_file="${expiry}-${account_id}-${region}-${deployment}"
         touch ${expiry_file}
+        aws s3 rm s3://storm-github-terraform-backend/expiries/*-${account_id}-${region}-${deployment}
         aws s3 cp ${expiry_file} s3://storm-github-terraform-backend/expiries/  # TODO: take bucket name from vars

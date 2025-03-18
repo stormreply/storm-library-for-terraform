@@ -5,8 +5,6 @@ inputs:
     required: true
   environment:
     required: true
-  expires_after:
-    required: true
   region:
     required: true
 
@@ -17,10 +15,18 @@ runs:
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
+        region=${{ inputs.region }}
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment="storm-${repo}-${{ inputs.environment }}"
 
-        expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y%m%d-%H%M%S")
-        expiry_file="${expiry}-${account_id}-${region}-${deployment}"
-        aws s3 rm s3://storm-github-terraform-backend/expiries/${expiry_file}  # TODO: take bucket name from vars
+        expiries=$(aws s3api list-objects \
+          --bucket storm-github-terraform-backend \
+          --prefix expiries \
+        | jq -r '.Contents[].Key' | grep "${account_id}-${region}-${deployment}
+
+        echo "$expiries"
+
+        for expiry in $expiries ; do
+          aws s3 rm s3://storm-github-terraform-backend/${expiry}  # TODO: take bucket name from vars
+        done
