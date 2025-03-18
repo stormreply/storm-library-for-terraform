@@ -59,7 +59,6 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          release: ${{ inputs.release }}
           tfvars: $${{ inputs.tfvars }}
 
   apply:
@@ -94,7 +93,13 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
           environment: ${{ inputs.environment }}
+          region: ${{ inputs.region }}
+          tfvars: $${{ inputs.tfvars }}
+
+      - name: Register
+        uses: stormreply/terraform-workflow-controller/.github/actions/register@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          environment: ${{ inputs.environment }}
           expires_after: ${{ inputs.expires_after }}
           region: ${{ inputs.region }}
-          release: ${{ inputs.release }}
-          tfvars: $${{ inputs.tfvars }}

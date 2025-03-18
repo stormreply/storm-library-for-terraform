@@ -3,11 +3,7 @@ name: Terraform apply
 inputs:
   environment:
     required: true
-  expires_after:
-    required: true
   region:
-    required: true
-  release:
     required: true
   tfvars:
     required: true

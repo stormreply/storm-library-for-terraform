@@ -1,0 +1,23 @@
+name: Cleanup deployments
+
+on:
+  # schedule:
+  #   - cron: "0 * * * *"  # Läuft jede Stunde
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup roles
+        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+
+      - name: Terraform destroy
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
+        with:
+          environment: ${{ inputs.environment }}
+          region: ${{ inputs.region }}

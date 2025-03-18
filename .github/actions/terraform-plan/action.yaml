@@ -3,11 +3,7 @@ name: Terraform plan
 inputs:
   environment:
     required: true
-  expires_after: # TODO: remove after testing
-    required: true
   region:
-    required: true
-  release:
     required: true
   tfvars:
     required: true
@@ -57,15 +53,3 @@ runs:
       with:
         name: tfplan
         path: tfplan
-
-    - name: Register expiry
-      shell: bash
-      run: |
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        deployment="storm-${repo}-${{ inputs.environment }}"
-
-        expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y-%m-%d-%H-%M-%S")
-        expiry_file="${expiry}-${deployment}"
-        touch ${expiry_file}
-        aws s3 cp ${expiry_file} s3://storm-github-terraform-backend/expiries/  # TODO: s.o.

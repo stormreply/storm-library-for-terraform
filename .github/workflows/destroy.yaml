@@ -55,5 +55,3 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          release: ${{ inputs.release }}
-          tfvars: $${{ inputs.tfvars }}
