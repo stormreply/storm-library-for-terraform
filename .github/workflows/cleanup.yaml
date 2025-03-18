@@ -3,8 +3,8 @@ name: Cleanup
 permissions: write-all
 
 on:
-  # schedule:
-  #   - cron: "0 * * * *"  # Läuft jede Stunde
+  schedule:
+    - cron: "*/5 * * * *"  # run every 5 minutes
   workflow_dispatch:
 
 jobs:
