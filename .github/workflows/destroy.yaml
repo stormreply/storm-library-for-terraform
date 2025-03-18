@@ -17,10 +17,6 @@ on:
         type: string
         required: true
         default: eu-central-1
-      release:
-        type: string
-        required: false
-        default: prod
       tfvars:
         type: string
         required: false
@@ -40,7 +36,6 @@ jobs:
         id: prepare-repository
         with:
           environment: ${{ inputs.environment }}
-          release: ${{ inputs.release }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 

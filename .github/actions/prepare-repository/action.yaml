@@ -3,8 +3,6 @@ name: Prepare repository
 inputs:
   environment:
     required: true
-  release:
-    required: true
   terraform_app_id:
     required: true
   terraform_private_key:
@@ -43,7 +41,6 @@ runs:
           name        = "${name}"
           ref         = "${{ github.ref }}"
           ref_name    = "${{ github.ref_name }}"
-          release     = "${{ inputs.release }}"
           repo        = "${repo}"
           repository  = "${{ github.repository }}"
           sha         = "${{ github.sha }}"
