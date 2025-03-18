@@ -16,8 +16,30 @@ jobs:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
 
-      - name: Terraform destroy
-        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
-        with:
-          environment: ${{ inputs.environment }}
-          region: ${{ inputs.region }}
+      - name: Check expired
+        shell: bash
+        run: |
+          expiries=$(
+            aws s3api list-objects \
+              --bucket storm-github-terraform-backend \
+              --prefix expiries \
+            | jq -r '.Contents[].Key'
+          )
+          for e in $expiries ; do
+            f=${e##*/}
+            date=${f%%-*} ; f=${f##$date-}
+            time=${f%%-*} ; f=${f##$time-}
+            account_id=${f%%-*} ; f=${f##$account_id-}
+            region=${f%-${f#*-*-*-}} ; f=${f##$region-}
+            storm=${f%%-*} ; f=${f##$storm-}
+            repo=${f%-*}
+            environment=${f##$repo-}
+            time="${time:0:2}:${time:2:2}:${time:4:2}"
+            expiry=$(date -d "${date} ${time}" +"%s")
+            now=$(date -d now +"%s")
+            if [ ${expiry} -lt ${now} ] ; then
+              echo "${storm}-${repo}-${environment} EXPIRED!"
+            else
+              echo "${storm}-${repo}-${environment} STILL VALID!"
+            fi
+          done
