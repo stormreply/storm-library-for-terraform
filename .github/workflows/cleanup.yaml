@@ -1,4 +1,4 @@
-name: Cleanup deployments
+name: Cleanup
 
 on:
   # schedule:
