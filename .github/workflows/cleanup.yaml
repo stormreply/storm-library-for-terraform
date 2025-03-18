@@ -1,5 +1,7 @@
 name: Cleanup
 
+permissions: write-all
+
 on:
   # schedule:
   #   - cron: "0 * * * *"  # Läuft jede Stunde
@@ -10,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.TERRAFORM_APP_ID }}
-          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
+      # - uses: actions/create-github-app-token@v1
+      #   id: app-token
+      #   with:
+      #     app-id: ${{ vars.TERRAFORM_APP_ID }}
+      #     private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+      #     owner: ${{ github.repository_owner }}
 
       - name: Setup roles
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
