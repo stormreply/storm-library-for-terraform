@@ -57,7 +57,7 @@ jobs:
             echo -n "checking ${file}... "
             if [ ${expiry} -lt ${now} ] ; then
               echo "EXPIRED"
-              gh workflow run plan.yaml \
+              gh workflow run destroy.yaml \
                 --repo stormreply/${repo} \
                 -f account_id=${account_id} \
                 -f environment=${environment} \
