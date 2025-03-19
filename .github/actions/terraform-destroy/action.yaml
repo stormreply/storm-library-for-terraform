@@ -41,7 +41,7 @@ runs:
           -auto-approve \
           -input=false
 
-terraform destroy -auto-approve \
-  -state="s3://storm-github-terraform-backend/${{ github.repository }}/${{ inputs.environment }}/terraform.tfstate"
+# terraform destroy -auto-approve \
+#   -state="s3://storm-github-terraform-backend/${{ github.repository }}/${{ inputs.environment }}/terraform.tfstate"
 
-# -var-file=<(cat ${{ inputs.tfvars }} github.tfvars)
+# # -var-file=<(cat ${{ inputs.tfvars }} github.tfvars)
