@@ -24,6 +24,7 @@ runs:
           -backend-config="key=${{ github.repository }}/${{ inputs.environment }}" \
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
+        ls -la
 
     - name: Terraform destroy
       shell: bash
@@ -39,5 +40,8 @@ runs:
         terraform destroy \
           -auto-approve \
           -input=false
+
+terraform destroy -auto-approve \
+  -state="s3://storm-github-terraform-backend/${{ github.repository }}/${{ inputs.environment }}/terraform.tfstate"
 
 # -var-file=<(cat ${{ inputs.tfvars }} github.tfvars)
