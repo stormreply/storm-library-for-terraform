@@ -26,6 +26,21 @@ runs:
           -backend-config="use_lockfile=true"
         ls -la
 
+    - name: Download Terraform State
+      shell:
+      run: |
+        unset AWS_SECRET_ACCESS_KEY
+        unset AWS_SESSION_TOKEN
+        unset AWS_ACCESS_KEY_ID
+
+        export AWS_PROFILE=backend
+
+        aws s3 cp \
+          s3://storm-github-terraform-backend/${{ github.repository}}/${{ inputs.environment}} \
+          terraform.tfstate
+
+        export AWS_PROFILE=oidc
+
     - name: Terraform destroy
       shell: bash
       run: |
@@ -39,7 +54,12 @@ runs:
         terraform version
         terraform destroy \
           -auto-approve \
-          -input=false
+          -input=false \
+          -state terraform.tfstate
+
+
+
+# -var-file=<(cat ${{ inputs.tfvars }} github.tfvars)
 
 # terraform destroy -auto-approve \
 #   -state="s3://storm-github-terraform-backend/${{ github.repository }}/${{ inputs.environment }}/terraform.tfstate"
