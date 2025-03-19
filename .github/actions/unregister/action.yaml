@@ -24,9 +24,12 @@ runs:
           aws s3api list-objects-v2 \
             --bucket storm-github-terraform-backend \
             --prefix expiries \
-            --query 'Contents[].Key' \
-          | grep "${account_id}-${region}-${deployment}"
+            --query 'Contents[].Key'
         )
+
+        [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
+
+        expiries=$(echo "${expiries}" | grep "${account_id}-${region}-${deployment}")
 
         echo "$expiries"
 

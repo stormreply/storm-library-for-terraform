@@ -42,7 +42,13 @@ jobs:
               --prefix expiries \
               --query 'Contents[].Key'
           )
+
+          [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
+
+          expiries=$(echo $expiries | grep -E "/[0-9]{8}-") # object name must start with datestamp
+
           for e in $expiries ; do
+
             file=${e##*/} ; f=${file}
             date=${f%%-*} ; f=${f##$date-}
             time=${f%%-*} ; f=${f##$time-}
@@ -54,7 +60,9 @@ jobs:
             time="${time:0:2}:${time:2:2}:${time:4:2}"
             expiry=$(date -d "${date} ${time}" +"%s")
             now=$(date -d now +"%s")
+
             echo -n "checking ${file}... "
+
             if [ ${expiry} -lt ${now} ] ; then
               echo "EXPIRED"
               gh workflow run destroy.yaml \
@@ -66,4 +74,5 @@ jobs:
             else
               echo "ok"
             fi
+
           done
