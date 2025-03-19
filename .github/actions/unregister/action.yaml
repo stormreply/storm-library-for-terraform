@@ -21,10 +21,11 @@ runs:
         deployment="storm-${repo}-${{ inputs.environment }}"
 
         expiries=$(
-          aws s3api list-objects \
+          aws s3api list-objects-v2 \
             --bucket storm-github-terraform-backend \
             --prefix expiries \
-          | jq -r '.Contents[].Key' | grep "${account_id}-${region}-${deployment}"
+            --query 'Contents[].Key' \
+          | grep "${account_id}-${region}-${deployment}"
         )
 
         echo "$expiries"
