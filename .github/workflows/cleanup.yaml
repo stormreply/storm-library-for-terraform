@@ -43,19 +43,18 @@ jobs:
               --query 'Contents[].Key'
           )
 
-          echo $expiries
-
           [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
 
-          echo $expiries
+          echo "1\n$expiries"
 
-          expiries=$(echo $expiries | grep -E "/[0-9]{8}-") # object name must start with datestamp
+          # object name must start with datestamp
+          expiries=$(echo "$expiries" | grep -E "/[0-9]{8}-")
 
-          echo $expiries
+          echo "2\n$expiries"
 
           for e in $expiries ; do
 
-            echo $e
+            echo "3 $e"
 
             file=${e##*/} ; f=${file}
             echo $file
