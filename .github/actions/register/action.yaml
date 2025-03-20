@@ -26,3 +26,4 @@ runs:
         expiry_file="${expiry}-${account_id}-${region}-${deployment}"
         touch ${expiry_file}
         aws s3 cp ${expiry_file} s3://storm-github-terraform-backend/expiries/  # TODO: take bucket name from vars
+        echo "REGISTERED ${expiry_file}"

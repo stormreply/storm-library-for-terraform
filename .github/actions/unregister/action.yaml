@@ -29,10 +29,15 @@ runs:
 
         [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
 
-        expiries=$(echo "${expiries}" | grep "${account_id}-${region}-${deployment}")
+        expiries=$(echo "${expiries}" | grep "${account_id}-${region}-${deployment}") || true
 
-        echo "$expiries"
+        if [ -n "$expiries" ] ; then
+          echo "$expiries"
+        else
+          echo "NO EXPIRIES"
+        fi
 
         for expiry in $expiries ; do
           aws s3 rm s3://storm-github-terraform-backend/${expiry}  # TODO: take bucket name from vars
+          echo "UNREGISTERED ${expiry}"
         done
