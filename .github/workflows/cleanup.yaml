@@ -52,8 +52,6 @@ jobs:
 
           for e in $expiries ; do
 
-            echo "3 $e"
-
             file=${e##*/} ; f=${file}
             date=${f%%-*} ; f=${f##$date-}
             time=${f%%-*} ; f=${f##$time-}
