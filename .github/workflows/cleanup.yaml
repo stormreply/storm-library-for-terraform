@@ -48,7 +48,7 @@ jobs:
           echo -e "1\n$expiries"
 
           # object name must start with datestamp
-          expiries=$(echo "$expiries" | grep -E "/[0-9]{8}-")
+          expiries=$(echo "$expiries" | grep -E "/[0-9]{8}-") || true
 
           echo -e "2\n$expiries"
 
