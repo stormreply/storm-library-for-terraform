@@ -45,22 +45,39 @@ jobs:
 
           [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
 
+          echo -e "1\n$expiries"
+
           # object name must start with datestamp
           expiries=$(echo "$expiries" | grep -E "/[0-9]{8}-")
 
+          echo -e "2\n$expiries"
+
           for e in $expiries ; do
 
+            echo "3 $e"
+
             file=${e##*/} ; f=${file}
+            echo $file
+            echo $f
             date=${f%%-*} ; f=${f##$date-}
+            echo $date
             time=${f%%-*} ; f=${f##$time-}
+            echo $time
             account_id=${f%%-*} ; f=${f##$account_id-}
+            echo $account_id
             region=${f%-${f#*-*-*-}} ; f=${f##$region-}
+            echo $region
             storm=${f%%-*} ; f=${f##$storm-}
             repo=${f%-*}
+            echo $repo
             environment=${f##$repo-}
+            echo $environment
             time="${time:0:2}:${time:2:2}:${time:4:2}"
+            echo $time
             expiry=$(date -d "${date} ${time}" +"%s")
+            echo $expiry
             now=$(date -d now +"%s")
+            echo $now
 
             echo -n "checking ${file}... "
 
