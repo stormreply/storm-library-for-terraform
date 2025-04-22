@@ -37,7 +37,7 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
         repository=${{ github.repository }}
         repo=${repository##*/}
-        echo "item=$(yq '.catalog["${repo}"]' catalog.yaml)" >> $GITHUB_OUTPUT
+        echo "item=$(yq '.catalog["'${repo}'"]' catalog.yaml)" >> $GITHUB_OUTPUT
         rm catalog.yaml
 
     - name: Create Github tfvars
