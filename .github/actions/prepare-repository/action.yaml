@@ -44,11 +44,9 @@ runs:
       id: create-github-tfvars
       shell: bash
       run: |
-        pwd
-        ls -la
         repository=${{ github.repository }}
         repo=${repository##*/}
-        catalog_reference="slt$(cat .catalog_item.yaml | yq .id)"
+        catalog_reference="slt-$(cat .catalog_item.yaml | yq .id)"
         name="${catalog_reference}-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
