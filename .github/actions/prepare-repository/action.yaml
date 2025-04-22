@@ -29,6 +29,8 @@ runs:
       id: create-github-tfvars
       shell: bash
       run: |
+        pwd
+        ls -la
         repository=${{ github.repository }}
         repo=${repository##*/}
         name="storm-${repo}-${{ inputs.environment }}"
