@@ -1,7 +1,19 @@
 catalog :
   lake-formation-demo:
-    id: 4
+    id: 3
     authors: berndherding
     published: 2025-04-22
     description: A quick demo showing AWS Lake Formation using row/column permissions on an s3table
-    public: true
+    public: yes
+  sakila-mysql-rds:
+    id: 2
+    authors: berndherding
+    published: 2025-03-18
+    description: A MySQL RDS containing the sakila database
+    public: yes
+  terraform-build-controller:
+    id: 1
+    authors: berndherding
+    published: 2025-03-18
+    description: An ec2 instance with configurable user data to be used as a build controller
+    public: yes
