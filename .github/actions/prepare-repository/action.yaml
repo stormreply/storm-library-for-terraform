@@ -18,14 +18,29 @@ runs:
       shell: bash
       run: echo "$GITHUB_CONTEXT"
 
-    - uses: actions/create-github-app-token@v1
+    - name: Create Github app token
+      uses: actions/create-github-app-token@v1
       id: app-token
       with:
         app-id: ${{ inputs.terraform_app_id }}
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
-    - name: Create github tfvars
+    - name: Get Storm Library catalog item
+      shell: bash
+      id: catalog-item
+      run: |
+        TOKEN=${{ steps.app-token.outputs.token }}
+        curl \
+          -H "Accept: application/vnd.github.raw" \
+          -o catalog.yaml \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        echo "item=$(yq ".catalog[${repo}]" catalog.yaml)" >> $GITHUB_OUTPUT
+        rm catalog.yaml
+
+    - name: Create Github tfvars
       id: create-github-tfvars
       shell: bash
       run: |
@@ -33,7 +48,8 @@ runs:
         ls -la
         repository=${{ github.repository }}
         repo=${repository##*/}
-        name="storm-${repo}-${{ inputs.environment }}"
+        sli=$(echo "${{steps.catalog-item.outputs.item}}" | yq .index)
+        name="slt${sli}-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
