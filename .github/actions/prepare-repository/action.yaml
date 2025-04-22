@@ -37,7 +37,7 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
         repository=${{ github.repository }}
         repo=${repository##*/}
-        echo "item=$(yq '.catalog["'${repo}'"]' catalog.yaml)" >> $GITHUB_OUTPUT
+        yq '.catalog['${repo}']' catalog.yaml > .catalog_item.yaml
         rm catalog.yaml
 
     - name: Create Github tfvars
@@ -48,7 +48,7 @@ runs:
         ls -la
         repository=${{ github.repository }}
         repo=${repository##*/}
-        catalog_reference="slt$(echo "${{steps.catalog-item.outputs.item}}" | yq .id)"
+        catalog_reference="slt$(cat .catalog_item.yaml | yq .id)"
         name="${catalog_reference}-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
