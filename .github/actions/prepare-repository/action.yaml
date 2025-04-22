@@ -48,7 +48,7 @@ runs:
         ls -la
         repository=${{ github.repository }}
         repo=${repository##*/}
-        catalog_reference="slt$(echo "${{steps.catalog-item.outputs.item}}" | yq .id)""
+        catalog_reference="slt$(echo "${{steps.catalog-item.outputs.item}}" | yq .id)"
         name="${catalog_reference}-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
 
