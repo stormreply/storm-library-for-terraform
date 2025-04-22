@@ -1,5 +1,0 @@
-id: 3
-authors: berndherding
-published: 2025-04-22
-description: A quick demo showing AWS Lake Formation using row/column permissions on an s3table
-public: yes
