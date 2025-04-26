@@ -15,5 +15,5 @@ catalog :
     id: 1
     authors: berndherding
     published: 2025-03-18
-    description: An ec2 instance with configurable user data to be used as a build controller
+    description: An EC2 instance with configurable user data to be used as a build controller
     public: yes

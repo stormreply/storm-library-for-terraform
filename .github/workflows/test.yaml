@@ -52,7 +52,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          tfvars: $${{ inputs.tfvars }}
+          tfvars: ${{ inputs.tfvars }}
 
   apply:
     needs: plan
@@ -86,7 +86,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          tfvars: $${{ inputs.tfvars }}
+          tfvars: ${{ inputs.tfvars }}
 
       - name: Register
         uses: stormreply/terraform-workflow-controller/.github/actions/register@main

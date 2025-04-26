@@ -52,4 +52,4 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          tfvars: $${{ inputs.tfvars }}
+          tfvars: ${{ inputs.tfvars }}

@@ -56,7 +56,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          tfvars: $${{ inputs.tfvars }}
+          tfvars: ${{ inputs.tfvars }}
 
   apply:
     needs: plan
@@ -90,7 +90,7 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
-          tfvars: $${{ inputs.tfvars }}
+          tfvars: ${{ inputs.tfvars }}
 
       - name: Unregister old deployments
         uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
