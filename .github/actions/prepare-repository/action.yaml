@@ -56,7 +56,7 @@ runs:
         catalog_reference="slt-$(cat .catalog_item.yaml | yq .id)"
         name="${catalog_reference}-${repo}"
         [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
-        echo "state_file=${name}.tfstate" >> GITHUB_OUTPUT
+        echo "state_file=${name}.tfstate" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {
