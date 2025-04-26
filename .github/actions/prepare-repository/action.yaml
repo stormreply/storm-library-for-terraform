@@ -8,6 +8,11 @@ inputs:
   terraform_private_key:
     required: true
 
+outputs:
+  state_file:
+    description: Name of the state file
+    value: ${{ steps.create-github-tfvars.outputs.state_file }}
+
 runs:
   using: "composite"
   steps:
@@ -46,9 +51,12 @@ runs:
       run: |
         repository=${{ github.repository }}
         repo=${repository##*/}
-        catalog_reference="slt-$(cat .catalog_item.yaml | yq .id)"
-        name="${catalog_reference}-${repo}-${{ inputs.environment }}"
         echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
+
+        catalog_reference="slt-$(cat .catalog_item.yaml | yq .id)"
+        name="${catalog_reference}-${repo}"
+        [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
+        echo "state_file=${name}.tfstate" >> GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {
@@ -63,6 +71,7 @@ runs:
           time        = "$(date)"
         }
         EOF
+
         cat github.tfvars
 
     - name: Set up access token

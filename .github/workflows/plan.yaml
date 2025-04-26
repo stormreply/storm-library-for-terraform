@@ -13,8 +13,8 @@ on:
         default: 123456789012
       environment:
         type: string
-        required: true
-        default: prod
+        required: false
+        default: ""
       region:
         type: string
         required: true
@@ -50,6 +50,6 @@ jobs:
       - name: Terraform plan
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
-          environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           tfvars: ${{ inputs.tfvars }}
+          tf_state_file: ${{ steps.prepare-repository.outputs.state_file }}
