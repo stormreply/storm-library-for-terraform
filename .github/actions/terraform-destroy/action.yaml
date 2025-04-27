@@ -1,9 +1,9 @@
 name: Terraform destroy
 
 inputs:
-  environment:
-    required: true
   region:
+    required: true
+  tf_state_file:
     required: true
 
 runs:
@@ -21,7 +21,7 @@ runs:
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{ github.repository }}/${{ inputs.environment }}" \
+          -backend-config="key=${{ github.repository }}/${{ inputs.tf_state_file }}" \
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
         ls -la
@@ -36,7 +36,7 @@ runs:
     #     export AWS_PROFILE=backend
 
     #     aws s3 cp \
-    #       s3://storm-github-terraform-backend/${{ github.repository}}/${{ inputs.environment}} \
+    #       s3://storm-github-terraform-backend/${{ github.repository}}/${{ inputs.tf_state_file }} \
     #       terraform.tfstate
 
     #     export AWS_PROFILE=oidc

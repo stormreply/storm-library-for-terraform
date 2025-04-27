@@ -13,8 +13,8 @@ on:
         default: 123456789012
       environment:
         type: string
-        required: true
-        default: prod
+        required: false
+        default: ""
       expires_after:
         type: string
         required: false
@@ -54,10 +54,9 @@ jobs:
       - name: Terraform plan
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
-          environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           tfvars: ${{ inputs.tfvars }}
-
+          tf_state_file: ${{ steps.prepare-repository.outputs.state_file }}
   apply:
     needs: plan
     runs-on: ubuntu-latest
@@ -88,9 +87,9 @@ jobs:
       - name: Terraform apply
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
-          environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           tfvars: ${{ inputs.tfvars }}
+          tf_state_file: ${{ steps.prepare-repository.outputs.state_file }}
 
       - name: Unregister old deployments
         uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
