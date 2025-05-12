@@ -40,7 +40,8 @@ runs:
         aws sso login --no-browser > login-output.txt &
         pid=$!
         echo PID=${pid}
-        sleep 1
+        sleep 5
+        ls -la
         cat login-output.txt
         while [ -n "$(ps -p ${pid} -o pid=)" ];
         do
