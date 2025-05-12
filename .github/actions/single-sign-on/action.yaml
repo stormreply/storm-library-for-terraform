@@ -22,15 +22,19 @@ runs:
 
         cd ${{ github.action_path }}
         mkdir -p ${HOME}/.aws
+        ls -la ${HOME}/.aws
+
         cat << EOF >> ${HOME}/.aws/config
         [profile default]
         sso_region=${{ inputs.region }}
         sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
         EOF
+        cat ${HOME}/.aws/config
 
         aws sso login --no-browser > login-output.txt &
         pid=$!
         sleep 1
+        cat login-output.txt
         while [ -n "$(ps -p ${pid} -o pid=)" ];
         do
           cat login-output.txt | grep "?user_code="
