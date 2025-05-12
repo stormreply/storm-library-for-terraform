@@ -1,0 +1,22 @@
+name: Bootstrap
+
+on:
+  workflow_call:
+    inputs:
+      access_domain:
+        required: true
+        default: storm-unity
+      region:
+        required: false
+        default: eu-central-1
+
+jobs:
+
+  sso:
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Single-sign-on
+        uses: stormreply/terraform-workflow-controller/.github/actions/single-sign-on@main

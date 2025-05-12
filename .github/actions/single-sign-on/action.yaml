@@ -1,0 +1,43 @@
+name: Single-sign-On
+
+inputs:
+  access_domain:
+    required: true
+    default: storm-unity
+  region:
+    required: false
+    default: eu-central-1
+outputs:
+  token:
+    value:  ${{ steps.sso.outputs.ACCESS_TOKEN }}
+
+runs:
+  using: composite
+  steps:
+
+    - name: aws sso login
+      shell: bash
+      id: sso
+      run: |
+
+        cat << EOF >> ~/.aws/config
+        [profile default]
+        sso_region=${{ inputs.region }}
+        sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
+        EOF
+
+        aws sso login --no-browser > login-output.txt &
+        pid=$!
+        sleep 1
+        while [ -n "$(ps -p ${pid} -o pid=)" ];
+        do
+          cat login-output.txt | grep "?user_code="
+          sleep 5
+        done
+
+        ls -la ${HOME}/.aws/sso/cache/*.json
+        cat ${HOME}/.aws/sso/cache/*.json
+
+        export "ACCESS_TOKEN=$(jq -r '. | select(.accessToken != null) | .accessToken' ${HOME}/.aws/sso/cache/*.json)"
+        echo "ACCESS_TOKEN=${ACCESS_TOKEN}"
+        echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> $GITHUB_OUTPUT
