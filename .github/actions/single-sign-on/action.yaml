@@ -27,32 +27,22 @@ runs:
 
         cd ${{ github.action_path }}
         mkdir -p ${HOME}/.aws
-        ls -la ${HOME}/.aws
 
         cat << EOF >> ${HOME}/.aws/config
         [profile default]
         sso_region=${{ inputs.region }}
         sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
         EOF
-        cat ${HOME}/.aws/config
-
 
         aws sso login --no-browser > login-output.txt &
         pid=$!
-        echo PID=${pid}
         while [ ! -f login-output.txt ]; do
-          ls -la
           sleep 1
         done
-        cat login-output.txt
         while [ -n "$(ps -p ${pid} -o pid=)" ]; do
           cat login-output.txt | grep "?user_code=" || true
           sleep 5
         done
 
-        ls -la ${HOME}/.aws/sso/cache/*.json
-        cat ${HOME}/.aws/sso/cache/*.json
-
         export "ACCESS_TOKEN=$(jq -r '. | select(.accessToken != null) | .accessToken' ${HOME}/.aws/sso/cache/*.json)"
-        echo "ACCESS_TOKEN=${ACCESS_TOKEN}"
         echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> $GITHUB_OUTPUT
