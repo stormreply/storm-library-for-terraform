@@ -46,7 +46,7 @@ runs:
         done
         cat login-output.txt
         while [ -n "$(ps -p ${pid} -o pid=)" ]; do
-          cat login-output.txt | grep "?user_code="
+          cat login-output.txt | grep "?user_code=" 2> /dev/null
           sleep 5
         done
 
