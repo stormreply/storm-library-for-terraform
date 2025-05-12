@@ -20,7 +20,9 @@ runs:
       id: sso
       run: |
 
-        cat << EOF >> ~/.aws/config
+        cd ${{ github.action_path }}
+        mkdir -p ${HOME}/.aws
+        cat << EOF >> ${HOME}/.aws/config
         [profile default]
         sso_region=${{ inputs.region }}
         sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
