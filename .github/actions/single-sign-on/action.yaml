@@ -15,6 +15,10 @@ runs:
   using: composite
   steps:
 
+    - name: Check AWS CLI version
+      run: aws --version
+
+
     - name: aws sso login
       shell: bash
       id: sso
@@ -30,6 +34,7 @@ runs:
         sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
         EOF
         cat ${HOME}/.aws/config
+
 
         aws sso login --no-browser > login-output.txt &
         pid=$!
