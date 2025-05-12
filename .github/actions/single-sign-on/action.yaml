@@ -16,6 +16,7 @@ runs:
   steps:
 
     - name: Check AWS CLI version
+      shell: bash
       run: aws --version
 
 
