@@ -16,20 +16,31 @@ jobs:
 
   sso:
     runs-on: ubuntu-latest
+    outputs:
+      access_token: ${{ steps.sso.outputs.access_token }}
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Single sign on
+        id: sso
         uses: stormreply/terraform-workflow-controller/.github/actions/single-sign-on@main
+        with:
+          access_domain: ${{ inputs.access_domain }}
+          region: ${{ inputs.region }}
 
   oidc:
+    needs: sso
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create OIDC
-        uses: stormreply/terraform-workflow-controller/.github/actions/create-oidc@main
+      - name: Get role credentials
+        uses: stormreply/terraform-workflow-controller/.github/actions/get-role-credentials@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+          access_token: ${{ needs.sso.outputs.access_token }}

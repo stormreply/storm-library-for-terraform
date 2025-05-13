@@ -3,10 +3,8 @@ name: Single sign on
 inputs:
   access_domain:
     required: true
-    default: storm-unity
   region:
     required: false
-    default: eu-central-1
 outputs:
   access_token:
     value:  ${{ steps.sso.outputs.ACCESS_TOKEN }}
