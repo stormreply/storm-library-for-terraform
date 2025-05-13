@@ -34,8 +34,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare repository
-        uses: stormreply/terraform-workflow-controller/.github/actions/prepare-repository@main
-        id: prepare-repository
+        uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
+        id: prepare
         with:
           environment: ${{ inputs.environment }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
@@ -51,7 +51,7 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
         with:
           region: ${{ inputs.region }}
-          tf_state_file: ${{ steps.prepare-repository.outputs.state_file }}
+          tf_state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unregister old deployments
         uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
