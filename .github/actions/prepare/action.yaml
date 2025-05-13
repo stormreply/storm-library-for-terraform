@@ -14,7 +14,7 @@ outputs:
     value: ${{ steps.create-github-tfvars.outputs.state_file }}
 
 runs:
-  using: "composite"
+  using: composite
   steps:
 
     - name: Dump GitHub context

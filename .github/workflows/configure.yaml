@@ -1,4 +1,4 @@
-name: Bootstrap
+name: Configure
 
 on:
   workflow_dispatch:
@@ -6,6 +6,8 @@ on:
       access_domain:
         required: true
         default: storm-unity
+      account_id:
+        required: true
       region:
         required: false
         default: eu-central-1
@@ -19,5 +21,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Single-sign-on
+      - name: Single sign on
         uses: stormreply/terraform-workflow-controller/.github/actions/single-sign-on@main
+
+  oidc:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create OIDC
+        uses: stormreply/terraform-workflow-controller/.github/actions/create-oidc@main

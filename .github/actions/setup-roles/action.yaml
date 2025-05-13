@@ -7,19 +7,17 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: composite
   steps:
 
     - name: Assume gh-terraform-backend-role
       uses: aws-actions/configure-aws-credentials@v4
-      # if: ${{ env.tf_local_backend == 'false' }}
       with:
         aws-region: ${{inputs.region}}
         role-session-name: GitHubBackendSession
         role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/gh-terraform-backend-role
 
     - name: Configure gh-terraform-backend-role
-      # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
         aws configure set profile.backend.region ${{ inputs.region }}

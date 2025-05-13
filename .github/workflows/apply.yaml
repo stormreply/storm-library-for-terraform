@@ -57,6 +57,7 @@ jobs:
           region: ${{ inputs.region }}
           tfvars: ${{ inputs.tfvars }}
           tf_state_file: ${{ steps.prepare.outputs.state_file }}
+
   apply:
     needs: plan
     runs-on: ubuntu-latest

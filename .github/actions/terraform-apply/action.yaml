@@ -9,7 +9,7 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: composite
   steps:
 
     - name: Download tfplan
@@ -21,8 +21,6 @@ runs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform init with S3 backend
-      # working-directory: ${{ env.tf_working_dir != '' && env.tf_working_dir || env.GITHUB_WORKSPACE }}
-      # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
         # TODO: bootstrap repo and retrieve bucket from vars
