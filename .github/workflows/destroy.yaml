@@ -37,16 +37,11 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
+          account_id: ${{ inputs.account_id }}
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-
-      - name: AWS configure
-        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
-        with:
-          account_id: ${{ inputs.account_id }}
-          region: ${{ inputs.region }}
 
       - name: Terraform destroy
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main

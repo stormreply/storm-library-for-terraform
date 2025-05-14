@@ -1,6 +1,8 @@
 name: Prepare
 
 inputs:
+  account_id:
+    required: true
   environment:
     required: false
   region:
@@ -116,7 +118,7 @@ runs:
       if: inputs.use_oidc == 'true'
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: ${{inputs.region}}
+        aws-region: ${{ inputs.region }}
         role-session-name: TerraformBackendSession
         role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.backend_role }}
 
