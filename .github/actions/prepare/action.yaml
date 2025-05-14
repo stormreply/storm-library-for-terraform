@@ -113,7 +113,7 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/backend.tf
 
     - name: Assume terraform backend role
-      if: inputs.oidc
+      if: inputs.use_oidc
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{inputs.region}}
