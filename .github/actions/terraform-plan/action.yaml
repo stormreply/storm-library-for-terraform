@@ -1,6 +1,8 @@
 name: Terraform plan
 
 inputs:
+  account_id:
+    required: true
   region:
     required: true
   tfvars:
@@ -22,7 +24,7 @@ runs:
       run: |
         git config --list --show-origin
         terraform init \
-          -backend-config="bucket=storm-github-terraform-backend" \
+          -backend-config="bucket=slt-${{ inputs.account_id }}" \
           -backend-config="profile=backend" \
           -backend-config="key=${{ github.repository }}/${{ inputs.tf_state_file }}" \
           -backend-config="region=${{ inputs.region }}" \
