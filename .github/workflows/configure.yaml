@@ -45,3 +45,11 @@ jobs:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
           access_token: ${{ needs.sso.outputs.access_token }}
+
+      - name: Create resources
+        shell: bash
+        run: |
+          aws sts get-caller-identity
+      # - name: Create Terraform backend role
+      # - name: Create Terraform deployment role
+      # - name: Create OIDC provider
