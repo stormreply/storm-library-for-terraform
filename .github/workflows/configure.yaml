@@ -57,7 +57,11 @@ jobs:
       - name: Check SLT bucket
         shell: bash
         run: |
-          aws s3api create-bucket --bucket slt-${{ inputs.account_id }} --region ${{ inputs.region }} || true
+          aws s3api create-bucket \
+            --bucket storm-library-for-terraform-${{ inputs.account_id }} \
+            --region ${{ inputs.region }} \
+            --create-bucket-configuration LocationConstraint=${{ inputs.region }} \
+          || true
 
       - name: Setup AWS credentials
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
@@ -81,7 +85,7 @@ jobs:
       - name: Terraform plan
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
-          account_id: ${{ inputs.account_id }}
+          bucket: storm-library-for-terraform-${{ inputs.account_id }}
           region: ${{ inputs.region }}
           tf_state_file: ${{ steps.prepare.outputs.state_file }}
 
