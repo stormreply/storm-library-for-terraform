@@ -57,7 +57,7 @@ jobs:
       - name: Check SLT bucket
         shell: bash
         run: |
-          aws s3api create-bucket --bucket slt-${{ inputs.account_id }} || true
+          aws s3api create-bucket --bucket slt-${{ inputs.account_id }} --region ${{ inputs.region }} || true
 
       - name: Setup AWS credentials
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
