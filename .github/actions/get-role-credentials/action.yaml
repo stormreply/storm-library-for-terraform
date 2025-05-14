@@ -16,14 +16,16 @@ runs:
     - name: Export all AWS credentials as environment variables
       shell: bash
       run: |
-        echo "login into account ${{ inputs.account_id }} with role ${{ inputs.role }}"
+        echo "login into account ${{ inputs.account_id }} with role ${{ inputs.role_name }}"
+
+        echo "::add-mask::${{ inputs.access_token }}"
 
         CREDENTIALS=$(
           aws sso get-role-credentials \
             --account-id ${{ inputs.account_id }} \
             --region ${{ inputs.region }} \
             --role-name ${{ inputs.role_name }} \
-            --access-token ${{ inputs.access_token }}
+            --access-token '${{ inputs.access_token }}'
         )
 
         # echo "::add-mask::$AWS_ACCESS_KEY_ID"
