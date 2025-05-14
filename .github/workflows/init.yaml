@@ -54,7 +54,7 @@ jobs:
           region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          use_oidc: false
+          use_oidc: "false"
 
       - name: Check SLT bucket
         shell: bash
