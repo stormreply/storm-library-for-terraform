@@ -26,12 +26,12 @@ jobs:
       - name: Authenticate
         run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
 
-      - name: AWS configure
-        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
-        with:
-          # TODO:
-          account_id: 123456789012
-          region: eu-central-1
+      # - name: AWS configure
+      #   uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
+      #   with:
+      #     # TODO: why would i need this block at all?
+      #     account_id: 123456789012
+      #     region: eu-central-1
 
       - name: Check expired
         shell: bash
