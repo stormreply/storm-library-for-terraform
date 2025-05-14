@@ -31,8 +31,8 @@ runs:
         unset AWS_SESSION_TOKEN
         unset AWS_ACCESS_KEY_ID
 
-        export AWS_PROFILE=oidc
-        echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
+        export AWS_PROFILE=deployment
+        echo "AWS_PROFILE=deployment" >> $GITHUB_ENV
 
         terraform version
         terraform destroy \

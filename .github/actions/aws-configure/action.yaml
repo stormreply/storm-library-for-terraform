@@ -40,7 +40,7 @@ runs:
     - name: Configure terraform-deployment-role
       shell: bash
       run: |
-        aws configure set profile.oidc.region ${{ inputs.region }}
-        aws configure set profile.oidc.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
-        aws configure set profile.oidc.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
-        aws configure set profile.oidc.aws_session_token $(echo ${AWS_SESSION_TOKEN})
+        aws configure set profile.deployment.region ${{ inputs.region }}
+        aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+        aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+        aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})
