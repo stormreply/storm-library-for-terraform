@@ -26,7 +26,7 @@ jobs:
       - name: Authenticate
         run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
 
-      - name: Setup roles
+      - name: AWS configure
         uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           # TODO:

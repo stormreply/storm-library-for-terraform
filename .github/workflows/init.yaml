@@ -42,9 +42,10 @@ jobs:
       - name: Get role credentials
         uses: stormreply/terraform-workflow-controller/.github/actions/get-role-credentials@main
         with:
+          access_token: ${{ needs.sso.outputs.access_token }}
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
-          access_token: ${{ needs.sso.outputs.access_token }}
+          role_name: AdministratorAccess
 
       - name: Prepare
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
@@ -67,7 +68,7 @@ jobs:
           bucket = "${BUCKET}"
           EOF
 
-      - name: Setup AWS credentials
+      - name: AWS configure
         uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           account_id: ${{ inputs.account_id }}

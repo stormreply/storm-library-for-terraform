@@ -6,14 +6,14 @@ inputs:
   region:
     required: true
   role_name:
-    default: AdministratorAccess
+    required: true
   access_token:
     required: true
 
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Export all AWS credentials as environment variables
+    - name: Export AWS environment variables
       shell: bash
       run: |
         echo "login into account ${{ inputs.account_id }} with role ${{ inputs.role_name }}"
