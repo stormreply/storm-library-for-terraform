@@ -75,11 +75,6 @@ jobs:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
 
-      # - name: Check identity
-      #   shell: bash
-      #   run: |
-      #     aws sts get-caller-identity
-
       - name: Terraform plan
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
@@ -88,6 +83,10 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
 
-      # - name: Create Terraform backend role
-      # - name: Create Terraform deployment role
-      # - name: Create OIDC provider
+      - name: Terraform apply
+        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
+        with:
+          bucket: storm-library-for-terraform-${{ inputs.account_id }}
+          region: ${{ inputs.region }}
+          state_file: ${{ steps.prepare.outputs.state_file }}
+          var_file: init.tfvars
