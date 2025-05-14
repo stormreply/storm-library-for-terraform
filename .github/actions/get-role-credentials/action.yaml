@@ -18,6 +18,7 @@ runs:
       run: |
         echo "login into account ${{ inputs.account_id }} with role ${{ inputs.role_name }}"
 
+        # TODO: fix masking or write to .env before and take from .env here
         echo "::add-mask::${{ inputs.access_token }}"
 
         CREDENTIALS=$(
@@ -29,12 +30,17 @@ runs:
         )
 
         # echo "::add-mask::$AWS_ACCESS_KEY_ID"
-        # echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
-        # echo "::add-mask::$AWS_SESSION_TOKEN"
+        echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
+        echo "::add-mask::$AWS_SESSION_TOKEN"
 
         export AWS_ACCESS_KEY_ID=$(echo $CREDENTIALS | yq '.roleCredentials.accessKeyId')
         export AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIALS | yq '.roleCredentials.secretAccessKey')
         export AWS_SESSION_TOKEN=$(echo $CREDENTIALS | yq '.roleCredentials.sessionToken')
+
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+        echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
+        echo "AWS_DEFAULT_REGION=${{ inputs.region }}"
 
         echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
