@@ -5,6 +5,7 @@ inputs:
     required: true
   region:
     required: false
+
 outputs:
   access_token:
     value:  ${{ steps.sso.outputs.ACCESS_TOKEN }}
