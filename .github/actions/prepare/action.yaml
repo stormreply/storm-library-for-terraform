@@ -3,6 +3,8 @@ name: Prepare
 inputs:
   environment:
     required: false
+  region:
+    required: true
   terraform_app_id:
     required: true
   terraform_private_key:
