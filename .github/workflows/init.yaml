@@ -1,4 +1,4 @@
-name: Configure
+name: Init
 
 on:
   workflow_dispatch:
