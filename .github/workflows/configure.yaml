@@ -8,6 +8,7 @@ on:
         default: storm-unity
       account_id:
         required: true
+        default: 123456789012
       region:
         required: false
         default: eu-central-1
