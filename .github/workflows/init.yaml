@@ -66,6 +66,8 @@ jobs:
           cat << EOF >> init.tfvars
           bucket = "${BUCKET}"
           EOF
+          ls -la
+          cat init.tfvars
 
       - name: Setup AWS credentials
         uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
