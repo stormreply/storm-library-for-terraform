@@ -17,3 +17,9 @@ catalog :
     published: 2025-03-18
     description: An EC2 instance with configurable user data to be used as a build controller
     public: yes
+  terraform-workflow-controller:
+    id: 0
+    authors: berndherding
+    published: 2025-03-18
+    description: The central workflow controller repository for the Storm Library for Terraform
+    public: yes
