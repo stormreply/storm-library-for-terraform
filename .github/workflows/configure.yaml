@@ -69,13 +69,6 @@ jobs:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
 
-      # - name: Terraform apply
-      #   uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
-      #   with:
-      #     region: ${{ inputs.region }}
-      #     tfvars: ${{ inputs.tfvars }}
-      #     tf_state_file: ${{ steps.prepare.outputs.state_file }}
-
       - name: Create resources
         shell: bash
         run: |

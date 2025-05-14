@@ -14,8 +14,6 @@ runs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform init with S3 backend
-      # working-directory: ${{ env.tf_working_dir != '' && env.tf_working_dir || env.GITHUB_WORKSPACE }}
-      # if: ${{ env.tf_local_backend == 'false' }}
       shell: bash
       run: |
         terraform init \
@@ -25,21 +23,6 @@ runs:
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
         ls -la
-
-    # - name: Download Terraform State
-    #   shell:
-    #   run: |
-    #     unset AWS_SECRET_ACCESS_KEY
-    #     unset AWS_SESSION_TOKEN
-    #     unset AWS_ACCESS_KEY_ID
-
-    #     export AWS_PROFILE=backend
-
-    #     aws s3 cp \
-    #       s3://storm-github-terraform-backend/${{ github.repository}}/${{ inputs.tf_state_file }} \
-    #       terraform.tfstate
-
-    #     export AWS_PROFILE=oidc
 
     - name: Terraform destroy
       shell: bash

@@ -89,11 +89,11 @@ runs:
           -o providers.tf \
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
 
-    - name: Download terraform.tf
+    - name: Download backend.tf
       shell: bash
       run: |
         TOKEN=${{ steps.app-token.outputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
-          -o terraform.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/terraform.tf
+          -o backend.tf \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/backend.tf
