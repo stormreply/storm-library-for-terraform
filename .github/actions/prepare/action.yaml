@@ -69,8 +69,8 @@ runs:
         [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
         echo "state_file=${name}.tfstate" >> $GITHUB_OUTPUT
 
-        echo "backend_role=${name}-terraform-backend" >> $GITHUB_OUTPUT
-        echo "deployment_role=${name}-terraform-deployment" >> $GITHUB_OUTPUT
+        echo "backend_role=slt-0-terraform-workflow-controller-terraform-backend" >> $GITHUB_OUTPUT
+        echo "deployment_role=slt-0-terraform-workflow-controller-terraform-deployment" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {
