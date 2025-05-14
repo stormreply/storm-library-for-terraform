@@ -41,7 +41,7 @@ runs:
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
         tfvars=github.tfvars
-        [-n "${{ inputs.var_file}}"] && tfvars="${{ inputs.var_file}} $tfvars"
+        [ -n "${{ inputs.var_file}}" ] && tfvars="${{ inputs.var_file}} $tfvars"
 
         terraform version
         terraform plan \
