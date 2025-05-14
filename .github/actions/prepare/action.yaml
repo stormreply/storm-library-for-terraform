@@ -1,4 +1,4 @@
-name: Prepare repository
+name: Prepare
 
 inputs:
   environment:

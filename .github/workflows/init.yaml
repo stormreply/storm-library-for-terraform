@@ -31,7 +31,7 @@ jobs:
           access_domain: ${{ inputs.access_domain }}
           region: ${{ inputs.region }}
 
-  oidc:
+  init:
     needs: sso
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
           region: ${{ inputs.region }}
           access_token: ${{ needs.sso.outputs.access_token }}
 
-      - name: Prepare repository
+      - name: Prepare
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
@@ -66,11 +66,9 @@ jobs:
           cat << EOF >> init.tfvars
           bucket = "${BUCKET}"
           EOF
-          ls -la
-          cat init.tfvars
 
       - name: Setup AWS credentials
-        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}

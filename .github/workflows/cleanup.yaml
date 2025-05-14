@@ -27,7 +27,7 @@ jobs:
         run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
 
       - name: Setup roles
-        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           # TODO:
           account_id: 123456789012

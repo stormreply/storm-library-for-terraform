@@ -33,7 +33,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare repository
+      - name: Prepare
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
@@ -42,7 +42,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Setup roles
-        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
@@ -67,7 +67,7 @@ jobs:
         with:
           name: tfplan
 
-      - name: Prepare repository
+      - name: Prepare
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
@@ -76,7 +76,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Setup roles
-        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}
@@ -105,7 +105,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare repository
+      - name: Prepare
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
@@ -114,7 +114,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Setup roles
-        uses: stormreply/terraform-workflow-controller/.github/actions/setup-roles@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
         with:
           account_id: ${{ inputs.account_id }}
           region: ${{ inputs.region }}

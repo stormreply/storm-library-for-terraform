@@ -1,5 +1,4 @@
-name: Setup roles
-# TODO: Setup AWS config file would be more appropriate name
+name: AWS configure
 inputs:
   account_id:
     required: true
