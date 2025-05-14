@@ -2,7 +2,7 @@ name: Prepare
 
 inputs:
   environment:
-    required: true
+    required: false
   terraform_app_id:
     required: true
   terraform_private_key:
