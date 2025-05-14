@@ -5,9 +5,9 @@ inputs:
     required: true
   region:
     required: true
-  tfvars:
+  state_file:
     required: true
-  tf_state_file:
+  var_file:
     required: true
 
 runs:
@@ -26,7 +26,7 @@ runs:
         terraform init \
           -backend-config="bucket=${{ inputs.bucket }}" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{ github.repository }}/${{ inputs.tf_state_file }}" \
+          -backend-config="key=${{ github.repository }}/${{ inputs.state_file }}" \
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
 
@@ -41,7 +41,7 @@ runs:
         echo "AWS_PROFILE=oidc" >> $GITHUB_ENV
 
         tfvars=github.tfvars
-        [-n "${{ inputs.tfvars }}"] && tfvars="${{ inputs.tfvars }} $tfvars"
+        [-n "${{ inputs.var_file}}"] && tfvars="${{ inputs.var_file}} $tfvars"
 
         terraform version
         terraform plan \

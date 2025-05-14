@@ -19,7 +19,7 @@ on:
         type: string
         required: true
         default: eu-central-1
-      tfvars:
+      var_file:
         type: string
         required: false
         default: ""
@@ -51,7 +51,7 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
         with:
           region: ${{ inputs.region }}
-          tf_state_file: ${{ steps.prepare.outputs.state_file }}
+          state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unregister old deployments
         uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main

@@ -19,7 +19,7 @@ on:
         type: string
         required: true
         default: eu-central-1
-      tfvars:
+      var_file:
         type: string
         required: false
         default: ""
@@ -51,5 +51,5 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
           region: ${{ inputs.region }}
-          tfvars: ${{ inputs.tfvars }}
-          tf_state_file: ${{ steps.prepare.outputs.state_file }}
+          state_file: ${{ steps.prepare.outputs.state_file }}
+          var_file: ${{ inputs.var_file}}

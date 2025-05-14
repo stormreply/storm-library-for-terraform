@@ -3,7 +3,7 @@ name: Terraform destroy
 inputs:
   region:
     required: true
-  tf_state_file:
+  state_file:
     required: true
 
 runs:
@@ -19,7 +19,7 @@ runs:
         terraform init \
           -backend-config="bucket=storm-github-terraform-backend" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{ github.repository }}/${{ inputs.tf_state_file }}" \
+          -backend-config="key=${{ github.repository }}/${{ inputs.state_file }}" \
           -backend-config="region=${{ inputs.region }}" \
           -backend-config="use_lockfile=true"
         ls -la
