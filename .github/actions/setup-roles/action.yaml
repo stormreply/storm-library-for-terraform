@@ -6,17 +6,16 @@ inputs:
   region:
     required: true
   backend_role:
-    required: true
-    default: AdministratorAccess
+    required: false
   deployment_role:
-    required: true
-    default: AdministratorAccess
+    required: false
 
 runs:
   using: composite
   steps:
 
     - name: Assume terraform backend role
+      if: inputs.backend_role == ''
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{inputs.region}}
@@ -32,6 +31,7 @@ runs:
         aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
 
     - name: Assume terraform deployment role
+      if: inputs.deployment_role == ''
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ inputs.region }}
