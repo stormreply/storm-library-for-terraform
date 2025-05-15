@@ -1,0 +1,20 @@
+name: Get state file
+
+inputs:
+  deployment_name:
+    required: true
+
+outputs:
+  state_file:
+    value: ${{ steps.get-state-file.outputs.state_file }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get state file
+      id: get-state-file
+      shell: bash
+      run: |
+        state_file="${{ inputs.deployment_name }}.tfstate"
+        echo "state_file=${state_file}"
+        echo "state_file=${state_file}" >> $GITHUB_OUTPUT

@@ -1,0 +1,24 @@
+name: Get deployment name
+
+inputs:
+  environment:
+    required: true
+
+outputs:
+  name:
+    value: ${{ steps.get-deployment-name.outputs.name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get deployment name
+      id: get-deployment-name
+      shell: bash
+      run: |
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        catalog_reference="slt-$(cat catalog_item.yaml | yq .id)"
+        name="${catalog_reference}-${repo}"
+        [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
+        echo "name=${name}"
+        echo "name=${name}" >> $GITHUB_OUTPUT

@@ -1,0 +1,38 @@
+name: Auto Destroy
+
+permissions:
+  contents: read
+  id-token: write
+
+on:
+  schedule:
+    - cron: "17 */4 * * *"  # run once every 4 hours
+    # - cron: "*/3 * * * *"
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Create app token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.TERRAFORM_APP_ID }}
+          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Authenticate
+        run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
+
+      - name: AWS configure
+        uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
+        with:
+          account_id: 123456789012
+          region: eu-central-1
+          backend_role: slt-0-terraform-workflow-controller-backend
+          deployment_role: slt-0-terraform-workflow-controller-deployment
+
+      - name: Run destroy
+        uses: stormreply/terraform-workflow-controller/.github/actions/run-destroy@main

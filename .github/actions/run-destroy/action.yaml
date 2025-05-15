@@ -1,0 +1,55 @@
+name: Run destroy
+
+
+runs:
+  using: composite
+  steps:
+
+    - name: Run destroy
+      shell: bash
+      run: |
+
+        # TODO: find way to configure/identify bucket name, most prob from gh vars
+        timestamps=$(
+          aws s3api list-objects-v2 \
+            --bucket storm-library-for-terraform-123456789012 \
+            --prefix schedule \
+            --query 'Contents[].Key'
+        )
+
+        [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
+
+        # object name must start with datestamp. if none does, continue (true)
+        timestamps=$(echo "$timestamps" | grep -E "/[0-9]{8}-") || true
+
+        [ -z "$timestamps" ] && echo "No timestamps found."
+
+        for e in $timestamps ; do
+
+          file=${e##*/} ; f=${file}
+          date=${f%%-*} ; f=${f##$date-}
+          time=${f%%-*} ; f=${f##$time-}
+          account_id=${f%%-*} ; f=${f##$account_id-}
+          region=${f%-${f#*-*-*-}} ; f=${f##$region-}
+          storm=${f%%-*} ; f=${f##$storm-}
+          repo=${f%-*}
+          environment=${f##$repo-}
+          time="${time:0:2}:${time:2:2}:${time:4:2}"
+          expiry=$(date -d "${date} ${time}" +"%s")
+          now=$(date -d now +"%s")
+
+          echo -n "checking ${file}... "
+
+          if [ ${expiry} -lt ${now} ] ; then
+            echo "EXPIRED"
+            gh workflow run destroy.yaml \
+              --repo stormreply/${repo} \
+              -f account_id=${account_id} \
+              -f environment=${environment} \
+              -f region=${region} \
+            & # TODO: handle "stormreply"
+          else
+            echo "ok"
+          fi
+
+        done

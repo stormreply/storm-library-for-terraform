@@ -18,10 +18,10 @@ inputs:
 outputs:
   bucket:
     description: Central administration bucket
-    value: ${{ steps.create-vars.outputs.bucket }}
+    value: ${{ steps.get-bucket-name.outputs.bucket }}
   state_file:
     description: Name of the state file
-    value: ${{ steps.create-vars.outputs.state_file }}
+    value: ${{ steps.get-state-file.outputs.state_file }}
 
 runs:
   using: composite
@@ -34,60 +34,12 @@ runs:
       run: echo "$GITHUB_CONTEXT"
 
     - name: Create Github app token
-      uses: actions/create-github-app-token@v1
       id: app-token
+      uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ inputs.terraform_app_id }}
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
-
-    - name: Get Storm Library catalog item
-      shell: bash
-      id: catalog-item
-      run: |
-        TOKEN=${{ steps.app-token.outputs.token }}
-        curl \
-          -H "Accept: application/vnd.github.raw" \
-          -o catalog.yaml \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
-        rm catalog.yaml
-
-    - name: Create variables
-      id: create-vars
-      shell: bash
-      run: |
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        # echo "repository=${{ github.repository }}" >> $GITHUB_OUTPUT
-
-        catalog_reference="slt-$(cat catalog_item.yaml | yq .id)"
-        name="${catalog_reference}-${repo}"
-        [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
-        echo "state_file=${name}.tfstate" >> $GITHUB_OUTPUT
-        # TODO: check if needed
-        echo "backend_role=slt-0-terraform-workflow-controller-backend" >> $GITHUB_OUTPUT
-        echo "deployment_role=slt-0-terraform-workflow-controller-deployment" >> $GITHUB_OUTPUT
-
-        echo "bucket=storm-library-for-terraform-${{ inputs.account_id }}" >> $GITHUB_OUTPUT
-
-        cat << EOF >> github.tfvars
-        deployment = {
-          actor       = "${{ github.actor }}"
-          environment = "${{ inputs.environment }}"
-          name        = "${name}"
-          ref         = "${{ github.ref }}"
-          ref_name    = "${{ github.ref_name }}"
-          repo        = "${repo}"
-          repository  = "${{ github.repository }}"
-          sha         = "${{ github.sha }}"
-          time        = "$(date)"
-        }
-        EOF
-
-        cat github.tfvars
 
     - name: Set up access token
       shell: bash
@@ -113,6 +65,61 @@ runs:
           -o backend.tf \
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/backend.tf
 
+    - name: Get Storm Library catalog item
+      shell: bash
+      id: catalog-item
+      run: |
+        TOKEN=${{ steps.app-token.outputs.token }}
+        curl \
+          -H "Accept: application/vnd.github.raw" \
+          -o catalog.yaml \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
+        rm catalog.yaml
+
+    - name: Get bucket name
+      id: get-bucket-name
+      uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
+      with:
+        account_id: ${{ inputs.account_id }}
+
+    - name: Get deployment name
+      id: get-deployment-name
+      uses: stormreply/terraform-workflow-controller/.github/actions/get-deployment-name@main
+      with:
+        environment: ${{ inputs.environment }}
+
+    - name: Get state file
+      id: get-state-file
+      uses: stormreply/terraform-workflow-controller/.github/actions/get-state-file@main
+      with:
+        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
+
+    - name: Create deployment variables
+      shell: bash
+      run: |
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        deployment_name=${{ steps.get-deployment-name.outputs.name }}
+
+        cat << EOF >> github.tfvars
+        deployment = {
+          actor       = "${{ github.actor }}"
+          environment = "${{ inputs.environment }}"
+          name        = "${deployment_name}"
+          ref         = "${{ github.ref }}"
+          ref_name    = "${{ github.ref_name }}"
+          repo        = "${repo}"
+          repository  = "${{ github.repository }}"
+          sha         = "${{ github.sha }}"
+          time        = "$(date)"
+        }
+        EOF
+
+        cat github.tfvars
+
     - name: AWS configure
       uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
       with:
@@ -121,35 +128,3 @@ runs:
         backend_role: slt-0-terraform-workflow-controller-backend
         deployment_role: slt-0-terraform-workflow-controller-deployment
         use_oidc: ${{ inputs.use_oidc }}
-
-    # - name: Assume terraform backend role
-    #   if: inputs.use_oidc == 'true'
-    #   uses: aws-actions/configure-aws-credentials@v4
-    #   with:
-    #     aws-region: ${{ inputs.region }}
-    #     role-session-name: TerraformBackendSession
-    #     role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.backend_role }}
-
-    # - name: Configure terraform backend role
-    #   shell: bash
-    #   run: |
-    #     aws configure set profile.backend.region ${{ inputs.region }}
-    #     aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
-    #     aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
-    #     aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
-
-    # - name: Assume terraform deployment role
-    #   if: inputs.use_oidc == 'true'
-    #   uses: aws-actions/configure-aws-credentials@v4
-    #   with:
-    #     aws-region: ${{ inputs.region }}
-    #     role-session-name: TerraformDeploymentSession
-    #     role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.deployment_role }}
-
-    # - name: Configure terraform deployment role
-    #   shell: bash
-    #   run: |
-    #     aws configure set profile.deployment.region ${{ inputs.region }}
-    #     aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
-    #     aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
-    #     aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})

@@ -11,34 +11,40 @@ inputs:
 runs:
   using: composite
   steps:
+  
+    - name: Get bucket name
+      id: get-bucket-name
+      uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
+      with:
+        account_id: ${{ inputs.account_id }}
+
     - name: Unregister expiry
       shell: bash
       run: |
-        # TODO: find way to configure/identify buucket name, most prob from gh vars
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment="storm-${repo}-${{ inputs.environment }}"
 
-        expiries=$(
+        timestamps=$(
           aws s3api list-objects-v2 \
-            --bucket storm-library-for-terraform-123456789012 \
+            --bucket ${{ steps.get-bucket-name.outputs.bucket }} \
             --prefix schedule \
             --query 'Contents[].Key'
         )
 
-        [ "${expiries}" != "null" ] && expiries=$(echo "${expiries}" | jq -r ".[]") || expiries=""
+        [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
 
-        expiries=$(echo "${expiries}" | grep "${account_id}-${region}-${deployment}") || true
+        timestamps=$(echo "${timestamps}" | grep "${account_id}-${region}-${deployment}") || true
 
-        if [ -n "$expiries" ] ; then
-          echo "$expiries"
+        if [ -n "$timestamps" ] ; then
+          echo "$timestamps"
         else
-          echo "NO EXPIRIES"
+          echo "NO timestamps"
         fi
 
-        for expiry in $expiries ; do
-          aws s3 rm s3://storm-library-for-terraform-123456789012/schedule/${expiry}  # TODO: take bucket name from vars
+        for expiry in $timestamps ; do
+          aws s3 rm s3://${{ steps.get-bucket-name.outputs.bucket }}/schedule/${expiry}
           echo "UNREGISTERED ${expiry}"
         done
