@@ -67,9 +67,9 @@ runs:
         name="${catalog_reference}-${repo}"
         [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
         echo "state_file=${name}.tfstate" >> $GITHUB_OUTPUT
-
-        echo "backend_role=slt-0-terraform-workflow-controller-terraform-backend" >> $GITHUB_OUTPUT
-        echo "deployment_role=slt-0-terraform-workflow-controller-terraform-deployment" >> $GITHUB_OUTPUT
+        # TODO: check if needed
+        echo "backend_role=slt-0-terraform-workflow-controller-backend" >> $GITHUB_OUTPUT
+        echo "deployment_role=slt-0-terraform-workflow-controller-deployment" >> $GITHUB_OUTPUT
 
         echo "bucket=storm-library-for-terraform-${{ inputs.account_id }}" >> $GITHUB_OUTPUT
 
@@ -113,34 +113,43 @@ runs:
           -o backend.tf \
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/backend.tf
 
-    - name: Assume terraform backend role
-      if: inputs.use_oidc == 'true'
-      uses: aws-actions/configure-aws-credentials@v4
+    - name: AWS configure
+      uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
       with:
-        aws-region: ${{ inputs.region }}
-        role-session-name: TerraformBackendSession
-        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.backend_role }}
+        account_id: ${{ inputs.account_id }}
+        region: ${{ inputs.region }}
+        backend_role: slt-0-terraform-workflow-controller-backend
+        deployment_role: slt-0-terraform-workflow-controller-deployment
+        use_oidc: ${{ inputs.use_oidc }}
 
-    - name: Configure terraform-backend-role
-      shell: bash
-      run: |
-        aws configure set profile.backend.region ${{ inputs.region }}
-        aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
-        aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
-        aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
+    # - name: Assume terraform backend role
+    #   if: inputs.use_oidc == 'true'
+    #   uses: aws-actions/configure-aws-credentials@v4
+    #   with:
+    #     aws-region: ${{ inputs.region }}
+    #     role-session-name: TerraformBackendSession
+    #     role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.backend_role }}
 
-    - name: Assume terraform deployment role
-      if: inputs.use_oidc == 'true'
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-region: ${{ inputs.region }}
-        role-session-name: TerraformDeploymentSession
-        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.deployment_role }}
+    # - name: Configure terraform backend role
+    #   shell: bash
+    #   run: |
+    #     aws configure set profile.backend.region ${{ inputs.region }}
+    #     aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+    #     aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+    #     aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
 
-    - name: Configure terraform-deployment-role
-      shell: bash
-      run: |
-        aws configure set profile.deployment.region ${{ inputs.region }}
-        aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
-        aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
-        aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})
+    # - name: Assume terraform deployment role
+    #   if: inputs.use_oidc == 'true'
+    #   uses: aws-actions/configure-aws-credentials@v4
+    #   with:
+    #     aws-region: ${{ inputs.region }}
+    #     role-session-name: TerraformDeploymentSession
+    #     role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ steps.create-vars.outputs.deployment_role }}
+
+    # - name: Configure terraform deployment role
+    #   shell: bash
+    #   run: |
+    #     aws configure set profile.deployment.region ${{ inputs.region }}
+    #     aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+    #     aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+    #     aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})

@@ -1,4 +1,5 @@
 name: AWS configure
+
 inputs:
   account_id:
     required: true
@@ -8,8 +9,41 @@ inputs:
     required: false
   deployment_role:
     required: false
+  use_oidc:
+    required:
 
 runs:
   using: composite
   steps:
 
+    - name: Assume terraform backend role
+      if: inputs.use_oidc == 'true'
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.region }}
+        role-session-name: TerraformBackendSession
+        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ inputs.backend_role }}
+
+    - name: Configure terraform backend role
+      shell: bash
+      run: |
+        aws configure set profile.backend.region ${{ inputs.region }}
+        aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+        aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+        aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})
+
+    - name: Assume terraform deployment role
+      if: inputs.use_oidc == 'true'
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.region }}
+        role-session-name: TerraformDeploymentSession
+        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ inputs.deployment_role }}
+
+    - name: Configure terraform deployment role
+      shell: bash
+      run: |
+        aws configure set profile.deployment.region ${{ inputs.region }}
+        aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+        aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+        aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})
