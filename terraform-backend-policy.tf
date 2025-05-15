@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "terraform_backend_policy" {
 }
 
 resource "aws_iam_policy" "terraform_backend_policy" {
-  name        = "${var.deployment.name}-terraform-backend"
+  name        = "${var.deployment.name}-backend"
   path        = "/"
   description = "This policy is used by terraform in order to access its backend"
   policy      = data.aws_iam_policy_document.terraform_backend_policy.json

@@ -1,5 +1,5 @@
 resource "aws_iam_role" "terraform_deployment_role" {
-  name               = "${var.deployment.name}-terraform-deployment"
+  name               = "${var.deployment.name}-deployment"
   assume_role_policy = data.aws_iam_policy_document.github_oidc_trust_policy.json
 }
 
