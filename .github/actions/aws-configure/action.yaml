@@ -10,7 +10,8 @@ inputs:
   deployment_role:
     required: false
   use_oidc:
-    required:
+    required: false
+    default: "true"
 
 runs:
   using: composite
