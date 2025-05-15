@@ -16,12 +16,9 @@ inputs:
     default: "true"
 
 outputs:
-  # backend_role:
-  #   description: Name of the Terraform backend role
-  #   value: ${{ steps.create-vars.outputs.backend_role }}
-  # deployment_role:
-  #   description: Name of the Terraform deployment role
-  #   value: ${{ steps.create-vars.outputs.deployment_role }}
+  bucket:
+    description: Central administration bucket
+    value: ${{ steps.create-vars.outputs.bucket }}
   state_file:
     description: Name of the state file
     value: ${{ steps.create-vars.outputs.state_file }}
@@ -73,6 +70,8 @@ runs:
 
         echo "backend_role=slt-0-terraform-workflow-controller-terraform-backend" >> $GITHUB_OUTPUT
         echo "deployment_role=slt-0-terraform-workflow-controller-terraform-deployment" >> $GITHUB_OUTPUT
+
+        echo "bucket=storm-library-for-terraform-${{ inputs.account_id }}" >> $GITHUB_OUTPUT
 
         cat << EOF >> github.tfvars
         deployment = {

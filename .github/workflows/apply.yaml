@@ -50,6 +50,7 @@ jobs:
       - name: Terraform plan
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
         with:
+          bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
@@ -80,6 +81,7 @@ jobs:
       - name: Terraform apply
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
         with:
+          bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}

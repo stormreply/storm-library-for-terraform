@@ -46,6 +46,7 @@ jobs:
       - name: Terraform destroy
         uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
         with:
+          bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
