@@ -1,4 +1,4 @@
-name: Monthly Build Test
+name: Scheduler
 
 on:
   # schedule:
