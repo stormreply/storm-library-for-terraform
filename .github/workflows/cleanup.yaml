@@ -36,10 +36,11 @@ jobs:
       - name: Check expired
         shell: bash
         run: |
+          # TODO: find way to configure/identify buucket name, most prob from gh vars
           expiries=$(
             aws s3api list-objects-v2 \
-              --bucket storm-github-terraform-backend \
-              --prefix expiries \
+              --bucket storm-library-for-terraform-123456789012 \
+              --prefix schedule \
               --query 'Contents[].Key'
           )
 

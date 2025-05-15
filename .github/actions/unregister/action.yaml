@@ -14,6 +14,7 @@ runs:
     - name: Unregister expiry
       shell: bash
       run: |
+        # TODO: find way to configure/identify buucket name, most prob from gh vars
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
         repository=${{ github.repository }}
@@ -22,8 +23,8 @@ runs:
 
         expiries=$(
           aws s3api list-objects-v2 \
-            --bucket storm-github-terraform-backend \
-            --prefix expiries \
+            --bucket storm-library-for-terraform-123456789012 \
+            --prefix schedule \
             --query 'Contents[].Key'
         )
 
@@ -38,6 +39,6 @@ runs:
         fi
 
         for expiry in $expiries ; do
-          aws s3 rm s3://storm-github-terraform-backend/${expiry}  # TODO: take bucket name from vars
+          aws s3 rm s3://storm-library-for-terraform-123456789012/schedule/${expiry}  # TODO: take bucket name from vars
           echo "UNREGISTERED ${expiry}"
         done
