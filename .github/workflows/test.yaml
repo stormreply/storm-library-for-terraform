@@ -115,3 +115,11 @@ jobs:
           bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
+
+      - name: Unregister old deployments
+        uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
+        with:
+          account_id: ${{ inputs.account_id }}
+          environment: ${{ inputs.environment }}
+          region: ${{ inputs.region }}
+        continue-on-error: true

@@ -11,7 +11,7 @@ inputs:
 runs:
   using: composite
   steps:
-  
+
     - name: Get bucket name
       id: get-bucket-name
       uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
