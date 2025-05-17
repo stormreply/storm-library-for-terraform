@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  cleanup:
+  auto-destroy:
     runs-on: ubuntu-latest
     steps:
 
@@ -34,5 +34,5 @@ jobs:
           backend_role: slt-0-terraform-workflow-controller-backend
           deployment_role: slt-0-terraform-workflow-controller-deployment
 
-      - name: Run destroy
-        uses: stormreply/terraform-workflow-controller/.github/actions/run-destroy@main
+      - name: Batch destroy
+        uses: stormreply/terraform-workflow-controller/.github/actions/batch-destroy@main

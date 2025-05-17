@@ -44,7 +44,7 @@ runs:
           echo "NO timestamps"
         fi
 
-        for expiry in $timestamps ; do
-          aws s3 rm s3://${{ steps.get-bucket-name.outputs.bucket }}/schedule/${expiry}
-          echo "UNREGISTERED ${expiry}"
+        for key in $timestamps ; do
+          aws s3 rm s3://${{ steps.get-bucket-name.outputs.bucket }}/${key}
+          echo "UNREGISTERED ${key}"
         done
