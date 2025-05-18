@@ -88,6 +88,9 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
 
+      - name: Print token (length only)
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | wc -c
+
       - name: Test Auth
         run: |
           curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
