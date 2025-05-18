@@ -3,13 +3,15 @@ name: Save account id
 inputs:
   account_id:
     required: true
+  token:
+    required: true
 
 runs:
   using: composite
   steps:
     - name: Set Repository Variable via API
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         VAR_NAME: STORM_LIBRARY_BUILD_ACCOUNT_ID
         VAR_VALUE: ${{ inputs.account_id }}
         REPO: ${{ github.repository }}
