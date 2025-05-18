@@ -6,31 +6,28 @@ inputs:
 
 runs:
   using: composite
+  steps:
+    - name: Set Repository Variable via API
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VAR_NAME: STORM_LIBRARY_BUILD_ACCOUNT_ID
+        VAR_VALUE: ${{ inputs.account_id }}
+        REPO: ${{ github.repository }}
+      run: |
+        curl -X PATCH \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/repos/$REPO/actions/variables/$VAR_NAME \
+          -d "{\"name\":\"$VAR_NAME\", \"value\":\"$VAR_VALUE\"}" \
+          -f || \
+        curl -X POST \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/repos/$REPO/actions/variables \
+          -d "{\"name\":\"$VAR_NAME\", \"value\":\"$VAR_VALUE\"}"
+        echo "Saved account_id ${{ inputs.account_id }} to vars.STORM_LIBRARY_BUILD_ACCOUNT_ID"
 
-jobs:
-  set-variable:
-    runs-on: ubuntu-latest
     # permissions:
     #   actions: write
     #   contents: read
     #   # optional, wenn du andere scopes brauchst
-    steps:
-      - name: Set Repository Variable via API
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VAR_NAME: STORM_LIBRARY_BUILD_ACCOUNT_ID
-          VAR_VALUE: ${{ inputs.account_id }}
-          REPO: ${{ github.repository }}
-        run: |
-          curl -X PATCH \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/$REPO/actions/variables/$VAR_NAME \
-            -d "{\"name\":\"$VAR_NAME\", \"value\":\"$VAR_VALUE\"}" \
-            -f || \
-          curl -X POST \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/$REPO/actions/variables \
-            -d "{\"name\":\"$VAR_NAME\", \"value\":\"$VAR_VALUE\"}"
-          echo "Saved account_id ${{ inputs.account_id }} to vars.STORM_LIBRARY_BUILD_ACCOUNT_ID"
