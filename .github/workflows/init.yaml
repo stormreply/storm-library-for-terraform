@@ -20,10 +20,8 @@ jobs:
     outputs:
       access_token: ${{ steps.sso.outputs.access_token }}
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Single sign on
         id: sso
         uses: stormreply/terraform-workflow-controller/.github/actions/single-sign-on@main
@@ -85,3 +83,8 @@ jobs:
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
+
+      - name: Save account id
+        uses: stormreply/terraform-workflow-controller/.github/actions/save-account-id@main
+        with:
+          account_id: ${{ inputs.account_id }}
