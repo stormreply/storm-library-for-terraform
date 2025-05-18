@@ -31,6 +31,8 @@ jobs:
 
   init:
     needs: sso
+    permissions:
+      actions: write
     runs-on: ubuntu-latest
     steps:
 
