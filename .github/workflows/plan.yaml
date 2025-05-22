@@ -37,7 +37,6 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
-          account_id: ${{ inputs.account_id }}
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
