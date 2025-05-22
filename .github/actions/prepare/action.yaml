@@ -16,6 +16,9 @@ inputs:
     default: "true"
 
 outputs:
+  app_token:
+    description: App token for GitHub API access
+    value: ${{ steps.app-token.outputs.token }}
   bucket:
     description: Central administration bucket
     value: ${{ steps.get-bucket-name.outputs.bucket }}

@@ -104,4 +104,5 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/save-account-id@main
         with:
           account_id: ${{ inputs.account_id }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: stormreply/terraform-build-controller
+          token: ${{ steps.prepare.outputs.app_token }}

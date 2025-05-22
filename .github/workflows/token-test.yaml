@@ -23,8 +23,6 @@ jobs:
       - name: Echo token length
         run: |
           echo "${{ steps.app-token.outputs.token}}" | wc -c
-          echo "${{ steps.app-token.outputs.token}}" > foo
-          cat foo
 
       - name: Test API Call
         run: |
