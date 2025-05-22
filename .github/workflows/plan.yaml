@@ -26,6 +26,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Time
+        shell: bash
+        run: date
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
