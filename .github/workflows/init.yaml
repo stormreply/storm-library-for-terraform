@@ -101,8 +101,9 @@ jobs:
               https://api.github.com/user
 
       - name: Save account id
-        uses: stormreply/terraform-workflow-controller/.github/actions/save-account-id@main
+        uses: stormreply/terraform-workflow-controller/.github/actions/set-repository-variable@main
         with:
-          account_id: ${{ inputs.account_id }}
-          repository: stormreply/terraform-build-controller
+          repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
+          value: ${{ inputs.account_id }}
+          variable: MAIN_ACCOUNT_ID

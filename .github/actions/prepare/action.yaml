@@ -2,7 +2,7 @@ name: Prepare
 
 inputs:
   account_id:
-    required: true
+    required: false
   environment:
     required: false
   region:
@@ -43,6 +43,15 @@ runs:
         app-id: ${{ inputs.terraform_app_id }}
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
+
+    - name: Get account id
+      id: get-account-id
+      if: inputs.account_id == ""
+      uses: stormreply/terraform-workflow-controller/.github/actions/get-repository-variable@main
+      with:
+        repository: stormreply/terraform-workflow-controller
+        token: ${{ steps.app-token.outputs.token}}
+        variable: MAIN_ACCOUNT_ID
 
     - name: Set up access token
       shell: bash
@@ -86,7 +95,7 @@ runs:
       id: get-bucket-name
       uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
       with:
-        account_id: ${{ inputs.account_id }}
+        account_id: ${{ inputs.account_id || steps.get-account-id.output.value}}
 
     - name: Get deployment name
       id: get-deployment-name
@@ -126,7 +135,7 @@ runs:
     - name: AWS configure
       uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
       with:
-        account_id: ${{ inputs.account_id }}
+        account_id: ${{ inputs.account_id || steps.get-account-id.output.value }}
         region: ${{ inputs.region }}
         backend_role: slt-0-terraform-workflow-controller-backend
         deployment_role: slt-0-terraform-workflow-controller-deployment
