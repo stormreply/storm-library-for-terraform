@@ -24,12 +24,13 @@ runs:
         VARIABLE: ${{ inputs.variable }}
         REPO: ${{ inputs.repository }}
       run: |
-        value=$(
+        variable=$(
           curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/$REPO/actions/variables/$VARIABLE
         )
+        value=$(echo ${variable} | jq -r .value)
         echo "value=${value}"
         echo "value=${value}" >> $GITHUB_OUTPUT
