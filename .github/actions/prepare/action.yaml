@@ -94,7 +94,7 @@ runs:
       id: get-bucket-name
       uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
       with:
-        account_id: ${{ steps.get-account-id.output.value}}
+        account_id: ${{ steps.get-account-id.outputs.value}}
 
     - name: Get deployment name
       id: get-deployment-name
@@ -134,7 +134,7 @@ runs:
     - name: AWS configure
       uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
       with:
-        account_id: ${{ steps.get-account-id.output.value }}
+        account_id: ${{ steps.get-account-id.outputs.value }}
         region: ${{ inputs.region }}
         backend_role: slt-0-terraform-workflow-controller-backend
         deployment_role: slt-0-terraform-workflow-controller-deployment
