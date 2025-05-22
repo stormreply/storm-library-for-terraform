@@ -41,7 +41,7 @@ runs:
       uses: actions/create-github-app-token@v1
       with:
         app-id: vars.TERRAFORM_APP_ID
-        private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+        private-key: secrets.TERRAFORM_PRIVATE_KEY
         owner: ${{ github.repository_owner }}
 
     - name: Get account id
