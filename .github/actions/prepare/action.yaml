@@ -46,7 +46,7 @@ runs:
 
     - name: Get account id
       id: get-account-id
-      if: inputs.account_id == ""
+      if: inputs.account_id == ''
       uses: stormreply/terraform-workflow-controller/.github/actions/get-repository-variable@main
       with:
         repository: stormreply/terraform-workflow-controller
