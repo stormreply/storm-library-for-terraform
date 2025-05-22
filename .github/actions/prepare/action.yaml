@@ -40,8 +40,8 @@ runs:
       id: app-token
       uses: actions/create-github-app-token@v1
       with:
-        app-id: vars.TERRAFORM_APP_ID
-        private-key: secrets.TERRAFORM_PRIVATE_KEY
+        app-id: ${{ inputs.terraform_app_id }}
+        private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
     - name: Get account id
