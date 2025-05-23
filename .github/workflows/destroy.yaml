@@ -7,10 +7,6 @@ permissions:
 on:
   workflow_call:
     inputs:
-      account_id:
-        type: string
-        required: true
-        default: 123456789012
       environment:
         type: string
         required: false
@@ -37,7 +33,6 @@ jobs:
         uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
         id: prepare
         with:
-          account_id: ${{ inputs.account_id }}
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
@@ -53,7 +48,7 @@ jobs:
       - name: Unregister old deployments
         uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
         with:
-          account_id: ${{ inputs.account_id }}
+          account_id: ${{ steps.prepare.outputs.account_id }}
           environment: ${{ inputs.environment }}
           region: ${{ inputs.region }}
         continue-on-error: true
