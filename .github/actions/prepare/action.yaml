@@ -16,6 +16,9 @@ inputs:
     default: "true"
 
 outputs:
+  account_id:
+    description: Id of the account we are deploying to
+    value: ${{ steps.get-account-id.outputs.value }}
   app_token:
     description: App token for GitHub API access
     value: ${{ steps.app-token.outputs.token }}
