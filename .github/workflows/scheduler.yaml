@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         repo:
+          - "stormreply/lake-formation-demo"
           - "stormreply/terraform-build-controller"
           - "stormreply/sakila-mysql-rds"
 
