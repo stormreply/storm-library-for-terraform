@@ -19,6 +19,8 @@ runs:
         repo=${repository##*/}
         catalog_reference="slt-$(cat catalog_item.yaml | yq .id)"
         name="${catalog_reference}-${repo}"
-        [ -n "${{ inputs.environment }}" ] && name="${name}-${{ inputs.environment }}"
+        [ -n "${{ inputs.environment }}" ] \
+        && name="${name}-${{ inputs.environment }}" \
+        || name="${name}-${{ github.actor }}"
         echo "deployment name: ${name}"
         echo "name=${name}" >> $GITHUB_OUTPUT
