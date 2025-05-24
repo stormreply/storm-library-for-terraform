@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare
-        uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
           environment: ${{ inputs.environment }}
@@ -43,7 +43,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform plan
-        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}

@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Single sign on
         id: sso
-        uses: stormreply/terraform-workflow-controller/.github/actions/single-sign-on@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/single-sign-on@main
         with:
           access_domain: ${{ inputs.access_domain }}
           region: ${{ inputs.region }}
@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get role credentials
-        uses: stormreply/terraform-workflow-controller/.github/actions/get-role-credentials@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/get-role-credentials@main
         with:
           access_token: ${{ needs.sso.outputs.access_token }}
           account_id: ${{ inputs.account_id }}
@@ -50,7 +50,7 @@ jobs:
           role_name: AdministratorAccess
 
       - name: Prepare
-        uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
           account_id: ${{ inputs.account_id }}
@@ -73,7 +73,7 @@ jobs:
           EOF
 
       - name: Terraform plan
-        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-plan@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
@@ -81,7 +81,7 @@ jobs:
           var_file: init.tfvars
 
       - name: Terraform apply
-        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-apply@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
@@ -101,7 +101,7 @@ jobs:
               https://api.github.com/user
 
       - name: Save account id
-        uses: stormreply/terraform-workflow-controller/.github/actions/set-repository-variable@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/set-repository-variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}

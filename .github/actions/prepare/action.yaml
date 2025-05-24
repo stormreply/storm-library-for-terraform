@@ -49,9 +49,9 @@ runs:
 
     - name: Get account id
       id: get-account-id
-      uses: stormreply/terraform-workflow-controller/.github/actions/get-repository-variable@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
       with:
-        repository: stormreply/terraform-workflow-controller
+        repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
         variable: MAIN_ACCOUNT_ID
 
@@ -68,7 +68,7 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/providers.tf
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/providers.tf
 
     - name: Download backend.tf
       shell: bash
@@ -77,7 +77,7 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o backend.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/backend.tf
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/backend.tf
 
     - name: Get Storm Library catalog item
       shell: bash
@@ -87,7 +87,7 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o catalog.yaml \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/terraform-workflow-controller/contents/catalog.yaml
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml
         repository=${{ github.repository }}
         repo=${repository##*/}
         yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
@@ -95,19 +95,19 @@ runs:
 
     - name: Get bucket name
       id: get-bucket-name
-      uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value}}
 
     - name: Get deployment name
       id: get-deployment-name
-      uses: stormreply/terraform-workflow-controller/.github/actions/get-deployment-name@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
       with:
         environment: ${{ inputs.environment }}
 
     - name: Get state file
       id: get-state-file
-      uses: stormreply/terraform-workflow-controller/.github/actions/get-state-file@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-state-file@main
       with:
         deployment_name: ${{ steps.get-deployment-name.outputs.name }}
 
@@ -135,10 +135,10 @@ runs:
         cat github.tfvars
 
     - name: AWS configure
-      uses: stormreply/terraform-workflow-controller/.github/actions/aws-configure@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/aws-configure@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value }}
         region: ${{ inputs.region }}
-        backend_role: slt-0-terraform-workflow-controller-backend
-        deployment_role: slt-0-terraform-workflow-controller-deployment
+        backend_role: slt-0-storm-library-for-terraform-backend
+        deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}

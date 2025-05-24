@@ -17,7 +17,7 @@ catalog :
     published: 2025-03-18
     description: An EC2 instance with configurable user data to be used as a build controller
     public: yes
-  terraform-workflow-controller:
+  storm-library-for-terraform:
     id: 0
     authors: berndherding
     published: 2025-03-18

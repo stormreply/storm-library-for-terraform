@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare
-        uses: stormreply/terraform-workflow-controller/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
           environment: ${{ inputs.environment }}
@@ -39,14 +39,14 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform destroy
-        uses: stormreply/terraform-workflow-controller/.github/actions/terraform-destroy@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-destroy@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unregister old deployments
-        uses: stormreply/terraform-workflow-controller/.github/actions/unregister@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/unregister@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           environment: ${{ inputs.environment }}

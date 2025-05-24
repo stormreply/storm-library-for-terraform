@@ -14,7 +14,7 @@ runs:
 
     - name: Get bucket name
       id: get-bucket-name
-      uses: stormreply/terraform-workflow-controller/.github/actions/get-bucket-name@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
       with:
         account_id: ${{ inputs.account_id }}
 
