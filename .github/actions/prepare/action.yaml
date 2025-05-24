@@ -55,6 +55,11 @@ runs:
         token: ${{ steps.app-token.outputs.token}}
         variable: MAIN_ACCOUNT_ID
 
+    - name: Info
+      shell: bash
+      run: |
+        echo "Account: ${{ steps.get-account-id.outputs.value }}"
+
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -71,7 +76,8 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/providers.tf
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/providers.tf \
+        2> /dev/null
 
     - name: Download backend.tf
       shell: bash
@@ -80,7 +86,8 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o backend.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/backend.tf
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/backend.tf \
+        2> /dev/null
 
     - name: Get Storm Library catalog item
       shell: bash
@@ -90,7 +97,8 @@ runs:
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o catalog.yaml \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
+        2> /dev/null
         repository=${{ github.repository }}
         repo=${repository##*/}
         yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
