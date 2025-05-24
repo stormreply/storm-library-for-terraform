@@ -26,9 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare

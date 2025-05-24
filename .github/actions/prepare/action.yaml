@@ -55,6 +55,9 @@ runs:
         token: ${{ steps.app-token.outputs.token}}
         variable: MAIN_ACCOUNT_ID
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Set up access token
       shell: bash
       run: |
