@@ -11,10 +11,6 @@ on:
         type: string
         required: false
         default: ""
-      region:
-        type: string
-        required: true
-        default: eu-central-1
       var_file:
         type: string
         required: false
@@ -34,7 +30,6 @@ jobs:
         id: prepare
         with:
           environment: ${{ inputs.environment }}
-          region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
@@ -42,7 +37,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
-          region: ${{ inputs.region }}
+          region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
@@ -64,7 +59,6 @@ jobs:
         id: prepare
         with:
           environment: ${{ inputs.environment }}
-          region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
@@ -72,7 +66,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
-          region: ${{ inputs.region }}
+          region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
@@ -82,7 +76,7 @@ jobs:
           account_id: ${{ steps.prepare.outputs.account_id }}
           environment: ${{ inputs.environment }}
           expires_after: "0 seconds"
-          region: ${{ inputs.region }}
+          region: ${{ steps.prepare.output.region }}
 
   destroy:
     needs: apply
@@ -95,7 +89,6 @@ jobs:
         id: prepare
         with:
           environment: ${{ inputs.environment }}
-          region: ${{ inputs.region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
@@ -103,7 +96,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-destroy@main
         with:
           bucket: ${{ steps.prepare.outputs.bucket }}
-          region: ${{ inputs.region }}
+          region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unregister old deployments
@@ -111,5 +104,5 @@ jobs:
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           environment: ${{ inputs.environment }}
-          region: ${{ inputs.region }}
+          region: ${{ steps.prepare.outputs.region }}
         continue-on-error: true

@@ -91,4 +91,12 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
           value: ${{ inputs.account_id }}
-          variable: MAIN_ACCOUNT_ID
+          variable: ACCOUNT_ID
+
+      - name: Save region
+        uses: stormreply/storm-library-for-terraform/.github/actions/set-repository-variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.app_token }}
+          value: ${{ inputs.region }}
+          variable: REGION

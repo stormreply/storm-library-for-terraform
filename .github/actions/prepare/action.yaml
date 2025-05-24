@@ -1,12 +1,9 @@
 name: Prepare
 
 inputs:
-  account_id:
-    required: false
+  # TODO: prepare needs account_id and region for (auto-)destroy. if set, pass them through
   environment:
     required: false
-  region:
-    required: true
   terraform_app_id:
     required: true
   terraform_private_key:
@@ -17,7 +14,7 @@ inputs:
 
 outputs:
   account_id:
-    description: Id of the account we are deploying to
+    description: Id of the AWS account we are deploying to
     value: ${{ steps.get-account-id.outputs.value }}
   app_token:
     description: App token for GitHub API access
@@ -25,6 +22,9 @@ outputs:
   bucket:
     description: Central administration bucket
     value: ${{ steps.get-bucket-name.outputs.bucket }}
+  region:
+    description: AWS region we are deploying to
+    value: ${{ steps.get-region.outputs.value }}
   state_file:
     description: Name of the state file
     value: ${{ steps.get-state-file.outputs.state_file }}
@@ -57,12 +57,15 @@ runs:
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
-        variable: MAIN_ACCOUNT_ID
+        variable: ACCOUNT_ID
 
-    - name: Info
-      shell: bash
-      run: |
-        echo "Account: ${{ steps.get-account-id.outputs.value }}"
+    - name: Get region
+      id: get-region
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
+      with:
+        repository: stormreply/storm-library-for-terraform
+        token: ${{ steps.app-token.outputs.token}}
+        variable: REGION
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -153,7 +156,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/aws-configure@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value }}
-        region: ${{ inputs.region }}
+        region: ${{ steps.get-region.outputs.value }}
         backend_role: slt-0-storm-library-for-terraform-backend
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}
