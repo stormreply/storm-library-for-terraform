@@ -39,6 +39,10 @@ runs:
     #   shell: bash
     #   run: echo "$GITHUB_CONTEXT"
 
+    - name: Time
+      shell: bash
+      run: date
+
     - name: Create Github app token
       id: app-token
       uses: actions/create-github-app-token@v1
