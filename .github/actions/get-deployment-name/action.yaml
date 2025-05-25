@@ -17,10 +17,18 @@ runs:
       run: |
         repository=${{ github.repository }}
         repo=${repository##*/}
-        catalog_reference="slt-$(cat catalog_item.yaml | yq .id)"
-        name="${catalog_reference}-${repo}"
-        [ -n "${{ inputs.environment }}" ] \
-        && name="${name}-${{ inputs.environment }}" \
-        || name="${name}-${{ github.actor }}"
-        echo "deployment name: ${name}"
-        echo "name=${name}" >> $GITHUB_OUTPUT
+
+        catalog_id=$(cat catalog_item.yaml | yq .id)
+        catalog_reference="slt-${catalog_id}"
+
+        deployment_name="${catalog_reference}-${repo}"
+
+        if [ "${catalog_id}" != "0" ] ; then
+          [ -n "${{ inputs.environment }}" ] \
+          && suffix="${name}-${{ inputs.environment }}" \
+          || suffix="${name}-${{ github.actor }}"
+          deployment_name="${deployment_name}-${suffix}"
+        fi
+
+        echo "deployment name: ${deployment_name}"
+        echo "name=${deployment_name}" >> $GITHUB_OUTPUT
