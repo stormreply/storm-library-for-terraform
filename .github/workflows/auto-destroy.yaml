@@ -1,8 +1,8 @@
 name: Auto Destroy
 
-# permissions:
-#   contents: read
-#   id-token: write
+permissions:
+  contents: read
+  id-token: write
 
 on:
   schedule:
