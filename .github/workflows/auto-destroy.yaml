@@ -18,8 +18,8 @@ jobs:
       - name: Get basic setup
         uses: stormreply/storm-library-for-terraform/.github/actions/get-basic-setup@main
         with:
-          app-id: ${{ vars.TERRAFORM_APP_ID }}
-          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          app_id: ${{ vars.TERRAFORM_APP_ID }}
+          private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       # - name: Create app token
       #   uses: actions/create-github-app-token@v1
