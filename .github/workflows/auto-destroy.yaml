@@ -15,27 +15,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Create app token
-        uses: actions/create-github-app-token@v1
-        id: app-token
+      - name: Get basic setup
+        uses: get-basic-setup
         with:
           app-id: ${{ vars.TERRAFORM_APP_ID }}
           private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
-      - name: Authenticate
+      # - name: Create app token
+      #   uses: actions/create-github-app-token@v1
+      #   id: app-token
+      #   with:
+      #     app-id: ${{ vars.TERRAFORM_APP_ID }}
+      #     private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+      #     owner: ${{ github.repository_owner }}
+
+      - name: gh auth login
         # we need gh auth in order to run gh workflow in batch destroy
-        run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
+        run: echo "${{ steps.get-basic-setup.outputs.token }}" | gh auth login --with-token
 
       - name: AWS configure
         # we need to assume role in order to aws s3api in batch destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/aws-configure@main
         with:
-          # TODO: eliminiate account_id, region
-          account_id: 123456789012
-          region: eu-central-1
+          account_id: ${{ steps.get-basic-setup.outputs.account_id }}
+          region: ${{ steps.get-basic-setup.outputs.region }}
           backend_role: slt-0-storm-library-for-terraform-backend
           deployment_role: slt-0-storm-library-for-terraform-deployment
 
       - name: Batch destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/batch-destroy@main
+        with:
+          bucket: ${{ steps.get-basic-setup.outputs.bucket }}

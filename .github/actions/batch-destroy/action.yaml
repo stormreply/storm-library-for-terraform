@@ -1,5 +1,8 @@
-name: Run destroy
+name: Batch destroy
 
+inputs:
+  bucket:
+    required: true
 
 runs:
   using: composite
@@ -9,10 +12,9 @@ runs:
       shell: bash
       run: |
 
-        # TODO: find way to configure/identify bucket name, most prob from gh vars
         timestamps=$(
           aws s3api list-objects-v2 \
-            --bucket storm-library-for-terraform-123456789012 \
+            --bucket ${{ inputs.bucket }} \
             --prefix schedule \
             --query 'Contents[].Key'
         )
