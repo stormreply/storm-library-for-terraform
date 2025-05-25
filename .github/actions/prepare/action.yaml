@@ -2,7 +2,11 @@ name: Prepare
 
 inputs:
   # TODO: prepare needs account_id and region for (auto-)destroy. if set, pass them through
+  account_id:
+    required: false
   environment:
+    required: false
+  region:
     required: false
   terraform_app_id:
     required: true
@@ -57,6 +61,7 @@ runs:
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
+        use_if_set: ${{ inputs.account_id }}
         variable: ACCOUNT_ID
 
     - name: Get region
@@ -65,6 +70,7 @@ runs:
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
+        use_if_set: ${{ inputs.region }}
         variable: REGION
 
     - name: Checkout repository
