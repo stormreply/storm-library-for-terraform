@@ -58,4 +58,4 @@ runs:
       id: get-bucket-name
       uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
       with:
-        account_id: ${{ inputs.account_id }}
+        account_id: ${{ steps.get-account-id.outputs.value }}
