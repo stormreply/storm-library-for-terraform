@@ -72,7 +72,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/unregister@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
-          environment: ${{ inputs.environment }}
+          deployment: ${{ steps.prepare.outputs.deployment }}
           region: ${{ steps.prepare.outputs.region }}
         continue-on-error: true
 
