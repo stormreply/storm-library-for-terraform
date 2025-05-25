@@ -23,7 +23,7 @@ runs:
       run: |
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
-        deployment="{{ inputs.deployment }}"
+        deployment="${{ inputs.deployment }}"
 
         timestamps=$(
           aws s3api list-objects-v2 \
