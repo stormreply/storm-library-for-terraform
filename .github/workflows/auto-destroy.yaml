@@ -16,6 +16,7 @@ jobs:
     steps:
 
       - name: Get basic setup
+        id: get-basic-setup
         uses: stormreply/storm-library-for-terraform/.github/actions/get-basic-setup@main
         with:
           app_id: ${{ vars.TERRAFORM_APP_ID }}
