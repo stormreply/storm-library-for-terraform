@@ -74,7 +74,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/register@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
-          environment: ${{ inputs.environment }}
+          deployment: ${{ steps.prepare.outputs.deployment }}
           expires_after: "0 seconds"
           region: ${{ steps.prepare.output.region }}
 

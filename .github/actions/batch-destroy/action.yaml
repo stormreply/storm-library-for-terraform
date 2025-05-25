@@ -31,7 +31,8 @@ runs:
           time=${f%%-*} ; f=${f##$time-}
           account_id=${f%%-*} ; f=${f##$account_id-}
           region=${f%-${f#*-*-*-}} ; f=${f##$region-}
-          storm=${f%%-*} ; f=${f##$storm-}
+          slt=${f%%-*} ; f=${f##$slt-}
+          catalog_id=${f%%-*} ; f=${f##$catalog_id-}
           repo=${f%-*}
           environment=${f##$repo-}
           time="${time:0:2}:${time:2:2}:${time:4:2}"

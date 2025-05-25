@@ -3,7 +3,7 @@ name: Unregister deployment
 inputs:
   account_id:
     required: true
-  environment:
+  deployment:
     required: true
   region:
     required: true
@@ -23,9 +23,7 @@ runs:
       run: |
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        deployment="storm-${repo}-${{ inputs.environment }}"
+        deployment="{{ inputs.deployment }}"
 
         timestamps=$(
           aws s3api list-objects-v2 \

@@ -26,6 +26,9 @@ outputs:
   bucket:
     description: Central administration bucket
     value: ${{ steps.get-bucket-name.outputs.bucket }}
+  deployment:
+    description: Name of this deployment
+    value: ${{ steps.get-deployment-name.outputs.name}}
   region:
     description: AWS region we are deploying to
     value: ${{ steps.get-region.outputs.value }}

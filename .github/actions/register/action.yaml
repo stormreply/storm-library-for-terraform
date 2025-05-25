@@ -3,7 +3,7 @@ name: Register deployment
 inputs:
   account_id:
     required: true
-  environment:
+  deployment:
     required: true
   expires_after:
     required: true
@@ -25,9 +25,7 @@ runs:
       run: |
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        deployment="storm-${repo}-${{ inputs.environment }}"
+        deployment="${{ inputs.deployment }}"
 
         expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y%m%d-%H%M%S")
         timestamp="${expiry}-${account_id}-${region}-${deployment}"
