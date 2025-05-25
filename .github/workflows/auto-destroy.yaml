@@ -1,8 +1,8 @@
 name: Auto Destroy
 
-permissions:
-  contents: read
-  id-token: write
+# permissions:
+#   contents: read
+#   id-token: write
 
 on:
   schedule:
@@ -20,7 +20,6 @@ jobs:
         with:
           app-id: ${{ vars.TERRAFORM_APP_ID }}
           private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
 
       # - name: Create app token
       #   uses: actions/create-github-app-token@v1

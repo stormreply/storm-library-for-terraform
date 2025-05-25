@@ -2,6 +2,10 @@ name: Get basic setup
 
 inputs:
   account_id:
+    required: false
+  app_id:
+    required: true
+  private_key:
     required: true
   region:
     required: false
@@ -28,8 +32,8 @@ runs:
       id: app-token
       uses: actions/create-github-app-token@v1
       with:
-        app-id: ${{ inputs.terraform_app_id }}
-        private-key: ${{ inputs.terraform_private_key }}
+        app-id: ${{ inputs.app_id }}
+        private-key: ${{ inputs.private_key }}
         owner: ${{ github.repository_owner }}
 
     - name: Get account id
