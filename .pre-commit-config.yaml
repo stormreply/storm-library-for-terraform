@@ -9,10 +9,10 @@ repos:
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
-    - id: terraform_checkov
-      args:
-        - --args=--quiet
     - id: terraform_tflint
     - id: terraform_trivy
     - id: terraform_validate
     - id: terrascan
+    - id: terraform_checkov
+      args:
+        - --args=--quiet
