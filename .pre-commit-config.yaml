@@ -8,3 +8,4 @@ repos:
     - id: terraform_checkov
       args:
         - --args=--quiet
+    - id: terraform_tflint
