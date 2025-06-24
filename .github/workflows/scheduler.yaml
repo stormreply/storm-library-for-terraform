@@ -5,13 +5,14 @@ on:
   #   - cron: '50 12 1 * *'
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
 
   test:
     runs-on: ubuntu-latest
 
     permissions:
-      id-token: write # TODO: check if necessary
       contents: read
 
     strategy:
