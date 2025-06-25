@@ -76,7 +76,7 @@ jobs:
           account_id: ${{ steps.prepare.outputs.account_id }}
           deployment: ${{ steps.prepare.outputs.deployment }}
           expires_after: "0 seconds"
-          region: ${{ steps.prepare.output.region }}
+          region: ${{ steps.prepare.outputs.region }}
 
   destroy:
     needs: apply
