@@ -95,14 +95,14 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/providers.tf \
         2> /dev/null
 
-    - name: Download backend.tf
+    - name: Download terraform.tf
       shell: bash
       run: |
         TOKEN=${{ steps.app-token.outputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
-          -o backend.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/backend.tf \
+          -o terraform.tf \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/terraform.tf \
         2> /dev/null
 
     - name: Get Storm Library catalog item
