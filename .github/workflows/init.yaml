@@ -2,7 +2,7 @@ name: Init
 
 on:
   workflow_dispatch:
-    # checkov:skip=CKV_GHA_7: GitHub Actions workflow_dispatch inputs MUST be empty
+    # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
       access_domain:
         required: true
