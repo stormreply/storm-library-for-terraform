@@ -22,14 +22,6 @@ jobs:
           app_id: ${{ vars.TERRAFORM_APP_ID }}
           private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
-      # - name: Create app token
-      #   uses: actions/create-github-app-token@v1
-      #   id: app-token
-      #   with:
-      #     app-id: ${{ vars.TERRAFORM_APP_ID }}
-      #     private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-      #     owner: ${{ github.repository_owner }}
-
       - name: gh auth login
         # we need gh auth in order to run gh workflow in batch destroy
         run: echo "${{ steps.get-basic-setup.outputs.token }}" | gh auth login --with-token

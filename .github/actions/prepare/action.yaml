@@ -50,6 +50,7 @@ runs:
       shell: bash
       run: date
 
+    # TODO: replace with get-basic-setup. pass through all params
     - name: Create Github app token
       id: app-token
       uses: actions/create-github-app-token@v1
@@ -58,6 +59,7 @@ runs:
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
+    # TODO: replace with get-basic-setup. pass through all params
     - name: Get account id
       id: get-account-id
       uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
@@ -67,6 +69,7 @@ runs:
         use_if_set: ${{ inputs.account_id }}
         variable: ACCOUNT_ID
 
+    # TODO: replace with get-basic-setup. pass through all params
     - name: Get region
       id: get-region
       uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
@@ -120,18 +123,21 @@ runs:
         yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
         rm catalog.yaml
 
+    # TODO: replace with get-basic-setup. pass through all params
     - name: Get bucket name
       id: get-bucket-name
       uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value}}
 
+    # TODO: add to and replace with get-basic-setup. pass through all params
     - name: Get deployment name
       id: get-deployment-name
       uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
       with:
         environment: ${{ inputs.environment }}
 
+    # TODO: add to and replace with get-basic-setup. pass through all params
     - name: Get state file
       id: get-state-file
       uses: stormreply/storm-library-for-terraform/.github/actions/get-state-file@main
