@@ -22,6 +22,14 @@ on:
 
 jobs:
 
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check
+        uses: stormreply/storm-library-for-terraform/.github/actions/check@main
+        id: check
+
   plan:
     runs-on: ubuntu-latest
     steps:
