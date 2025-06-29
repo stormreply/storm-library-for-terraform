@@ -40,15 +40,13 @@ runs:
           time="${time:0:2}:${time:2:2}:${time:4:2}"
           expiry=$(date -d "${date} ${time}" +"%s")
           now=$(date -d now +"%s")
-
-          echo -n "checking current time ($(date -d ${now} +"%Y%m%d-%H%M%S"))) against ${file}... "
+          nows=$(date -d now +"%Y%m%d-%H%M%S")
+          echo -n "checking current time (${nows}) against ${file}... "
 
           if [ ${expiry} -lt ${now} ] ; then
             echo "EXPIRED"
-            gh workflow run destroy.yaml \
-              --repo stormreply/${repo} \
-              -f environment=${environment} \
-            & # TODO: handle "stormreply"
+            # TODO: handle "stormreply"
+            gh workflow run destroy.yaml --repo stormreply/${repo} &
           else
             echo "AUTHORIZED"
           fi
