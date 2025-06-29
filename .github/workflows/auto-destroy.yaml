@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Time
+        shell: bash
+        run: date
+
       - name: Get basic setup
         id: get-basic-setup
         uses: stormreply/storm-library-for-terraform/.github/actions/get-basic-setup@main

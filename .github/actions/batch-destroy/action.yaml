@@ -41,7 +41,7 @@ runs:
           expiry=$(date -d "${date} ${time}" +"%s")
           now=$(date -d now +"%s")
 
-          echo -n "checking ${file}... "
+          echo -n "checking expiry (${expiry}) against now (${now}) for ${file}... "
 
           if [ ${expiry} -lt ${now} ] ; then
             echo "EXPIRED"
@@ -52,7 +52,7 @@ runs:
               -f region=${region} \
             & # TODO: handle "stormreply"
           else
-            echo "ok"
+            echo "AUTHORIZED"
           fi
 
         done
