@@ -41,7 +41,7 @@ runs:
           expiry=$(date -d "${date} ${time}" +"%s")
           now=$(date -d now +"%s")
 
-          echo -n "checking expiry (${expiry}) against now (${now}) for ${file}... "
+          echo -n "checking current time ($(date -d ${now} +"%Y%m%d-%H%M%S"))) against ${file}... "
 
           if [ ${expiry} -lt ${now} ] ; then
             echo "EXPIRED"
