@@ -47,9 +47,7 @@ runs:
             echo "EXPIRED"
             gh workflow run destroy.yaml \
               --repo stormreply/${repo} \
-              -f account_id=${account_id} \
               -f environment=${environment} \
-              -f region=${region} \
             & # TODO: handle "stormreply"
           else
             echo "AUTHORIZED"
