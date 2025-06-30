@@ -46,7 +46,9 @@ runs:
           if [ ${expiry} -lt ${now} ] ; then
             echo "EXPIRED"
             # TODO: handle "stormreply"
-            gh workflow run destroy.yaml --repo stormreply/${repo} &
+            gh workflow run destroy.yaml \
+              --repo stormreply/${repo} \
+              -f environment=${environment} &
           else
             echo "AUTHORIZED"
           fi
