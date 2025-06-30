@@ -23,3 +23,9 @@ catalog :
     published: 2025-03-18
     description: The central workflow controller repository for the Storm Library for Terraform
     public: yes
+  client-vpn-demo:
+    id: 4
+    authors: berndherding
+    published: 2025-06-26
+    desciption: A quick demo showing an AWS Client VPN setup with two associated VPCs
+    public: yes
