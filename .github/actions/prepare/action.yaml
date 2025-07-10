@@ -89,21 +89,6 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/terraform.tf \
         2> /dev/null
 
-    - name: Get Storm Library catalog item
-      shell: bash
-      id: catalog-item
-      run: |
-        TOKEN=${{ steps.app-token.outputs.token }}
-        curl \
-          -H "Accept: application/vnd.github.raw" \
-          -o catalog.yaml \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
-        2> /dev/null
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
-        rm catalog.yaml
-
     - name: Create deployment variables
       shell: bash
       run: |

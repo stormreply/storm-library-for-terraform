@@ -75,6 +75,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
       with:
         environment: ${{ inputs.environment }}
+        token: ${{ steps.app-token.outputs.token}}
 
     - name: Get state file
       id: get-state-file

@@ -3,6 +3,8 @@ name: Get deployment name
 inputs:
   environment:
     required: true
+  token:
+    required: true
 
 outputs:
   name:
@@ -15,11 +17,19 @@ runs:
       id: get-deployment-name
       shell: bash
       run: |
+        TOKEN=${{ inputs.token }}
+        curl \
+          -H "Accept: application/vnd.github.raw" \
+          -o catalog.yaml \
+          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
+        2> /dev/null
         repository=${{ github.repository }}
         repo=${repository##*/}
 
+        yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
         catalog_id=$(cat catalog_item.yaml | yq .id)
         catalog_reference="slt-${catalog_id}"
+        rm catalog.yaml
 
         deployment_name="${catalog_reference}-${repo}"
 
