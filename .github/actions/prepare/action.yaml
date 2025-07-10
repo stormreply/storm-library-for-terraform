@@ -72,7 +72,7 @@ runs:
     - name: Download providers.tf
       shell: bash
       run: |
-        TOKEN=${{ steps.app-token.outputs.token }}
+        TOKEN=${{ steps.get-basic-setup.outputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o providers.tf \
@@ -82,7 +82,7 @@ runs:
     - name: Download terraform.tf
       shell: bash
       run: |
-        TOKEN=${{ steps.app-token.outputs.token }}
+        TOKEN=${{ steps.get-basic-setup.outputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
           -o terraform.tf \
