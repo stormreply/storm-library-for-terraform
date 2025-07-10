@@ -1,17 +1,18 @@
 name: Prepare
 
 inputs:
-  # TODO: prepare needs account_id and region for (auto-)destroy. if set, pass them through
+
+  terraform_app_id:
+    required: true
+  terraform_private_key:
+    required: true
+
   account_id:
     required: false
   environment:
     required: false
   region:
     required: false
-  terraform_app_id:
-    required: true
-  terraform_private_key:
-    required: true
   use_oidc:
     required: false
     default: "true"
@@ -19,22 +20,22 @@ inputs:
 outputs:
   account_id:
     description: Id of the AWS account we are deploying to
-    value: ${{ steps.get-account-id.outputs.value }}
+    value: ${{ steps.get-basic-setup.outputs.account_id }}
   app_token:
     description: App token for GitHub API access
-    value: ${{ steps.app-token.outputs.token }}
+    value: ${{ steps.get-basic-setup.outputs.token }}
   bucket:
     description: Central administration bucket
-    value: ${{ steps.get-bucket-name.outputs.bucket }}
+    value: ${{ steps.get-basic-setup.outputs.bucket }}
   deployment:
     description: Name of this deployment
-    value: ${{ steps.get-deployment-name.outputs.name}}
+    value: ${{ steps.get-basic-setup.outputs.deployment_name}}
   region:
     description: AWS region we are deploying to
-    value: ${{ steps.get-region.outputs.value }}
+    value: ${{ steps.get-basic-setup.outputs.region }}
   state_file:
     description: Name of the state file
-    value: ${{ steps.get-state-file.outputs.state_file }}
+    value: ${{ steps.get-basic-setup.outputs.state_file }}
 
 runs:
   using: composite
@@ -50,34 +51,14 @@ runs:
       shell: bash
       run: date
 
-    # TODO: replace with get-basic-setup. pass through all params
-    - name: Create Github app token
-      id: app-token
-      uses: actions/create-github-app-token@v1
+    - name: Get basic setup
+      id: get-basic-setup
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-basic-setup@main
       with:
-        app-id: ${{ inputs.terraform_app_id }}
-        private-key: ${{ inputs.terraform_private_key }}
-        owner: ${{ github.repository_owner }}
-
-    # TODO: replace with get-basic-setup. pass through all params
-    - name: Get account id
-      id: get-account-id
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
-      with:
-        repository: stormreply/storm-library-for-terraform
-        token: ${{ steps.app-token.outputs.token}}
-        use_if_set: ${{ inputs.account_id }}
-        variable: ACCOUNT_ID
-
-    # TODO: replace with get-basic-setup. pass through all params
-    - name: Get region
-      id: get-region
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
-      with:
-        repository: stormreply/storm-library-for-terraform
-        token: ${{ steps.app-token.outputs.token}}
-        use_if_set: ${{ inputs.region }}
-        variable: REGION
+        account_id: ${{ inputs.account_id }}
+        app_id: ${{ vars.TERRAFORM_APP_ID }}
+        environment: ${{ inputs.environment }}
+        private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -85,7 +66,7 @@ runs:
     - name: Set up access token
       shell: bash
       run: |
-        TOKEN=${{ steps.app-token.outputs.token}}
+        TOKEN=${{ steps.get-basic-setup.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
     - name: Download providers.tf
@@ -123,33 +104,12 @@ runs:
         yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
         rm catalog.yaml
 
-    # TODO: replace with get-basic-setup. pass through all params
-    - name: Get bucket name
-      id: get-bucket-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
-      with:
-        account_id: ${{ steps.get-account-id.outputs.value}}
-
-    # TODO: add to and replace with get-basic-setup. pass through all params
-    - name: Get deployment name
-      id: get-deployment-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
-      with:
-        environment: ${{ inputs.environment }}
-
-    # TODO: add to and replace with get-basic-setup. pass through all params
-    - name: Get state file
-      id: get-state-file
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-state-file@main
-      with:
-        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
-
     - name: Create deployment variables
       shell: bash
       run: |
         repository=${{ github.repository }}
         repo=${repository##*/}
-        deployment_name=${{ steps.get-deployment-name.outputs.name }}
+        deployment_name=${{ steps.get-basic-setup.outputs.deployment_name }}
 
         cat << EOF >> github.tfvars
         deployment = {
@@ -170,8 +130,8 @@ runs:
     - name: AWS configure
       uses: stormreply/storm-library-for-terraform/.github/actions/aws-configure@main
       with:
-        account_id: ${{ steps.get-account-id.outputs.value }}
-        region: ${{ steps.get-region.outputs.value }}
+        account_id: ${{ steps.get-basic-setup.outputs.account_id }}
+        region: ${{ steps.get-basic-setup.outputs.region }}
         backend_role: slt-0-storm-library-for-terraform-backend
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}

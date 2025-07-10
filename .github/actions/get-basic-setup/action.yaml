@@ -1,12 +1,16 @@
 name: Get basic setup
 
 inputs:
-  account_id:
-    required: false
+
   app_id:
     required: true
   private_key:
     required: true
+
+  account_id:
+    required: false
+  environment:
+    required: false
   region:
     required: false
 
@@ -17,9 +21,15 @@ outputs:
   bucket:
     description: Central administration bucket
     value: ${{ steps.get-bucket-name.outputs.bucket }}
+  deployment_name:
+    description: Name of our deployment
+    value: ${{ steps.get-deployment-name.outputs.name }}
   region:
     description: AWS region we are deploying to
     value: ${{ steps.get-region.outputs.value }}
+  state_file:
+    description: Terraform State file we are gonna use
+    value: ${{ steps.get-state-file.outputs.state_file }}
   token:
     description: Token to use for GitHub calls
     value: ${{ steps.app-token.outputs.token}}
@@ -59,3 +69,15 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value }}
+
+    - name: Get deployment name
+      id: get-deployment-name
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
+      with:
+        environment: ${{ inputs.environment }}
+
+    - name: Get state file
+      id: get-state-file
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-state-file@main
+      with:
+        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
