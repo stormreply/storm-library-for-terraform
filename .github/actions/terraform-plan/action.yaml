@@ -20,6 +20,8 @@ runs:
     - name: Terraform init with S3 backend
       shell: bash
       run: |
+        ls -la
+        cat terraform.tf
         git config --list --show-origin
         terraform init \
           -backend-config="bucket=${{ inputs.bucket }}" \
