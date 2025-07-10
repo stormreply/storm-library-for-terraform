@@ -4,28 +4,33 @@ catalog :
     authors: berndherding
     published: 2025-04-22
     description: A quick demo showing AWS Lake Formation using row/column permissions on an s3table
+    reference: https://github.com/stormreply/lake-formation-demo
     public: yes
   sakila-mysql-rds:
     id: 2
     authors: berndherding
     published: 2025-03-18
     description: A MySQL RDS containing the sakila database
+    reference: https://github.com/stormreply/sakila-mysql-rds
     public: yes
   terraform-build-controller:
     id: 1
     authors: berndherding
     published: 2025-03-18
     description: An EC2 instance with configurable user data to be used as a build controller
+    reference: https://github.com/stormreply/terraform-build-controller
     public: yes
   storm-library-for-terraform:
     id: 0
     authors: berndherding
     published: 2025-03-18
     description: The central workflow controller repository for the Storm Library for Terraform
+    reference: https://github.com/stormreply/storm-library-for-terraform
     public: yes
   client-vpn-demo:
     id: 4
     authors: berndherding
     published: 2025-06-26
     desciption: A quick demo showing an AWS Client VPN setup with two associated VPCs
+    reference: https://github.com/stormreply/client-vpn-demo
     public: yes
