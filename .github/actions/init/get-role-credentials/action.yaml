@@ -3,7 +3,7 @@ name: Get role credentials
 inputs:
   account_id:
     required: true
-  region:
+  backend_region:
     required: true
   role_name:
     required: true
@@ -24,7 +24,7 @@ runs:
         CREDENTIALS=$(
           aws sso get-role-credentials \
             --account-id ${{ inputs.account_id }} \
-            --region ${{ inputs.region }} \
+            --region ${{ inputs.backend_region }} \
             --role-name ${{ inputs.role_name }} \
             --access-token '${{ inputs.access_token }}'
         )
@@ -40,9 +40,9 @@ runs:
         echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
         echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
         echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
-        echo "AWS_DEFAULT_REGION=${{ inputs.region }}"
+        echo "AWS_DEFAULT_REGION=${{ inputs.backend_region }}"
 
         echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
         echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN" >> $GITHUB_ENV
-        echo "AWS_DEFAULT_REGION=${{ inputs.region }}" >> $GITHUB_ENV
+        echo "AWS_DEFAULT_REGION=${{ inputs.backend_region }}" >> $GITHUB_ENV

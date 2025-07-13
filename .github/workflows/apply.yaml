@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Check
-        uses: stormreply/storm-library-for-terraform/.github/actions/check@main
-        id: check
+      - name: Check Code
+        uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
+        id: check-code
 
   plan:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ steps.prepare.outputs.backend_region }}
@@ -69,7 +69,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ steps.prepare.outputs.backend_region }}

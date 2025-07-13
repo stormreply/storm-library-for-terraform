@@ -10,7 +10,7 @@ on:
       account_id:
         required: true
         default: 123456789012
-      region:
+      backend_region:
         required: false
         default: eu-central-1
 
@@ -25,14 +25,16 @@ jobs:
     outputs:
       access_token: ${{ steps.sso.outputs.access_token }}
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Single sign on
         id: sso
-        uses: stormreply/storm-library-for-terraform/.github/actions/single-sign-on@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/single-sign-on@main
         with:
           access_domain: ${{ inputs.access_domain }}
-          region: ${{ inputs.region }}
+          backend_region: ${{ inputs.backend_region }}
 
   init:
     needs: sso
@@ -40,11 +42,11 @@ jobs:
     steps:
 
       - name: Get role credentials
-        uses: stormreply/storm-library-for-terraform/.github/actions/get-role-credentials@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
           access_token: ${{ needs.sso.outputs.access_token }}
           account_id: ${{ inputs.account_id }}
-          region: ${{ inputs.region }}
+          backend_region: ${{ inputs.backend_region }}
           role_name: AdministratorAccess
 
       - name: Prepare
@@ -52,7 +54,7 @@ jobs:
         id: prepare
         with:
           account_id: ${{ inputs.account_id }}
-          region: ${{ inputs.region }}
+          backend_region: ${{ inputs.backend_region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           use_oidc: false
@@ -63,41 +65,41 @@ jobs:
           backend_bucket=${{ steps.prepare.outputs.backend_bucket }}
           aws s3api create-bucket \
             --bucket ${backend_bucket} \
-            --region ${{ inputs.region }} \
-            --create-bucket-configuration LocationConstraint=${{ inputs.region }} \
+            --region ${{ inputs.backend_region }} \
+            --create-bucket-configuration LocationConstraint=${{ inputs.backend_region }} \
           || true
           cat << EOF >> init.tfvars
           bucket = "${backend_bucket}"
           EOF
 
       - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ inputs.region }}
+          backend_region: ${{ inputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
 
       - name: Terraform apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ inputs.region }}
+          backend_region: ${{ inputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
 
       - name: Save account id
-        uses: stormreply/storm-library-for-terraform/.github/actions/set-repository-variable@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
           value: ${{ inputs.account_id }}
           variable: ACCOUNT_ID
 
-      - name: Save region
-        uses: stormreply/storm-library-for-terraform/.github/actions/set-repository-variable@main
+      - name: Save backend region
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
-          value: ${{ inputs.region }}
+          value: ${{ inputs.backend_region }}
           variable: REGION

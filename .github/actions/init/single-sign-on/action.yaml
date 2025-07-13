@@ -3,7 +3,7 @@ name: Single sign on
 inputs:
   access_domain:
     required: true
-  region:
+  backend_region:
     required: false
 
 outputs:
@@ -28,7 +28,7 @@ runs:
 
         cat << EOF >> ${HOME}/.aws/config
         [profile default]
-        sso_region=${{ inputs.region }}
+        sso_region=${{ inputs.backend_region }}
         sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
         EOF
 

@@ -11,7 +11,7 @@ inputs:
     required: false
   environment:
     required: false
-  region:
+  backend_region:
     required: false
   use_oidc:
     required: false
@@ -54,9 +54,9 @@ runs:
       shell: bash
       run: date
 
-    - name: Get basic setup
-      id: get-basic-setup
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-basic-setup@main
+    - name: Setup
+      id: setup
+      uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
       with:
         account_id: ${{ inputs.account_id }}
         app_id: ${{ inputs.terraform_app_id }}
@@ -73,24 +73,16 @@ runs:
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
     - name: Download providers.tf
-      shell: bash
-      run: |
-        TOKEN=${{ steps.get-basic-setup.outputs.token }}
-        curl \
-          -H "Accept: application/vnd.github.raw" \
-          -o providers.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/providers.tf \
-        2> /dev/null
+      uses: stormreply/storm-library-for-terraform/.github/actions/download@main
+      with:
+        token: ${{ steps.get-basic-setup.outputs.token }}
+        file: providers.tf
 
     - name: Download terraform.tf
-      shell: bash
-      run: |
-        TOKEN=${{ steps.get-basic-setup.outputs.token }}
-        curl \
-          -H "Accept: application/vnd.github.raw" \
-          -o terraform.tf \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/terraform.tf \
-        2> /dev/null
+      uses: stormreply/storm-library-for-terraform/.github/actions/download@main
+      with:
+        token: ${{ steps.get-basic-setup.outputs.token }}
+        file: terraform.tf
 
     - name: Create deployment variables
       shell: bash
@@ -116,7 +108,7 @@ runs:
         cat github.tfvars
 
     - name: Set backend profile in AWS config
-      uses: stormreply/storm-library-for-terraform/.github/actions/set-backend-profile@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
       with:
         account_id: ${{ steps.get-basic-setup.outputs.account_id }}
         backend_region: ${{ steps.get-basic-setup.outputs.backend_region }}
@@ -124,7 +116,7 @@ runs:
         use_oidc: ${{ inputs.use_oidc }}
 
     - name: Set deployment profile in AWS config
-      uses: stormreply/storm-library-for-terraform/.github/actions/set-deployment-profile@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-profile@main
       with:
         account_id: ${{ steps.get-basic-setup.outputs.account_id }}
         deployment_region: ${{ steps.get-basic-setup.outputs.deployment_region }}

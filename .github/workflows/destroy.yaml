@@ -31,7 +31,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform-destroy@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/destroy@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ steps.prepare.outputs.backend_region }}

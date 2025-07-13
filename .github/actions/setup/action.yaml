@@ -51,7 +51,7 @@ runs:
 
     - name: Get account id
       id: get-account-id
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/variable@main
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
@@ -60,7 +60,7 @@ runs:
 
     - name: Get backend region
       id: get-backend-region
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/variable@main
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
@@ -69,19 +69,19 @@ runs:
 
     - name: Get backend bucket
       id: get-backend-bucket
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-backend-bucket@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value }}
 
     - name: Get deployment name
       id: get-deployment-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-deployment-name@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
       with:
         environment: ${{ inputs.environment }}
         token: ${{ steps.app-token.outputs.token}}
 
     - name: Get state file
       id: get-state-file
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-state-file@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main
       with:
         deployment_name: ${{ steps.get-deployment-name.outputs.name }}

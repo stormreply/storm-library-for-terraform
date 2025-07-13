@@ -1,0 +1,24 @@
+name: Download File
+
+inputs:
+  file:
+    required: true
+  token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Download File
+      id: download-file
+      shell: bash
+      run: |
+        api="x-access-token:${{ inputs.token }}@api.github.com"
+        path="repos/stormreply/storm-library-for-terraform/contents"
+        file=${{ inputs.file }}
+
+        curl \
+          -H "Accept: application/vnd.github.raw" \
+          -o ${file} \
+          "https://${api}/${path}/${file}
+        2> /dev/null
