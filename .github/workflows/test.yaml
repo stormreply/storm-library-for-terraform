@@ -45,7 +45,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ steps.prepare.outputs.region }}
+          backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
@@ -74,7 +74,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ steps.prepare.outputs.region }}
+          backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
@@ -83,9 +83,9 @@ jobs:
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          deployment: ${{ steps.prepare.outputs.deployment }}
+          deployment_name: ${{ steps.prepare.outputs.deployment_name }}
+          deployment_region: ${{ steps.prepare.outputs.deployment_region }}
           expires_after: "0 seconds"
-          region: ${{ steps.prepare.outputs.region }}
 
   destroy:
     needs: apply
@@ -105,7 +105,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-destroy@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ steps.prepare.outputs.region }}
+          backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unregister old deployments
@@ -113,6 +113,6 @@ jobs:
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          deployment: ${{ steps.prepare.outputs.deployment }}
-          region: ${{ steps.prepare.outputs.region }}
+          deployment_name: ${{ steps.prepare.outputs.deployment_name }}
+          deployment_region: ${{ steps.prepare.outputs.deployment_region }}
         continue-on-error: true

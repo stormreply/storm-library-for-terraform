@@ -1,0 +1,32 @@
+name: Set backend profile in AWS config
+
+inputs:
+  account_id:
+    required: true
+  backend_region:
+    required: true
+  backend_role:
+    required: false
+  use_oidc:
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+
+    - name: Assume terraform backend role
+      if: inputs.use_oidc == 'true'
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.backend_region }}
+        role-session-name: TerraformBackendSession
+        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ inputs.backend_role }}
+
+    - name: Configure terraform backend role
+      shell: bash
+      run: |
+        aws configure set profile.backend.region ${{ inputs.backend_region }}
+        aws configure set profile.backend.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
+        aws configure set profile.backend.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
+        aws configure set profile.backend.aws_session_token $(echo ${AWS_SESSION_TOKEN})

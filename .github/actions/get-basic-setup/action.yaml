@@ -11,7 +11,7 @@ inputs:
     required: false
   environment:
     required: false
-  region:
+  backend_region:
     required: false
 
 outputs:
@@ -21,12 +21,15 @@ outputs:
   backend_bucket:
     description: Central administration backend bucket
     value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
+  backend_region:
+    description: Central administration backend region
+    value: ${{ steps.get-region.outputs.value }}
   deployment_name:
     description: Name of our deployment
     value: ${{ steps.get-deployment-name.outputs.name }}
-  region:
-    description: AWS region we are deploying to
-    value: ${{ steps.get-region.outputs.value }}
+  deployment_region:
+    description: Region where resources are being deployed to
+    value: ${{ steps.get-region.outputs.value }} # TODO:
   state_file:
     description: Terraform State file we are gonna use
     value: ${{ steps.get-state-file.outputs.state_file }}
@@ -55,14 +58,14 @@ runs:
         use_if_set: ${{ inputs.account_id }}
         variable: ACCOUNT_ID
 
-    - name: Get region
-      id: get-region
+    - name: Get backend region
+      id: get-backend-region
       uses: stormreply/storm-library-for-terraform/.github/actions/get-repository-variable@main
       with:
         repository: stormreply/storm-library-for-terraform
         token: ${{ steps.app-token.outputs.token}}
-        use_if_set: ${{ inputs.region }}
-        variable: REGION
+        use_if_set: ${{ inputs.backend_region }}
+        variable: REGION # TODO: rename to BACKEND_REGION?
 
     - name: Get backend bucket
       id: get-backend-bucket

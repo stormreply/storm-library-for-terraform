@@ -3,7 +3,7 @@ name: Terraform destroy
 inputs:
   backend_bucket:
     required: true
-  region:
+  backend_region:
     required: true
   state_file:
     required: true
@@ -22,7 +22,7 @@ runs:
           -backend-config="bucket=${{ inputs.backend_bucket }}" \
           -backend-config="profile=backend" \
           -backend-config="key=${{ github.repository }}/${{ inputs.state_file }}" \
-          -backend-config="region=${{ inputs.region }}" \
+          -backend-config="region=${{ inputs.backend_region }}" \
           -backend-config="use_lockfile=true"
         ls -la
 

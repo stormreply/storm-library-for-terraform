@@ -42,6 +42,6 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          region: ${{ steps.prepare.outputs.region }}
+          backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
