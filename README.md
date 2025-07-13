@@ -1,8 +1,8 @@
 <h1>
-  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.2em;display:inline-block;border-radius:2px;">A</span>
-  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.2em;display:inline-block;border-radius:2px;">B</span>
-  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.4em;display:inline-block;border-radius:2px;">C</span>
-  Willkommen auf meiner GitHub Page!
+  <span style="background-color:black; color:white; border:2px solid limegreen; padding:0.1em 0.4em; margin-right:0.2em; display:inline-block;">A</span>
+  <span style="background-color:black; color:white; border:2px solid limegreen; padding:0.1em 0.4em; margin-right:0.2em; display:inline-block;">B</span>
+  <span style="background-color:black; color:white; border:2px solid limegreen; padding:0.1em 0.4em; margin-right:0.4em; display:inline-block;">C</span>
+  Dein normaler Text hier
 </h1>
 
 ## SLT | Storm Library for Terraform
