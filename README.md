@@ -1,6 +1,6 @@
-# <div style="display: inline-block; background: black; color: white; border: 2px solid limegreen; padding: 0.1em 0.4em; margin-right: 0.15em; font-family: monospace; font-size: 0.8em; line-height: 1em;">S</div> | Storm Library for Terraform (SLT)
+# SLT | Storm Library for Terraform
 
-The Storm Library for Terraform (SLT) is a collection of GitHub™ repositories containing Terraform modules,
+The SLT | Storm Library for Terraform is a collection of GitHub™ repositories containing Terraform modules,
 designed to serve as a means to easily share and build showcases and good architectural patterns on AWS.
 
 It features
