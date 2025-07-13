@@ -1,4 +1,18 @@
-# Storm Library for Terraform (SLT)
+<style>
+.badge {
+  display: inline-block;
+  background: black;
+  color: white;
+  border: 2px solid limegreen;
+  padding: 0.1em 0.4em;
+  margin-right: 0.15em;
+  font-family: monospace;
+  font-size: 0.8em;
+  line-height: 1em;
+}
+</style>
+
+# <span class="badge">S</span><span class="badge">L</span><span class="badge">T</span> | Storm Library for Terraform (SLT)
 
 The Storm Library for Terraform (SLT) is a collection of GitHub™ repositories containing Terraform modules,
 designed to serve as a means to easily share and build showcases and good architectural patterns on AWS.
