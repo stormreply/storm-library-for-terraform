@@ -1,7 +1,7 @@
 name: Batch destroy
 
 inputs:
-  bucket:
+  backend_bucket:
     required: true
 
 runs:
@@ -14,7 +14,7 @@ runs:
 
         timestamps=$(
           aws s3api list-objects-v2 \
-            --bucket ${{ inputs.bucket }} \
+            --bucket ${{ inputs.backend_bucket }} \
             --prefix schedule \
             --query 'Contents[].Key'
         )

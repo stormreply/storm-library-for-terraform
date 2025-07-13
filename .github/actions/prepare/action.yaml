@@ -24,9 +24,9 @@ outputs:
   app_token:
     description: App token for GitHub API access
     value: ${{ steps.get-basic-setup.outputs.token }}
-  bucket:
-    description: Central administration bucket
-    value: ${{ steps.get-basic-setup.outputs.bucket }}
+  backend_bucket:
+    description: Central administration backend bucket
+    value: ${{ steps.get-basic-setup.outputs.backend_bucket }}
   deployment:
     description: Name of this deployment
     value: ${{ steps.get-basic-setup.outputs.deployment_name}}

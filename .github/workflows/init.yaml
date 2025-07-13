@@ -57,23 +57,23 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           use_oidc: false
 
-      - name: Check SLT bucket
+      - name: Check SLT backend bucket
         shell: bash
         run: |
-          BUCKET=${{ steps.prepare.outputs.bucket }}
+          backend_bucket=${{ steps.prepare.outputs.backend_bucket }}
           aws s3api create-bucket \
-            --bucket $BUCKET \
+            --bucket ${backend_bucket} \
             --region ${{ inputs.region }} \
             --create-bucket-configuration LocationConstraint=${{ inputs.region }} \
           || true
           cat << EOF >> init.tfvars
-          bucket = "${BUCKET}"
+          bucket = "${backend_bucket}"
           EOF
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
-          bucket: ${{ steps.prepare.outputs.bucket }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
@@ -81,7 +81,7 @@ jobs:
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
         with:
-          bucket: ${{ steps.prepare.outputs.bucket }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           region: ${{ inputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars

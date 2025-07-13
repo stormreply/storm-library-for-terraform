@@ -1,7 +1,7 @@
 name: Terraform apply
 
 inputs:
-  bucket:
+  backend_bucket:
     required: true
   region:
     required: true
@@ -26,7 +26,7 @@ runs:
       shell: bash
       run: |
         terraform init \
-          -backend-config="bucket=${{ inputs.bucket }}" \
+          -backend-config="bucket=${{ inputs.backend_bucket }}" \
           -backend-config="profile=backend" \
           -backend-config="key=${{ github.repository }}/${{ inputs.state_file }}" \
           -backend-config="region=${{ inputs.region }}" \

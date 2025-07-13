@@ -18,9 +18,9 @@ outputs:
   account_id:
     description: Id of the AWS account we are deploying to
     value: ${{ steps.get-account-id.outputs.value }}
-  bucket:
-    description: Central administration bucket
-    value: ${{ steps.get-bucket-name.outputs.bucket }}
+  backend_bucket:
+    description: Central administration backend bucket
+    value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
   deployment_name:
     description: Name of our deployment
     value: ${{ steps.get-deployment-name.outputs.name }}
@@ -64,9 +64,9 @@ runs:
         use_if_set: ${{ inputs.region }}
         variable: REGION
 
-    - name: Get bucket name
-      id: get-bucket-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
+    - name: Get backend bucket
+      id: get-backend-bucket
+      uses: stormreply/storm-library-for-terraform/.github/actions/get-backend-bucket@main
       with:
         account_id: ${{ steps.get-account-id.outputs.value }}
 

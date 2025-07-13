@@ -44,7 +44,7 @@ jobs:
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-plan@main
         with:
-          bucket: ${{ steps.prepare.outputs.bucket }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
@@ -73,7 +73,7 @@ jobs:
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-apply@main
         with:
-          bucket: ${{ steps.prepare.outputs.bucket }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
@@ -82,6 +82,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/register@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment: ${{ steps.prepare.outputs.deployment }}
           expires_after: "0 seconds"
           region: ${{ steps.prepare.outputs.region }}
@@ -103,7 +104,7 @@ jobs:
       - name: Terraform destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform-destroy@main
         with:
-          bucket: ${{ steps.prepare.outputs.bucket }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           region: ${{ steps.prepare.outputs.region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
@@ -111,6 +112,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/unregister@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment: ${{ steps.prepare.outputs.deployment }}
           region: ${{ steps.prepare.outputs.region }}
         continue-on-error: true

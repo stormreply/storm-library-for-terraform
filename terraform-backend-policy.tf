@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "terraform_backend_policy" {
       "s3:ListBucket"
     ]
     resources = [
-      "arn:aws:s3:::${var.bucket}"
+      "arn:aws:s3:::${var.backend_bucket}"
     ]
   }
   statement {
@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "terraform_backend_policy" {
       "s3:DeleteObject"
     ]
     resources = [
-      "arn:aws:s3:::${var.bucket}/*"
+      "arn:aws:s3:::${var.backend_bucket}/*"
     ]
   }
 }

@@ -1,0 +1,21 @@
+name: Get bucket name
+
+inputs:
+  account_id:
+    required: true
+
+outputs:
+  backend_bucket:
+    description: Central administration backend bucket
+    value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get backend bucket
+      id: get-backend-bucket
+      shell: bash
+      run: |
+        backend_bucket="storm-library-for-terraform-${{ inputs.account_id }}"
+        echo "backend_bucket=${backend_bucket}"
+        echo "backend_bucket=${backend_bucket}" >> $GITHUB_OUTPUT

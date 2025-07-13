@@ -42,4 +42,4 @@ jobs:
       - name: Batch destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/batch-destroy@main
         with:
-          bucket: ${{ steps.get-basic-setup.outputs.bucket }}
+          backend_bucket: ${{ steps.get-basic-setup.outputs.backend_bucket }}

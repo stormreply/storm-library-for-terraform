@@ -3,6 +3,8 @@ name: Register deployment
 inputs:
   account_id:
     required: true
+  backend_bucket:
+    required: true
   deployment:
     required: true
   expires_after:
@@ -14,21 +16,16 @@ runs:
   using: composite
   steps:
 
-    - name: Get bucket name
-      id: get-bucket-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
-      with:
-        account_id: ${{ inputs.account_id }}
-
     - name: Register expiry
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
         deployment="${{ inputs.deployment }}"
+        backend_bucket=${{ inputs.backend_bucket }}
 
         expiry=$(date -d "now + ${{ inputs.expires_after}}" +"%Y%m%d-%H%M%S")
         timestamp="${expiry}-${account_id}-${region}-${deployment}"
         touch ${timestamp}
-        aws s3 cp ${timestamp} s3://${{ steps.get-bucket-name.outputs.bucket }}/schedule/
+        aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/
         echo "REGISTERED ${timestamp}"

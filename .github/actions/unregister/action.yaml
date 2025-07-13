@@ -3,6 +3,8 @@ name: Unregister deployment
 inputs:
   account_id:
     required: true
+  backend_bucket:
+    required: true
   deployment:
     required: true
   region:
@@ -12,22 +14,17 @@ runs:
   using: composite
   steps:
 
-    - name: Get bucket name
-      id: get-bucket-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get-bucket-name@main
-      with:
-        account_id: ${{ inputs.account_id }}
-
     - name: Unregister expiry
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
         region=${{ inputs.region }}
         deployment="${{ inputs.deployment }}"
+        backend_bucket=${{ inputs.backend_bucket }}
 
         timestamps=$(
           aws s3api list-objects-v2 \
-            --bucket ${{ steps.get-bucket-name.outputs.bucket }} \
+            --bucket ${backend_bucket} \
             --prefix schedule \
             --query 'Contents[].Key'
         )
@@ -43,6 +40,6 @@ runs:
         fi
 
         for key in $timestamps ; do
-          aws s3 rm s3://${{ steps.get-bucket-name.outputs.bucket }}/${key}
+          aws s3 rm s3://${backend_bucket}/${key}
           echo "UNREGISTERED ${key}"
         done

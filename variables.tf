@@ -1,4 +1,4 @@
-variable "bucket" {
-  description = "Administration bucket of the Storm Library for Terraform (SLT)™"
+variable "backend_bucket" {
+  description = "Central backend bucket of the Storm Library for Terraform (SLT)™"
   type        = string
 }
