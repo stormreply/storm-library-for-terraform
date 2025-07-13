@@ -28,17 +28,17 @@ jobs:
 
       - name: gh auth login
         # we need gh auth in order to run gh workflow in batch destroy
-        run: echo "${{ steps.get-basic-setup.outputs.token }}" | gh auth login --with-token
+        run: echo "${{ steps.setup.outputs.token }}" | gh auth login --with-token
 
       - name: Set backend profile in AWS config
         # we need to assume role in order to aws s3api in batch destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
         with:
-          account_id: ${{ steps.get-basic-setup.outputs.account_id }}
-          backend_region: ${{ steps.get-basic-setup.outputs.backend_region }}
+          account_id: ${{ steps.setup.outputs.account_id }}
+          backend_region: ${{ steps.setup.outputs.backend_region }}
           backend_role: slt-0-storm-library-for-terraform-backend
 
       - name: Batch destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/batch-destroy@main
         with:
-          backend_bucket: ${{ steps.get-basic-setup.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.setup.outputs.backend_bucket }}

@@ -20,25 +20,25 @@ inputs:
 outputs:
   account_id:
     description: Id of the AWS account we are deploying to
-    value: ${{ steps.get-basic-setup.outputs.account_id }}
+    value: ${{ steps.setup.outputs.account_id }}
   app_token:
     description: App token for GitHub API access
-    value: ${{ steps.get-basic-setup.outputs.token }}
+    value: ${{ steps.setup.outputs.token }}
   backend_bucket:
     description: Central administration backend bucket
-    value: ${{ steps.get-basic-setup.outputs.backend_bucket }}
+    value: ${{ steps.setup.outputs.backend_bucket }}
   backend_region:
     description: Central administration backend region
-    value: ${{ steps.get-basic-setup.outputs.backend_region }}
+    value: ${{ steps.setup.outputs.backend_region }}
   deployment_name:
     description: Name of this deployment
-    value: ${{ steps.get-basic-setup.outputs.deployment_name}}
+    value: ${{ steps.setup.outputs.deployment_name}}
   deployment_region:
     description: Region resources are being deployed to
-    value: ${{ steps.get-basic-setup.outputs.deployment_region }}
+    value: ${{ steps.setup.outputs.deployment_region }}
   state_file:
     description: Name of the state file
-    value: ${{ steps.get-basic-setup.outputs.state_file }}
+    value: ${{ steps.setup.outputs.state_file }}
 
 runs:
   using: composite
@@ -69,19 +69,19 @@ runs:
     - name: Set up access token
       shell: bash
       run: |
-        TOKEN=${{ steps.get-basic-setup.outputs.token}}
+        TOKEN=${{ steps.setup.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
       with:
-        token: ${{ steps.get-basic-setup.outputs.token }}
+        token: ${{ steps.setup.outputs.token }}
         file: providers.tf
 
     - name: Download terraform.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
       with:
-        token: ${{ steps.get-basic-setup.outputs.token }}
+        token: ${{ steps.setup.outputs.token }}
         file: terraform.tf
 
     - name: Create deployment variables
@@ -89,7 +89,7 @@ runs:
       run: |
         repository=${{ github.repository }}
         repo=${repository##*/}
-        deployment_name=${{ steps.get-basic-setup.outputs.deployment_name }}
+        deployment_name=${{ steps.setup.outputs.deployment_name }}
 
         cat << EOF >> github.tfvars
         deployment = {
@@ -110,15 +110,15 @@ runs:
     - name: Set backend profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
       with:
-        account_id: ${{ steps.get-basic-setup.outputs.account_id }}
-        backend_region: ${{ steps.get-basic-setup.outputs.backend_region }}
+        account_id: ${{ steps.setup.outputs.account_id }}
+        backend_region: ${{ steps.setup.outputs.backend_region }}
         backend_role: slt-0-storm-library-for-terraform-backend
         use_oidc: ${{ inputs.use_oidc }}
 
     - name: Set deployment profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-profile@main
       with:
-        account_id: ${{ steps.get-basic-setup.outputs.account_id }}
-        deployment_region: ${{ steps.get-basic-setup.outputs.deployment_region }}
+        account_id: ${{ steps.setup.outputs.account_id }}
+        deployment_region: ${{ steps.setup.outputs.deployment_region }}
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}
