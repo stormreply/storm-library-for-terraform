@@ -23,13 +23,13 @@ outputs:
     value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
   backend_region:
     description: Central administration backend region
-    value: ${{ steps.get-region.outputs.value }}
+    value: ${{ steps.get-backend-region.outputs.value }}
   deployment_name:
     description: Name of our deployment
     value: ${{ steps.get-deployment-name.outputs.name }}
   deployment_region:
     description: Region where resources are being deployed to
-    value: ${{ steps.get-region.outputs.value }} # TODO:
+    value: ${{ steps.get-backend-region.outputs.value }} # TODO:
   state_file:
     description: Terraform State file we are gonna use
     value: ${{ steps.get-state-file.outputs.state_file }}
