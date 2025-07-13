@@ -19,6 +19,6 @@ runs:
 
         curl \
           -H "Accept: application/vnd.github.raw" \
-          -o ${file} \
-          "https://${api}/${path}/${file}
+          -o "${file}" \
+          "https://${api}/${path}/${file}"
         2> /dev/null
