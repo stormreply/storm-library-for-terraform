@@ -1,8 +1,9 @@
-# <span style="display:inline-block;background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;border-radius:3px;font-family:monospace;">A</span>
-<span style="display:inline-block;background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;border-radius:3px;font-family:monospace;">B</span>
-<span style="display:inline-block;background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;border-radius:3px;font-family:monospace;">C</span>
- Willkommen auf der GitHub Page
-
+<h1>
+  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.2em;display:inline-block;border-radius:2px;">A</span>
+  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.2em;display:inline-block;border-radius:2px;">B</span>
+  <span style="background:black;color:white;border:2px solid limegreen;padding:0.1em 0.3em;margin-right:0.4em;display:inline-block;border-radius:2px;">C</span>
+  Willkommen auf meiner GitHub Page!
+</h1>
 
 ## SLT | Storm Library for Terraform
 
