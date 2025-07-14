@@ -18,7 +18,7 @@ runs:
         file=${{ inputs.file }}
 
         curl \
-          -H "Accept: application/vnd.github.raw" \
           -o "${file}" \
+          -H "Accept: application/vnd.github.raw" \
           "https://${api}/${path}/${file}"
         2> /dev/null

@@ -41,13 +41,20 @@ runs:
   using: composite
   steps:
 
+    # - name: Create Github app token
+    #   id: app-token
+    #   uses: actions/create-github-app-token@v1
+    #   with:
+    #     app-id: ${{ inputs.app_id }}
+    #     private-key: ${{ inputs.private_key }}
+    #     owner: ${{ github.repository_owner }}
+
     - name: Create Github app token
       id: app-token
-      uses: actions/create-github-app-token@v1
-      with:
-        app-id: ${{ inputs.app_id }}
-        private-key: ${{ inputs.private_key }}
-        owner: ${{ github.repository_owner }}
+      shell: bash
+      run: |
+        echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+
 
     - name: Get account id
       id: get-account-id
