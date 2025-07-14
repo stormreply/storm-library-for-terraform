@@ -62,6 +62,7 @@ runs:
       with:
         account_id: ${{ inputs.account_id }}
         app_id: ${{ inputs.terraform_app_id }}
+        backend_region: ${{ inputs.backend_region }}
         environment: ${{ inputs.environment }}
         private_key: ${{ inputs.terraform_private_key }}
         token: ${{ inputs.token }}
