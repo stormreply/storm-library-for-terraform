@@ -1,40 +1,48 @@
 name: Scheduler
 
-on:
-  # schedule:
-  #   - cron: '50 12 1 * *'
-  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
 
-permissions: read-all
+on:
+  schedule:
+    - cron: "17 */4 * * *"  # run once every 4 hours
+  workflow_dispatch:
 
 jobs:
 
-  test:
+  schedule:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    strategy:
-      matrix:
-        repo:
-          - "stormreply/lake-formation-demo"
-          - "stormreply/terraform-build-controller"
-          - "stormreply/sakila-mysql-rds"
-
     steps:
 
-      - name: Create app token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.TERRAFORM_APP_ID }}
-          private-key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-
-      - name: Authenticate
-        run: echo "${{ steps.app-token.outputs.token }}" | gh auth login --with-token
-
-      - name: Test
+      - name: Time
+        id: time
+        shell: bash
         run: |
-          gh workflow run plan.yaml --repo ${{ matrix.repo }}
+          date=$(date)
+          echo "date=${deployment_name}" >> $GITHUB_OUTPUT
+
+      - name: Setup
+        id: setup
+        uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
+        with:
+          app_id: ${{ vars.TERRAFORM_APP_ID }}
+          private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: gh auth login
+        # we need gh auth in order to run a gh workflow
+        run: echo "${{ steps.setup.outputs.token }}" | gh auth login --with-token
+
+      - name: Set backend profile in AWS config
+        # we need to assume role in order to aws s3api
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
+        with:
+          account_id: ${{ steps.setup.outputs.account_id }}
+          backend_region: ${{ steps.setup.outputs.backend_region }}
+          backend_role: slt-0-storm-library-for-terraform-backend
+
+      - name: Execute
+        uses: stormreply/storm-library-for-terraform/.github/actions/execute@main
+        with:
+          backend_bucket: ${{ steps.setup.outputs.backend_bucket }}

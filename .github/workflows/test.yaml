@@ -10,7 +10,7 @@ on:
       environment:
         type: string
         required: false
-        default: ${{ github.actor }}
+        default: ""
       var_file:
         type: string
         required: false
@@ -78,14 +78,14 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
-      - name: Register
+      - name: Register new deployment for destruction
         uses: stormreply/storm-library-for-terraform/.github/actions/register@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
+          action: destroy
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
-          expires_after: "0 seconds"
 
   destroy:
     needs: apply

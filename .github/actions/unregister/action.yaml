@@ -1,4 +1,4 @@
-name: Unregister deployment
+name: Unregister action
 
 inputs:
   account_id:

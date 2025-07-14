@@ -1,4 +1,4 @@
-name: Batch destroy
+name: Execute
 
 inputs:
   backend_bucket:
@@ -31,6 +31,7 @@ runs:
           file=${e##*/} ; f=${file}
           date=${f%%-*} ; f=${f##$date-}
           time=${f%%-*} ; f=${f##$time-}
+          action=${f%%-*} ; f=${f##$action-}
           account_id=${f%%-*} ; f=${f##$account_id-}
           region=${f%-${f#*-*-*-}} ; f=${f##$region-}
           slt=${f%%-*} ; f=${f##$slt-}
@@ -38,19 +39,19 @@ runs:
           repo=${f%-*}
           environment=${f##$repo-}
           time="${time:0:2}:${time:2:2}:${time:4:2}"
-          expiry=$(date -d "${date} ${time}" +"%s")
+          when=$(date -d "${date} ${time}" +"%s")
           now=$(date -d now +"%s")
           nows=$(date -d now +"%Y%m%d-%H%M%S")
           echo -n "checking current time (${nows}) against ${file}... "
 
-          if [ ${expiry} -lt ${now} ] ; then
-            echo "EXPIRED"
+          if [ ${when} -lt ${now} ] ; then
+            echo "OVERDUE"
             # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
-            gh workflow run destroy.yaml \
+            gh workflow run ${action}.yaml \
               --repo stormreply/${repo} \
               -f environment=${environment} &
           else
-            echo "AUTHORIZED"
+            echo "WAITING"
           fi
 
         done
