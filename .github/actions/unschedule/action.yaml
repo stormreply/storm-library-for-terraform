@@ -1,4 +1,4 @@
-name: Unregister action
+name: Unschedule actions
 
 inputs:
   account_id:
@@ -14,7 +14,7 @@ runs:
   using: composite
   steps:
 
-    - name: Unregister expiry
+    - name: Unschedule actions
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
@@ -41,5 +41,5 @@ runs:
 
         for key in $timestamps ; do
           aws s3 rm s3://${backend_bucket}/${key}
-          echo "UNREGISTERED ${key}"
+          echo "UNSCHEDULED ${key}"
         done

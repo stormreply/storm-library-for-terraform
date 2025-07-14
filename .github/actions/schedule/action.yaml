@@ -1,4 +1,4 @@
-name: Register action
+name: Schedule action
 
 inputs:
   account_id:
@@ -18,7 +18,16 @@ runs:
   using: composite
   steps:
 
-    - name: Register execution
+    - name: Unschedule action
+      uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
+      with:
+        account_id: ${{ inputs.account_id }}
+        backend_bucket: ${{ inputs.backend_bucket }}
+        deployment_name: ${{ inputs.deployment_name }}
+        deployment_region: ${{ inputs.deployment_region }}
+      continue-on-error: true
+
+    - name: Schedule action
       shell: bash
       run: |
         account_id=${{ inputs.account_id }}
@@ -31,4 +40,4 @@ runs:
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
         touch ${timestamp}
         aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/
-        echo "REGISTERED ${timestamp}"
+        echo "SCHEDULED ${timestamp}"

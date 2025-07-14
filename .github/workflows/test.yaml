@@ -78,8 +78,8 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: ${{ inputs.var_file}}
 
-      - name: Register new deployment for destruction
-        uses: stormreply/storm-library-for-terraform/.github/actions/register@main
+      - name: Schedule destroy
+        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           action: destroy
@@ -108,8 +108,8 @@ jobs:
           backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
 
-      - name: Unregister old deployments
-        uses: stormreply/storm-library-for-terraform/.github/actions/unregister@main
+      - name: Unschedule actions
+        uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
