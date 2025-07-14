@@ -10,7 +10,7 @@ on:
       environment:
         type: string
         required: false
-        default: ""
+        default: ${{ github.actor }}
       var_file:
         type: string
         required: false

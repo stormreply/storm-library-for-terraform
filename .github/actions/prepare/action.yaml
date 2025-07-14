@@ -17,9 +17,6 @@ inputs:
     required: false
   environment:
     required: false
-  repository:
-    required: false
-    default: ${{ github.repository }}
   use_oidc:
     required: false
     default: "true"
@@ -74,10 +71,6 @@ runs:
 
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        ref: main
-        repository: ${{ inputs.repository }}
-        token: ${{ steps.setup.outputs.token }}
 
     - name: Set up access token
       shell: bash

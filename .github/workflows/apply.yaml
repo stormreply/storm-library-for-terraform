@@ -10,7 +10,7 @@ on:
       environment:
         type: string
         required: false
-        default: ""
+        default: ${{ github.actor }}
       expires_after:
         type: string
         required: false

@@ -24,9 +24,6 @@ runs:
           https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
         2> /dev/null
 
-        ls -la catalog.yaml
-        cat catalog.yaml
-
         repository=${{ github.repository }}
         repo=${repository##*/}
 
