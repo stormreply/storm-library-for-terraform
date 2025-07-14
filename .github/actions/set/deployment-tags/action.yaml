@@ -1,0 +1,34 @@
+name: Set deployment tags
+
+inputs:
+  deployment_name
+    required: true
+  environment:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: Create deployment tags
+      shell: bash
+      run: |
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        deployment_name=${{ inputs.deployment_name }}
+
+        cat << EOF >> github.tfvars
+        deployment = {
+          actor       = "${{ github.actor }}"
+          environment = "${{ inputs.environment }}"
+          name        = "${deployment_name}"
+          ref         = "${{ github.ref }}"
+          ref_name    = "${{ github.ref_name }}"
+          repo        = "${repo}"
+          repository  = "${{ github.repository }}"
+          sha         = "${{ github.sha }}"
+          time        = "$(date)"
+        }
+        EOF
+
+        cat github.tfvars

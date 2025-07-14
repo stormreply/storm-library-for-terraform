@@ -90,28 +90,11 @@ runs:
         token: ${{ steps.setup.outputs.token }}
         file: terraform.tf
 
-    - name: Create deployment variables
-      shell: bash
-      run: |
-        repository=${{ github.repository }}
-        repo=${repository##*/}
-        deployment_name=${{ steps.setup.outputs.deployment_name }}
-
-        cat << EOF >> github.tfvars
-        deployment = {
-          actor       = "${{ github.actor }}"
-          environment = "${{ inputs.environment }}"
-          name        = "${deployment_name}"
-          ref         = "${{ github.ref }}"
-          ref_name    = "${{ github.ref_name }}"
-          repo        = "${repo}"
-          repository  = "${{ github.repository }}"
-          sha         = "${{ github.sha }}"
-          time        = "$(date)"
-        }
-        EOF
-
-        cat github.tfvars
+    - name: Set deployment tags
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
+      with:
+        deployment_name: ${{ steps.setup.outputs.deployment_name }}
+        environment: ${{ inputs.environment }}
 
     - name: Set backend profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
