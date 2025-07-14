@@ -91,7 +91,7 @@ jobs:
             --create-bucket-configuration LocationConstraint=${{ inputs.backend_region }} \
           || true
           cat << EOF >> init.tfvars
-          bucket = "${backend_bucket}"
+          backend_bucket = "${backend_bucket}"
           EOF
 
       - name: Terraform plan
