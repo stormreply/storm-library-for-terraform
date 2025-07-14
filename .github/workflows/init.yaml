@@ -11,7 +11,7 @@ on:
         required: true
         default: 123456789012
       backend_region:
-        required: false
+        required: true
         default: eu-central-1
 
   workflow_call:
@@ -27,8 +27,12 @@ on:
         default: 123456789012
       backend_region:
         type: string
-        required: false
+        required: true
         default: eu-central-1
+      repository:
+        type: string
+        required: true
+        default: stormreply/storm-library-for-terraform
 
 permissions:
   actions: write
@@ -42,8 +46,8 @@ jobs:
       access_token: ${{ steps.sso.outputs.access_token }}
     steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # - name: Checkout repository
+      #   uses: actions/checkout@v4
 
       - name: Single sign on
         id: sso
@@ -57,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Get role credentials
+      - name: Get role credentials # TODO: rather move as step into sso?
         uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
           access_token: ${{ needs.sso.outputs.access_token }}
@@ -73,6 +77,7 @@ jobs:
           backend_region: ${{ inputs.backend_region }}
           # terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           # terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          repository: ${{ inputs.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
           use_oidc: false
 

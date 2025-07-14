@@ -11,10 +11,13 @@ inputs:
 
   account_id:
     required: false
-  environment:
-    required: false
   backend_region:
     required: false
+  environment:
+    required: false
+  repository:
+    required: false
+    default: ${{ github.repository }}
   use_oidc:
     required: false
     default: "true"
@@ -69,6 +72,8 @@ runs:
 
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
 
     - name: Set up access token
       shell: bash
