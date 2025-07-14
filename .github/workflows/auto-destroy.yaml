@@ -23,9 +23,9 @@ jobs:
         id: setup
         uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # app_id: ${{ vars.TERRAFORM_APP_ID }}
-          # private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          app_id: ${{ vars.TERRAFORM_APP_ID }}
+          private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: gh auth login
         # we need gh auth in order to run gh workflow in batch destroy

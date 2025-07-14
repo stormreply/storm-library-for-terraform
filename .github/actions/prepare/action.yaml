@@ -2,12 +2,14 @@ name: Prepare
 
 inputs:
 
-  # terraform_app_id:
-  #   required: true
-  # terraform_private_key:
-  #   required: true
-  token:
+  terraform_app_id:
     required: true
+  terraform_private_key:
+    required: true
+  # TODO: move app-token action out of prepare, init at very beginning and pass to prepare.
+  # this way, we could create an alternative token easier
+  # token:
+  #   required: true
 
   account_id:
     required: false
@@ -68,7 +70,7 @@ runs:
         backend_region: ${{ inputs.backend_region }}
         environment: ${{ inputs.environment }}
         private_key: ${{ inputs.terraform_private_key }}
-        token: ${{ inputs.token }}
+        # token: ${{ inputs.token }}
 
     - name: Checkout repository
       uses: actions/checkout@v4
