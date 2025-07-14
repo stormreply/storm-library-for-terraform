@@ -77,7 +77,7 @@ runs:
       with:
         ref: main
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
+        token: ${{ steps.setup.outputs.token }}
 
     - name: Set up access token
       shell: bash
