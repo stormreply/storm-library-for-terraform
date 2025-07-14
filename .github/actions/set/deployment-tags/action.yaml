@@ -1,7 +1,7 @@
 name: Set deployment tags
 
 inputs:
-  deployment_name
+  deployment_name:
     required: true
   environment:
     required: true
