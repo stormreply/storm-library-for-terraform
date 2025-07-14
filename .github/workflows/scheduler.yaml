@@ -16,11 +16,8 @@ jobs:
     steps:
 
       - name: Time
-        id: time
         shell: bash
-        run: |
-          date=$(date)
-          echo "date=${deployment_name}" >> $GITHUB_OUTPUT
+        run: date
 
       - name: Setup
         id: setup
