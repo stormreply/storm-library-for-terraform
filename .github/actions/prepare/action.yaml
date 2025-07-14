@@ -74,6 +74,7 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: ${{ inputs.repository }}
+        ref: main
 
     - name: Set up access token
       shell: bash
