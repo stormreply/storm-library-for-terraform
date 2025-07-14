@@ -2,9 +2,11 @@ name: Prepare
 
 inputs:
 
-  terraform_app_id:
-    required: true
-  terraform_private_key:
+  # terraform_app_id:
+  #   required: true
+  # terraform_private_key:
+  #   required: true
+  token:
     required: true
 
   account_id:
