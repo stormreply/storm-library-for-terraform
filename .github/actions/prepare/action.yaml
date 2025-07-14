@@ -64,6 +64,7 @@ runs:
         app_id: ${{ inputs.terraform_app_id }}
         environment: ${{ inputs.environment }}
         private_key: ${{ inputs.terraform_private_key }}
+        token: ${{ inputs.token }}
 
     - name: Checkout repository
       uses: actions/checkout@v4
