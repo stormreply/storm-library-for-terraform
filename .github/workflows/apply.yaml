@@ -27,7 +27,7 @@ on:
 jobs:
 
   queue:
-    if: inputs.after != ""
+    if: inputs.after != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -51,7 +51,7 @@ jobs:
 
 
   check:
-    if: inputs.after == ""
+    if: inputs.after == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -60,7 +60,7 @@ jobs:
         id: check-code
 
   plan:
-    if: inputs.after == ""
+    if: inputs.after == ''
     runs-on: ubuntu-latest
     steps:
 
