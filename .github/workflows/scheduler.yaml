@@ -11,7 +11,7 @@ on:
 
 jobs:
 
-  schedule:
+  run-scheduler:
     runs-on: ubuntu-latest
     steps:
 
@@ -39,7 +39,10 @@ jobs:
           backend_region: ${{ steps.setup.outputs.backend_region }}
           backend_role: slt-0-storm-library-for-terraform-backend
 
-      - name: Execute
-        uses: stormreply/storm-library-for-terraform/.github/actions/execute@main
+      - name: Select
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/select@main
         with:
           backend_bucket: ${{ steps.setup.outputs.backend_bucket }}
+
+      - name: Execute
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/execute@main

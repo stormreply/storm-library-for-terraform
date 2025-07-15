@@ -40,10 +40,10 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Schedule apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
-          account_id: ${{ steps.prepare.outputs.account_id }}
           action: apply
+          account_id: ${{ steps.prepare.outputs.account_id }}
           delay: ${{ inputs.delay }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
@@ -106,10 +106,10 @@ jobs:
           var_file: ${{ inputs.var_file}}
 
       - name: Schedule destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
-          account_id: ${{ steps.prepare.outputs.account_id }}
           action: destroy
+          account_id: ${{ steps.prepare.outputs.account_id }}
           delay: ${{ inputs.duration }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}

@@ -1,4 +1,4 @@
-name: Execute
+name: Select
 
 inputs:
   backend_bucket:
@@ -8,9 +8,13 @@ runs:
   using: composite
   steps:
 
-    - name: Execute
+    - name: Select
       shell: bash
       run: |
+
+        now=$(date -d now +"%s")
+
+        echo "CURRENT TIME:   $(date -d now +"%Y-%m-%d %H:%M:%S")"
 
         timestamps=$(
           aws s3api list-objects-v2 \
@@ -24,34 +28,29 @@ runs:
         # object name must start with datestamp. if none does, continue (true)
         timestamps=$(echo "$timestamps" | grep -E "/[0-9]{8}-") || true
 
-        [ -z "$timestamps" ] && echo "No timestamps found."
+        if [ -n "$timestamps" ] ; then
+          rm -f /tmp/selected 2>&1
+          touch /tmp/selected
+        else
+          echo "No timestamps found."
+        fi
 
         for e in $timestamps ; do
 
           file=${e##*/} ; f=${file}
           date=${f%%-*} ; f=${f##$date-}
           time=${f%%-*} ; f=${f##$time-}
-          action=${f%%-*} ; f=${f##$action-}
-          account_id=${f%%-*} ; f=${f##$account_id-}
-          region=${f%-${f#*-*-*-}} ; f=${f##$region-}
-          slt=${f%%-*} ; f=${f##$slt-}
-          catalog_id=${f%%-*} ; f=${f##$catalog_id-}
-          repo=${f%-*}
-          environment=${f##$repo-}
+
           time="${time:0:2}:${time:2:2}:${time:4:2}"
           when=$(date -d "${date} ${time}" +"%s")
-          now=$(date -d now +"%s")
-          nows=$(date -d now +"%Y%m%d-%H%M%S")
-          echo -n "checking current time (${nows}) against ${file}... "
 
           if [ ${when} -lt ${now} ] ; then
-            echo "OVERDUE"
-            # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
-            gh workflow run ${action}.yaml \
-              --field environment=${environment} \
-              --repo stormreply/${repo} &
+            echo "SELECT $file"
+            echo "$file" >> /tmp/selected
           else
-            echo "WAITING"
+            echo "SKIP   $file"
           fi
+
+          cat /tmp/selected
 
         done

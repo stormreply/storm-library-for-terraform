@@ -3,6 +3,9 @@ name: Unschedule actions
 inputs:
   account_id:
     required: true
+  action:
+    required: true
+    default: ".*"
   backend_bucket:
     required: true
   deployment_name:
@@ -17,6 +20,8 @@ runs:
     - name: Unschedule actions
       shell: bash
       run: |
+        action=${{ inputs.action }}
+
         account_id=${{ inputs.account_id }}
         backend_bucket=${{ inputs.backend_bucket }}
         deployment_name="${{ inputs.deployment_name }}"
@@ -31,15 +36,18 @@ runs:
 
         [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
 
-        timestamps=$(echo "${timestamps}" | grep "${account_id}-${deployment_region}-${deployment_name}") || true
+        pattern="${action}-${account_id}-${deployment_region}-${deployment_name}"
 
         if [ -n "$timestamps" ] ; then
-          echo "$timestamps"
+          for key in $timestamps ; do
+            if echo "$key" | grep -E "$pattern" > /dev/null ] ; then
+              echo -n "REMOVE $key... "
+              aws s3 rm s3://${backend_bucket}/${key}
+              echo DONE
+            else
+              echo "SKIP   $key"
+            fi
+          done
         else
           echo "NO timestamps"
         fi
-
-        for key in $timestamps ; do
-          aws s3 rm s3://${backend_bucket}/${key}
-          echo "UNSCHEDULED ${key}"
-        done

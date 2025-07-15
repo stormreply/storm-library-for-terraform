@@ -1,0 +1,30 @@
+name: Execute
+
+runs:
+  using: composite
+  steps:
+
+    - name: Execute
+      shell: bash
+      run: |
+
+        for e in $(cat /tmp/selected) ; do
+
+          file=${e##*/} ; f=${file}
+          date=${f%%-*} ; f=${f##$date-}
+          time=${f%%-*} ; f=${f##$time-}
+          action=${f%%-*} ; f=${f##$action-}
+          account_id=${f%%-*} ; f=${f##$account_id-}
+          region=${f%-${f#*-*-*-}} ; f=${f##$region-}
+          slt=${f%%-*} ; f=${f##$slt-}
+          catalog_id=${f%%-*} ; f=${f##$catalog_id-}
+          repo=${f%-*}
+          environment=${f##$repo-}
+
+          # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
+
+          gh workflow run ${action}.yaml \
+            --field environment=${environment} \
+            --repo stormreply/${repo} &
+
+        done

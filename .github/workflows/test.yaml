@@ -73,10 +73,10 @@ jobs:
           var_file: ${{ inputs.var_file}}
 
       - name: Schedule destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
-          account_id: ${{ steps.prepare.outputs.account_id }}
           action: destroy
+          account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
@@ -102,7 +102,7 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
 
       - name: Unschedule actions
-        uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}

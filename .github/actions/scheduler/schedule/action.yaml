@@ -5,21 +5,23 @@ inputs:
     required: true
   action:
     required: true
-  delay:
-    required: true
   backend_bucket:
+    required: true
+  delay:
     required: true
   deployment_name:
     required: true
   deployment_region:
     required: true
+  duration:
+    required: false
 
 runs:
   using: composite
   steps:
 
-    - name: Unschedule action
-      uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
+    - name: Unschedule actions
+      uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
       with:
         account_id: ${{ inputs.account_id }}
         backend_bucket: ${{ inputs.backend_bucket }}
@@ -30,14 +32,28 @@ runs:
     - name: Schedule action
       shell: bash
       run: |
-        account_id=${{ inputs.account_id }}
         action=${{ inputs.action }}
+
+        account_id=${{ inputs.account_id }}
         backend_bucket=${{ inputs.backend_bucket }}
+        delay=${{ inputs.delay }}
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
+        duration=${{ inputs.duration }}
 
-        time=$(date -d "now + ${{ inputs.delay}}" +"%Y%m%d-%H%M%S")
+        time=$(date -d "now + ${delay}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
-        touch ${timestamp}
+
+        cat << EOF | yq -o=json >> ${timestamp}
+        account_id: $account_id
+        action: $action
+        delay: $delay
+        backend_bucket: $backend_bucket
+        deployment_name: $deployment_name
+        deployment_region: $deployment_region
+        duration: $duration
+        EOF
+
+        echo -n "SCHEDULE ${timestamp}... "
         aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/
-        echo "SCHEDULED ${timestamp}"
+        echo DONE
