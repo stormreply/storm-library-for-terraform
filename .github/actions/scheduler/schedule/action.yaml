@@ -37,10 +37,10 @@ runs:
 
         account_id=${{ inputs.account_id }}
         backend_bucket=${{ inputs.backend_bucket }}
-        delay="${{ inputs.delay }}""
+        delay="${{ inputs.delay }}"
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
-        duration="${{ inputs.duration }}""
+        duration="${{ inputs.duration }}"
 
         time=$(date -d "now + ${delay}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"

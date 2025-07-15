@@ -20,6 +20,7 @@ runs:
     - name: Unschedule actions
       shell: bash
       run: |
+        # Unschedule actions
         action=${{ inputs.action }}
 
         account_id=${{ inputs.account_id }}
