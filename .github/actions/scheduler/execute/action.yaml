@@ -26,7 +26,7 @@ runs:
           repo=${f%-*}
           environment=${f##$repo-}
 
-          aws s3 cp ${timestamp} s3://${inputs.backend_bucket}/schedule/$file /tmp
+          aws s3 cp ${timestamp} s3://${{ inputs.backend_bucket }}/schedule/$file /tmp
 
           # cat << EOF
           # EXECUTE
