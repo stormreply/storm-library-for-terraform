@@ -7,14 +7,16 @@ inputs:
     required: true
   backend_bucket:
     required: true
-  wait:
-    required: true
   deployment_name:
     required: true
   deployment_region:
     required: true
+  environment:
+    required: false
   lifetime:
     required: false
+  wait:
+    required: true
 
 runs:
   using: composite
@@ -37,15 +39,17 @@ runs:
 
         account_id=${{ inputs.account_id }}
         backend_bucket=${{ inputs.backend_bucket }}
-        wait="${{ inputs.wait }}"
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
+        environment=${{ inputs.environment }}
         lifetime="${{ inputs.lifetime }}"
+        wait="${{ inputs.wait }}"
 
         time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
 
-        cat << EOF | grep -v ": null" | yq -o=json >> ${timestamp}
+        cat << EOF | grep -v ': "null"' | yq -o=json >> ${timestamp}
+        environment: "$environment"
         lifetime: "$lifetime"
         wait: "$wait"
         EOF

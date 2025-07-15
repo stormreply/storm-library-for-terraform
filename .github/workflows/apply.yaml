@@ -47,6 +47,7 @@ jobs:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
+          environment: $${{ inputs.environment }}
           lifetime: ${{ inputs.lifetime }}
           wait: ${{ inputs.wait }}
 
@@ -114,4 +115,5 @@ jobs:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
+          environment: ${{ inputs.environment }}
           wait: ${{ inputs.lifetime }}
