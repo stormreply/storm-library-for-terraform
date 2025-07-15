@@ -7,14 +7,14 @@ permissions:
 on:
   workflow_call:
     inputs:
-      delay:
-        type: string
-        required: false
-        default: ""
-      duration:
+      lifetime:
         type: string
         required: false
         default: 1 hour
+      wait:
+        type: string
+        required: false
+        default: ""
       environment:
         type: string
         required: false
@@ -27,7 +27,7 @@ on:
 jobs:
 
   schedule:
-    if: inputs.delay != ''
+    if: inputs.wait != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -44,13 +44,13 @@ jobs:
         with:
           action: apply
           account_id: ${{ steps.prepare.outputs.account_id }}
-          delay: ${{ inputs.delay }}
+          wait: ${{ inputs.wait }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
 
   check:
-    if: inputs.delay == ''
+    if: inputs.wait == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -59,7 +59,7 @@ jobs:
         id: check-code
 
   plan:
-    if: inputs.delay == ''
+    if: inputs.wait == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -110,7 +110,7 @@ jobs:
         with:
           action: destroy
           account_id: ${{ steps.prepare.outputs.account_id }}
-          delay: ${{ inputs.duration }}
+          wait: ${{ inputs.lifetime }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}

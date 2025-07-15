@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_call:
     inputs:
-      delay:
+      wait:
         type: string
         required: false
         default: ""
@@ -19,7 +19,7 @@ on:
 jobs:
 
   schedule:
-    if: inputs.delay != ''
+    if: inputs.wait != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -36,13 +36,13 @@ jobs:
         with:
           action: destroy
           account_id: ${{ steps.prepare.outputs.account_id }}
-          delay: ${{ inputs.delay }}
+          wait: ${{ inputs.wait }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
 
   destroy:
-    if: inputs.delay == ''
+    if: inputs.wait == ''
     runs-on: ubuntu-latest
     steps:
 

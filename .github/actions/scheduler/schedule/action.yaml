@@ -7,13 +7,13 @@ inputs:
     required: true
   backend_bucket:
     required: true
-  delay:
+  wait:
     required: true
   deployment_name:
     required: true
   deployment_region:
     required: true
-  duration:
+  lifetime:
     required: false
 
 runs:
@@ -37,22 +37,22 @@ runs:
 
         account_id=${{ inputs.account_id }}
         backend_bucket=${{ inputs.backend_bucket }}
-        delay="${{ inputs.delay }}"
+        wait="${{ inputs.wait }}"
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
-        duration="${{ inputs.duration }}"
+        lifetime="${{ inputs.lifetime }}"
 
-        time=$(date -d "now + ${delay}" +"%Y%m%d-%H%M%S")
+        time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
 
         cat << EOF | yq -o=json >> ${timestamp}
         account_id: "$account_id"
         action: "$action"
-        delay: "$delay"
+        wait: "$wait"
         backend_bucket: "$backend_bucket"
         deployment_name: "$deployment_name"
         deployment_region: "$deployment_region"
-        duration: "$duration"
+        lifetime: "$lifetime"
         EOF
 
         echo -n "SCHEDULE ${timestamp}... "
