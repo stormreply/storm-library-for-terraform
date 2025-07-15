@@ -41,7 +41,7 @@ runs:
         backend_bucket=${{ inputs.backend_bucket }}
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
-        environment=${{ inputs.environment }}
+        environment=${{ inputs.environment || github.actor }}
         lifetime="${{ inputs.lifetime }}"
         wait="${{ inputs.wait }}"
 
