@@ -45,14 +45,9 @@ runs:
         time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
 
-        cat << EOF | yq -o=json >> ${timestamp}
-        account_id: "$account_id"
-        action: "$action"
-        wait: "$wait"
-        backend_bucket: "$backend_bucket"
-        deployment_name: "$deployment_name"
-        deployment_region: "$deployment_region"
+        cat << EOF | grep -v ": null" | yq -o=json >> ${timestamp}
         lifetime: "$lifetime"
+        wait: "$wait"
         EOF
 
         echo -n "SCHEDULE ${timestamp}... "

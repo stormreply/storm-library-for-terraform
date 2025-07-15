@@ -35,6 +35,11 @@ runs:
           # EOF
 
           # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
-          cat /tmp/$file | gh workflow run ${action}.yaml --json --repo stormreply/${repo} &
+          cat /tmp/$file \
+          | gh workflow run ${action}.yaml \
+            --repo stormreply/${repo} \
+            --field environment=${environment} \
+            --json \
+            &
 
         done
