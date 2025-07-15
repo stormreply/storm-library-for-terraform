@@ -41,7 +41,7 @@ runs:
 
         if [ -n "$timestamps" ] ; then
           for key in $timestamps ; do
-            if echo "$key" | grep -E "$pattern" > /dev/null ] ; then
+            if echo "$key" | grep -E "$pattern" > /dev/null ; then
               echo -n "REMOVE $key... "
               aws s3 rm s3://${backend_bucket}/${key}
               echo DONE
