@@ -26,6 +26,8 @@ runs:
 
           echo "EXECUTE   gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo}"
 
-          gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo} &
+          aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/$file /tmp
+
+          cat /tmp/$file | gh workflow run ${action}.yaml --json --repo stormreply/${repo} &
 
         done

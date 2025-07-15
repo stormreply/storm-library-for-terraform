@@ -56,5 +56,5 @@ runs:
         EOF
 
         echo -n "SCHEDULE ${timestamp}... "
-        aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/
+        aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/ > /dev/null
         echo DONE
