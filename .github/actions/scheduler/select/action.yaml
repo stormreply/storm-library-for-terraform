@@ -11,6 +11,7 @@ runs:
     - name: Select
       shell: bash
       run: |
+        # Select
 
         now=$(date -d now +"%s")
 
@@ -51,6 +52,6 @@ runs:
             echo "SKIP   $file"
           fi
 
-          cat /tmp/selected
+          # cat /tmp/selected
 
         done

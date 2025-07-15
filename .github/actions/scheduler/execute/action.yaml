@@ -7,6 +7,7 @@ runs:
     - name: Execute
       shell: bash
       run: |
+        # Execute
 
         for e in $(cat /tmp/selected) ; do
 
@@ -23,8 +24,8 @@ runs:
 
           # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
 
-          gh workflow run ${action}.yaml \
-            --field environment=${environment} \
-            --repo stormreply/${repo} &
+          echo "EXECUTE   gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo}"
+
+          gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo} &
 
         done
