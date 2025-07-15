@@ -13,14 +13,19 @@ runs:
     - name: Create deployment tags
       shell: bash
       run: |
+        # Create deployment tags
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment_name=${{ inputs.deployment_name }}
 
+        [ -n "${{ inputs.environment }}" ] \
+        && environment="${{ inputs.environment }}" \
+        || environment="${{ github.actor }}"
+
         cat << EOF >> github.tfvars
         deployment = {
           actor       = "${{ github.actor }}"
-          environment = "${{ inputs.environment }}"
+          environment = "${environment}"
           name        = "${deployment_name}"
           ref         = "${{ github.ref }}"
           ref_name    = "${{ github.ref_name }}"

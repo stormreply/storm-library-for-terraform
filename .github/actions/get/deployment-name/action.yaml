@@ -36,9 +36,9 @@ runs:
 
         if [ "${catalog_id}" != "0" ] ; then
           [ -n "${{ inputs.environment }}" ] \
-          && suffix="${{ inputs.environment }}" \
-          || suffix="${{ github.actor }}"
-          deployment_name="${deployment_name}-${suffix}"
+          && environment="${{ inputs.environment }}" \
+          || environment="${{ github.actor }}"
+          deployment_name="${deployment_name}-${environment}"
         fi
 
         echo "deployment name: ${deployment_name}"
