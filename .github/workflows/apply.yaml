@@ -7,18 +7,18 @@ permissions:
 on:
   workflow_call:
     inputs:
+      delay:
+        type: string
+        required: false
+        default: ""
+      duration:
+        type: string
+        required: false
+        default: 1 hour
       environment:
         type: string
         required: false
         default: ""
-      after:
-        type: string
-        required: false
-        default: ""
-      ttl:
-        type: string
-        required: false
-        default: 1 day
       var_file:
         type: string
         required: false
@@ -26,8 +26,8 @@ on:
 
 jobs:
 
-  queue:
-    if: inputs.after != ''
+  schedule:
+    if: inputs.delay != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -44,13 +44,13 @@ jobs:
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           action: apply
-          after: ${{ inputs.after }}
+          delay: ${{ inputs.delay }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
 
   check:
-    if: inputs.after == ''
+    if: inputs.delay == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -59,7 +59,7 @@ jobs:
         id: check-code
 
   plan:
-    if: inputs.after == ''
+    if: inputs.delay == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -84,10 +84,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Download tfplan
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
+      # - name: Download tfplan
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: tfplan
 
       - name: Prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
@@ -110,7 +110,7 @@ jobs:
         with:
           account_id: ${{ steps.prepare.outputs.account_id }}
           action: destroy
-          after: ${{ inputs.ttl }}
+          delay: ${{ inputs.duration }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}

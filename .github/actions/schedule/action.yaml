@@ -5,7 +5,7 @@ inputs:
     required: true
   action:
     required: true
-  after:
+  delay:
     required: true
   backend_bucket:
     required: true
@@ -36,7 +36,7 @@ runs:
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
 
-        time=$(date -d "now + ${{ inputs.after}}" +"%Y%m%d-%H%M%S")
+        time=$(date -d "now + ${{ inputs.delay}}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
         touch ${timestamp}
         aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/
