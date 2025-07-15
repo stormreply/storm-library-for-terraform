@@ -48,7 +48,7 @@ runs:
             echo "OVERDUE"
             # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
             gh workflow run ${action}.yaml \
-              --environment ${environment} \
+              --field environment=${environment} \
               --repo stormreply/${repo} &
           else
             echo "WAITING"
