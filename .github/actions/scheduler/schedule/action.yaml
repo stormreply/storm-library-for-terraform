@@ -46,13 +46,13 @@ runs:
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
 
         cat << EOF | yq -o=json >> ${timestamp}
-        account_id: $account_id
-        action: $action
-        delay: $delay
-        backend_bucket: $backend_bucket
-        deployment_name: $deployment_name
-        deployment_region: $deployment_region
-        duration: $duration
+        account_id: "$account_id"
+        action: "$action"
+        delay: "$delay"
+        backend_bucket: "$backend_bucket"
+        deployment_name: "$deployment_name"
+        deployment_region: "$deployment_region"
+        duration: "$duration"
         EOF
 
         echo -n "SCHEDULE ${timestamp}... "
