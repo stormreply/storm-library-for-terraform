@@ -1,5 +1,9 @@
 name: Execute
 
+inputs:
+  backend_bucket:
+    required: true
+
 runs:
   using: composite
   steps:
@@ -22,12 +26,15 @@ runs:
           repo=${f%-*}
           environment=${f##$repo-}
 
+          aws s3 cp ${timestamp} s3://${inputs.backend_bucket}/schedule/$file /tmp
+
+          cat << EOF
+          EXECUTE
+            cat /tmp/$file
+            | gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo}
+          EOF
+
           # TODO: handle "stormreply": put into yaml in s3 object itself, together with tfvars name
-
-          echo "EXECUTE   gh workflow run ${action}.yaml --field environment=${environment} --repo stormreply/${repo}"
-
-          aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/$file /tmp
-
           cat /tmp/$file | gh workflow run ${action}.yaml --json --repo stormreply/${repo} &
 
         done
