@@ -41,3 +41,10 @@ catalog :
     desciption: A repository to test the Storm Library for Terraform workflows with
     reference: https://github.com/stormreply/test-storm-library-for-terraform
     public: yes
+  wavelength-demo:
+    id: 6
+    authors: berndherding
+    published: 2025-07-16
+    desciption: A quick demo of AWS Wavelength and interaction with your Vodafone mobile
+    reference: https://github.com/stormreply/wavelength-demo
+    public: yes
