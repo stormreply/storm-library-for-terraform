@@ -105,7 +105,7 @@ jobs:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ steps.prepare.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
-          var_file: ${{ inputs.var_file}}
+          var_file: ${{ inputs.var_file }}
 
       - name: Schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
