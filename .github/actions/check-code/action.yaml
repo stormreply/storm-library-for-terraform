@@ -17,5 +17,5 @@ runs:
           -v $(pwd):/lint \
           -w /lint \
           ghcr.io/antonbabenko/pre-commit-terraform:latest \
-            -c .pre-commit-github.yaml \
-            run -a
+            run -a \
+            -c .pre-commit-github.yaml
