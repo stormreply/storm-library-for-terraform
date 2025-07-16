@@ -51,7 +51,6 @@ runs:
         cat << EOF | grep -v ': "null"' | yq -o=json >> ${timestamp}
         environment: "$environment"
         lifetime: "$lifetime"
-        wait: "$wait"
         EOF
 
         echo -n "SCHEDULE ${timestamp}... "
