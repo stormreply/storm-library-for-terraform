@@ -11,9 +11,11 @@ runs:
       id: pre-commit-terraform
       shell: bash
       run: |
-        ls -la
+        # Check via pre-commit-terraform
         docker run \
           -e "USERID=$(id -u):$(id -g)" \
           -v $(pwd):/lint \
           -w /lint \
-          ghcr.io/antonbabenko/pre-commit-terraform:latest run -a
+          ghcr.io/antonbabenko/pre-commit-terraform:latest \
+            -c .pre-commit-github.yaml \
+            run -a
