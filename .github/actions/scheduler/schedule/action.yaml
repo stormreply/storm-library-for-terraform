@@ -48,7 +48,7 @@ runs:
         time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
 
-        cat << EOF | grep -v ': "null"' | yq -o=json >> ${timestamp}
+        cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${timestamp}
         environment: "$environment"
         lifetime: "$lifetime"
         EOF
