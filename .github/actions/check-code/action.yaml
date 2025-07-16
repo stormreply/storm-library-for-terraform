@@ -4,13 +4,14 @@ runs:
   using: composite
   steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    # - name: Checkout repository
+    #   uses: actions/checkout@v4
 
     - name: Check via pre-commit-terraform
       id: pre-commit-terraform
       shell: bash
       run: |
+        ls -la
         docker run \
           -e "USERID=$(id -u):$(id -g)" \
           -v $(pwd):/lint \

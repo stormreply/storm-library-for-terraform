@@ -72,9 +72,10 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up access token
+    - name: Git config access token
       shell: bash
       run: |
+        # Git config access token
         TOKEN=${{ steps.setup.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
