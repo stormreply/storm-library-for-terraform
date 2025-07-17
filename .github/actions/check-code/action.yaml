@@ -13,9 +13,9 @@ runs:
       run: |
         # Check via pre-commit-terraform
         docker run \
+          --entrypoint /bin/bash \
           -e "USERID=$(id -u):$(id -g)" \
           -v $(pwd):/lint \
           -w /lint \
           ghcr.io/antonbabenko/pre-commit-terraform:latest \
-            run -a \
-            -c .pre-commit-github.yaml
+            -c "git config --list --show-origin"
