@@ -79,12 +79,12 @@ runs:
         # Git config rewrite URLs
         TOKEN=${{ steps.setup.outputs.token}}
         git config --local url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
-        cat .gitconfig
+        cat .git/config
 
     - name: Check public-instance.tf
       shell: bash
       run: |
-        cat .gitconfig
+        cat .git/config
         cat public-instance.tf
 
     - name: Download providers.tf
