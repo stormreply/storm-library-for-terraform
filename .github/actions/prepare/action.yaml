@@ -97,11 +97,11 @@ runs:
         token: ${{ steps.setup.outputs.token }}
         file: providers.tf
 
-    - name: Download terraform.tf
-      uses: stormreply/storm-library-for-terraform/.github/actions/download@main
-      with:
-        token: ${{ steps.setup.outputs.token }}
-        file: terraform.tf
+    # - name: Download terraform.tf
+    #   uses: stormreply/storm-library-for-terraform/.github/actions/download@main
+    #   with:
+    #     token: ${{ steps.setup.outputs.token }}
+    #     file: terraform.tf
 
     - name: Set deployment tags
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
