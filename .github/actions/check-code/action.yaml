@@ -19,7 +19,7 @@ runs:
         docker run \
           --entrypoint /bin/bash \
           -e "USERID=$(id -u):$(id -g)" \
-          -e "TOKEN=${{ inputs.token }}"
+          -e "TOKEN=${{ inputs.token }}" \
           -v $(pwd):/lint \
           -w /lint \
           ghcr.io/antonbabenko/pre-commit-terraform:latest \
