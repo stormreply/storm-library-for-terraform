@@ -25,6 +25,7 @@ outputs:
   account_id:
     description: Id of the AWS account we are deploying to
     value: ${{ steps.setup.outputs.account_id }}
+  # TODO: rename to "token"
   app_token:
     description: App token for GitHub API access
     value: ${{ steps.setup.outputs.token }}

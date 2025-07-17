@@ -28,6 +28,8 @@ jobs:
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
         id: check-code
+        with:
+          token: ${{ steps.prepare.outputs.app_token }}
 
   plan:
     runs-on: ubuntu-latest
