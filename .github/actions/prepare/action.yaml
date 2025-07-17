@@ -79,8 +79,8 @@ runs:
         # Git config rewrite URLs
         TOKEN=${{ steps.setup.outputs.token }} # TODO:
         # NOTE: --local won't work (at least not with plan WF)
-        git config --global url."https://x-access-token:${{ steps.setup.outputs.token }}@github.com/".insteadOf "https://github.com/"
-        git config --local  url."https://x-access-token:${{ steps.setup.outputs.token }}@github.com/".insteadOf "https://github.com/"
+        git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
+        git config --local  url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
     - name: Show git configs
       shell: bash
