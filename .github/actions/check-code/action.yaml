@@ -8,9 +8,6 @@ runs:
   using: composite
   steps:
 
-    # - name: Checkout repository
-    #   uses: actions/checkout@v4
-
     - name: Check via pre-commit-terraform
       id: pre-commit-terraform
       shell: bash
@@ -25,7 +22,6 @@ runs:
           ghcr.io/antonbabenko/pre-commit-terraform:latest -c '
             git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
             terraform --version
-            ls -la
-            git config --list --show-origin
+            # git config --list --show-origin
             pre-commit run -a -c .pre-commit-github.yaml
           '
