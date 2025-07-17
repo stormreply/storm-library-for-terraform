@@ -83,6 +83,7 @@ runs:
     - name: Check public-instance.tf
       shell: bash
       run: |
+        cat .gitconfig
         cat public-instance.tf
 
     - name: Download providers.tf
