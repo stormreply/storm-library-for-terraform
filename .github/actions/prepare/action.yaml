@@ -69,15 +69,16 @@ runs:
         private_key: ${{ inputs.terraform_private_key }}
         # token: ${{ inputs.token }}
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Git config access token
+    # TODO: maybe move into Setup
+    - name: Git config rewrite URLs
       shell: bash
       run: |
-        # Git config access token
+        # Git config rewrite URLs
         TOKEN=${{ steps.setup.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
