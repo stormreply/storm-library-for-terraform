@@ -78,14 +78,15 @@ runs:
       run: |
         # Git config rewrite URLs
         TOKEN=${{ steps.setup.outputs.token}}
-        git config --local url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
-        cat .git/config
+        git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
 
-    - name: Check public-instance.tf
+    - name: Cat git config
       shell: bash
       run: |
+        echo "global .gitconfig:"
+        cat ~/.gitconfig
+        echo "local .git/config:"
         cat .git/config
-        cat public-instance.tf
 
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
