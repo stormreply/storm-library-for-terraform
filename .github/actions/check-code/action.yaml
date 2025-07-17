@@ -21,7 +21,7 @@ runs:
           -w /lint \
           ghcr.io/antonbabenko/pre-commit-terraform:latest -c '
             git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
-            terraform --version
             # git config --list --show-origin
-            pre-commit run -a -c .pre-commit-github.yaml
+            terraform --version
+            pre-commit run -a
           '
