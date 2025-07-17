@@ -80,6 +80,11 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Check public-instance.tf
+      shell: bash
+      run: |
+        cat public-instance.tf
+
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
       with:
