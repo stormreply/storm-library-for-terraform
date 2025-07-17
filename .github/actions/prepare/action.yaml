@@ -69,16 +69,16 @@ runs:
         private_key: ${{ inputs.terraform_private_key }}
         # token: ${{ inputs.token }}
 
-    # TODO: maybe move into Setup
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # NOTE: position *behind* checkout
     - name: Git config rewrite URLs
       shell: bash
       run: |
         # Git config rewrite URLs
         TOKEN=${{ steps.setup.outputs.token}}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
     - name: Check public-instance.tf
       shell: bash
