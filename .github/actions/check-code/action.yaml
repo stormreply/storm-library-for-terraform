@@ -23,4 +23,4 @@ runs:
           -v $(pwd):/lint \
           -w /lint \
           ghcr.io/antonbabenko/pre-commit-terraform:latest \
-            -c "echo $TOKEN; terraform --version; ls -la ; git config --list --show-origin; pre-commit run -a -c .pre-commit-github.yaml"
+            -c 'echo $TOKEN; terraform --version; ls -la ; git config --list --show-origin; pre-commit run -a -c .pre-commit-github.yaml'
