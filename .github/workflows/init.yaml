@@ -7,15 +7,15 @@ on:
       access_domain:
         type: string
         required: true
-        default: storm-unity
+      access_role:
+        type: string
+        required: true
       backend_account:
         type: string
         required: true
-        default: 123456789012
       backend_region:
         type: string
         required: true
-        default: eu-central-1
 
 permissions:
   actions: write
@@ -44,10 +44,10 @@ jobs:
       - name: Get role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
+          access_role: ${{ inputs.access_role }}
           access_token: ${{ needs.sso.outputs.access_token }}
           backend_account: ${{ inputs.backend_account }}
           backend_region: ${{ inputs.backend_region }}
-          role_name: AdministratorAccess
 
       - name: Prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
@@ -57,7 +57,6 @@ jobs:
           backend_region: ${{ inputs.backend_region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          # token: ${{ secrets.GITHUB_TOKEN }}
           use_oidc: false
 
       - name: Check SLT backend bucket
