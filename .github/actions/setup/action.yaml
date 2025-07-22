@@ -36,8 +36,8 @@ runs:
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
-        app-id: ${{ inputs.app_id }}
-        private-key: ${{ inputs.private_key }}
+        app-id: ${{ inputs.terraform_app_id }}
+        private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
     # TODO: move

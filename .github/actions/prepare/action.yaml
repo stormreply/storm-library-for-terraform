@@ -4,6 +4,8 @@ inputs:
 
   backend_account:
     required: true
+  backend_region:
+    required: true
   environment:
     required: false
   private_access_token:

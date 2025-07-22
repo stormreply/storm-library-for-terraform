@@ -23,6 +23,7 @@ jobs:
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ vars.BACKEND_REGION }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
@@ -41,6 +42,7 @@ jobs:
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ vars.BACKEND_REGION }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
