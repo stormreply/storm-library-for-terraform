@@ -26,6 +26,7 @@ runs:
         VARIABLE: ${{ inputs.variable }}
         REPO: ${{ inputs.repository }}
       run: |
+        # Get repository variable via API
         value=${{ inputs.use_if_set }}
         if [ "${value}" == "" ] ; then
           variable=$(

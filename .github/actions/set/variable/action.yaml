@@ -21,6 +21,7 @@ runs:
         VALUE: ${{ inputs.value }}
         REPO: ${{ inputs.repository }}
       run: |
+        # Set repository variable via API
         curl -X PATCH \
           -H "Authorization: Bearer $TOKEN" \
           -H "Accept: application/vnd.github+json" \
