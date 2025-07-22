@@ -5,12 +5,15 @@ on:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
       access_domain:
+        type: string
         required: true
         default: storm-unity
       backend_account:
+        type: string
         required: true
         default: 123456789012
       backend_region:
+        type: string
         required: true
         default: eu-central-1
 
