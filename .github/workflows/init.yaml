@@ -7,7 +7,7 @@ on:
       access_domain:
         required: true
         default: storm-unity
-      account_id:
+      backend_account:
         required: true
         default: 123456789012
       backend_region:
@@ -42,7 +42,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
           access_token: ${{ needs.sso.outputs.access_token }}
-          account_id: ${{ inputs.account_id }}
+          backend_account: ${{ inputs.backend_account }}
           backend_region: ${{ inputs.backend_region }}
           role_name: AdministratorAccess
 
@@ -50,7 +50,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
-          account_id: ${{ inputs.account_id }}
+          backend_account: ${{ inputs.backend_account }}
           backend_region: ${{ inputs.backend_region }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
@@ -86,13 +86,13 @@ jobs:
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
 
-      - name: Save account id
+      - name: Save backend account
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
-          value: ${{ inputs.account_id }}
-          variable: ACCOUNT_ID
+          value: ${{ inputs.backend_account }}
+          variable: BACKEND_ACCOUNT
 
       - name: Save backend region
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
@@ -100,4 +100,4 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.app_token }}
           value: ${{ inputs.backend_region }}
-          variable: REGION
+          variable: BACKEND_REGION

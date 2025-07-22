@@ -2,85 +2,68 @@ name: Get basic setup
 
 inputs:
 
-  app_id:
+  backend_account:
     required: true
-  private_key:
-    required: true
-  # token:
-  #   required: true
-
-  account_id:
-    required: false
   environment:
     required: false
-  backend_region:
+  private_access_token:
+    required: false
+  terraform_app_id:
+    required: false
+  terraform_private_key:
     required: false
 
+
 outputs:
-  account_id:
-    description: Id of the AWS account we are deploying to
-    value: ${{ steps.get-account-id.outputs.value }}
   backend_bucket:
     description: Central administration backend bucket
     value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
-  backend_region:
-    description: Central administration backend region
-    value: ${{ steps.get-backend-region.outputs.value }}
   deployment_name:
     description: Name of our deployment
     value: ${{ steps.get-deployment-name.outputs.name }}
-  deployment_region:
-    description: Region where resources are being deployed to
-    value: ${{ steps.get-backend-region.outputs.value }} # TODO:
   state_file:
     description: Terraform State file we are gonna use
     value: ${{ steps.get-state-file.outputs.state_file }}
   token:
     description: Token to use for GitHub calls
-    value: ${{ steps.app-token.outputs.token}}
+    value: ${{ steps.get-token.outputs.token}}
 
 runs:
   using: composite
   steps:
 
     - name: Create Github app token
-      id: app-token
+      id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ inputs.app_id }}
         private-key: ${{ inputs.private_key }}
         owner: ${{ github.repository_owner }}
 
-    - name: Get account id
-      id: get-account-id
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/variable@main
-      with:
-        repository: stormreply/storm-library-for-terraform
-        token: ${{ steps.app-token.outputs.token}}
-        use_if_set: ${{ inputs.account_id }}
-        variable: ACCOUNT_ID
-
-    - name: Get backend region
-      id: get-backend-region
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/variable@main
-      with:
-        repository: stormreply/storm-library-for-terraform
-        token: ${{ steps.app-token.outputs.token}}
-        use_if_set: ${{ inputs.backend_region }}
-        variable: REGION # TODO: rename to BACKEND_REGION?
+    # TODO: move
+    - name: Get Token
+      id: get-token
+      shell: bash
+      env:
+        APP_TOKEN: ${{ steps.create-github-app-token.outputs.token }}
+      run: |
+        # Get token
+        token=${APP_TOKEN}
+        [ -z "${token}" ] && token=${{ inputs.private_access_token }}
+        echo "token=${token}" >> $GITHUB_OUTPUT
 
     - name: Get backend bucket
       id: get-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
       with:
-        account_id: ${{ steps.get-account-id.outputs.value }}
+        backend_account: ${{ inputs.backend_account }}
 
     - name: Get deployment name
       id: get-deployment-name
       uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
       with:
         environment: ${{ inputs.environment }}
-        token: ${{ steps.app-token.outputs.token}}
+        token: ${{ steps.get-token.outputs.token}}
 
     - name: Get state file
       id: get-state-file

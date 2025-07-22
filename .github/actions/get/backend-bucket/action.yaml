@@ -1,7 +1,7 @@
 name: Get bucket name
 
 inputs:
-  account_id:
+  backend_account:
     required: true
 
 outputs:
@@ -16,6 +16,6 @@ runs:
       id: get-backend-bucket
       shell: bash
       run: |
-        backend_bucket="storm-library-for-terraform-${{ inputs.account_id }}"
+        backend_bucket="storm-library-for-terraform-${{ inputs.backend_account }}"
         echo "backend_bucket=${backend_bucket}"
         echo "backend_bucket=${backend_bucket}" >> $GITHUB_OUTPUT

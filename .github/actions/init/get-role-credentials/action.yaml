@@ -1,13 +1,13 @@
 name: Get role credentials
 
 inputs:
-  account_id:
+  access_token:
+    required: true
+  backend_account:
     required: true
   backend_region:
     required: true
   role_name:
-    required: true
-  access_token:
     required: true
 
 runs:
@@ -16,14 +16,14 @@ runs:
     - name: Export AWS environment variables
       shell: bash
       run: |
-        echo "login into account ${{ inputs.account_id }} with role ${{ inputs.role_name }}"
+        echo "login into account ${{ inputs.backend_account }} with role ${{ inputs.role_name }}"
 
         # TODO: fix masking or write to .env before and take from .env here
         echo "::add-mask::${{ inputs.access_token }}"
 
         CREDENTIALS=$(
           aws sso get-role-credentials \
-            --account-id ${{ inputs.account_id }} \
+            --account-id ${{ inputs.backend_account }} \
             --region ${{ inputs.backend_region }} \
             --role-name ${{ inputs.role_name }} \
             --access-token '${{ inputs.access_token }}'

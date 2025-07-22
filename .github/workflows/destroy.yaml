@@ -27,6 +27,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
+          backend_account: ${{ vars.BACKEND_ACCOUNT }}
           environment: ${{ inputs.environment }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
@@ -35,8 +36,8 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: destroy
-          account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          deployment_account: ${{ vars.BACKEND_ACCOUNT }} # TODO:
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
           environment: ${{ inputs.environment }}
@@ -51,6 +52,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
+          backend_account: ${{ vars.BACKEND_ACCOUNT }}
           environment: ${{ inputs.environment }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
@@ -65,8 +67,8 @@ jobs:
       - name: Unschedule actions
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
         with:
-          account_id: ${{ steps.prepare.outputs.account_id }}
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          deployment_account: ${{ vars.BACKEND_ACCOUNT }} # TODO:
           deployment_name: ${{ steps.prepare.outputs.deployment_name }}
           deployment_region: ${{ steps.prepare.outputs.deployment_region }}
         continue-on-error: true

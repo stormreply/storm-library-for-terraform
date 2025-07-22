@@ -2,39 +2,27 @@ name: Prepare
 
 inputs:
 
-  terraform_app_id:
+  backend_account:
     required: true
-  terraform_private_key:
-    required: true
-  # TODO: move app-token action out of prepare, init at very beginning and pass to prepare.
-  # this way, we could create an alternative token easier
-  # token:
-  #   required: true
-
-  account_id:
-    required: false
-  backend_region:
-    required: false
   environment:
+    required: false
+  private_access_token:
+    required: false
+  terraform_app_id:
+    required: false
+  terraform_private_key:
     required: false
   use_oidc:
     required: false
     default: "true"
 
 outputs:
-  account_id:
-    description: Id of the AWS account we are deploying to
-    value: ${{ steps.setup.outputs.account_id }}
-  # TODO: rename to "token"
-  app_token:
+  app_token:  # TODO: rename to "token"
     description: App token for GitHub API access
     value: ${{ steps.setup.outputs.token }}
   backend_bucket:
     description: Central administration backend bucket
     value: ${{ steps.setup.outputs.backend_bucket }}
-  backend_region:
-    description: Central administration backend region
-    value: ${{ steps.setup.outputs.backend_region }}
   deployment_name:
     description: Name of this deployment
     value: ${{ steps.setup.outputs.deployment_name}}
@@ -63,12 +51,11 @@ runs:
       id: setup
       uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
       with:
-        account_id: ${{ inputs.account_id }}
-        app_id: ${{ inputs.terraform_app_id }}
-        backend_region: ${{ inputs.backend_region }}
+        backend_account: ${{ inputs.backend_account }}
         environment: ${{ inputs.environment }}
-        private_key: ${{ inputs.terraform_private_key }}
-        # token: ${{ inputs.token }}
+        private_access_token: ${{ inputs.private_access_token }}
+        terraform_app_id: ${{ inputs.terraform_app_id }}
+        terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -97,12 +84,6 @@ runs:
         token: ${{ steps.setup.outputs.token }}
         file: providers.tf
 
-    # - name: Download terraform.tf
-    #   uses: stormreply/storm-library-for-terraform/.github/actions/download@main
-    #   with:
-    #     token: ${{ steps.setup.outputs.token }}
-    #     file: terraform.tf
-
     - name: Set deployment tags
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
       with:
@@ -112,15 +93,15 @@ runs:
     - name: Set backend profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
       with:
-        account_id: ${{ steps.setup.outputs.account_id }}
-        backend_region: ${{ steps.setup.outputs.backend_region }}
+        backend_account: ${{ inputs.backend_account }}
+        backend_region: ${{ inputs.backend_region }}
         backend_role: slt-0-storm-library-for-terraform-backend
         use_oidc: ${{ inputs.use_oidc }}
 
     - name: Set deployment profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-profile@main
       with:
-        account_id: ${{ steps.setup.outputs.account_id }}
+        deployment_account: ${{ inputs.backend_account }} # TODO:
         deployment_region: ${{ steps.setup.outputs.deployment_region }}
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}

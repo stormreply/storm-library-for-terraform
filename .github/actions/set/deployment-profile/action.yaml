@@ -1,7 +1,7 @@
 name: Set deployment profile in AWS config
 
 inputs:
-  account_id:
+  deployment_account:
     required: true
   deployment_region:
     required: true
@@ -21,7 +21,7 @@ runs:
       with:
         aws-region: ${{ inputs.deployment_region }}
         role-session-name: TerraformdeploymentSession
-        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ inputs.deployment_role }}
+        role-to-assume: arn:aws:iam::${{ inputs.deployment_account }}:role/${{ inputs.deployment_role }}
 
     - name: Configure terraform deployment role
       shell: bash

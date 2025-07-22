@@ -1,11 +1,11 @@
 name: Schedule action
 
 inputs:
-  account_id:
-    required: true
   action:
     required: true
   backend_bucket:
+    required: true
+  deployment_account:
     required: true
   deployment_name:
     required: true
@@ -25,7 +25,7 @@ runs:
     - name: Unschedule actions
       uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
       with:
-        account_id: ${{ inputs.account_id }}
+        deployment_account: ${{ inputs.deployment_account }}
         backend_bucket: ${{ inputs.backend_bucket }}
         deployment_name: ${{ inputs.deployment_name }}
         deployment_region: ${{ inputs.deployment_region }}
@@ -37,7 +37,7 @@ runs:
         # Schedule action
         action=${{ inputs.action }}
 
-        account_id=${{ inputs.account_id }}
+        deployment_account=${{ inputs.deployment_account }}
         backend_bucket=${{ inputs.backend_bucket }}
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
@@ -46,7 +46,7 @@ runs:
         wait="${{ inputs.wait }}"
 
         time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
-        timestamp="${time}-${action}-${account_id}-${deployment_region}-${deployment_name}"
+        timestamp="${time}-${action}-${deployment_account}-${deployment_region}-${deployment_name}"
 
         cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${timestamp}
         environment: "$environment"

@@ -1,7 +1,7 @@
 name: Set backend profile in AWS config
 
 inputs:
-  account_id:
+  backend_account:
     required: true
   backend_region:
     required: true
@@ -21,7 +21,7 @@ runs:
       with:
         aws-region: ${{ inputs.backend_region }}
         role-session-name: TerraformBackendSession
-        role-to-assume: arn:aws:iam::${{ inputs.account_id }}:role/${{ inputs.backend_role }}
+        role-to-assume: arn:aws:iam::${{ inputs.backend_account }}:role/${{ inputs.backend_role }}
 
     - name: Configure terraform backend role
       shell: bash

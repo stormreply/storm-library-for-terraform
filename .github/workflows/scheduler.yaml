@@ -23,9 +23,10 @@ jobs:
         id: setup
         uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
         with:
-          app_id: ${{ vars.TERRAFORM_APP_ID }}
-          private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          # token: ${{ secrets.GITHUB_TOKEN }}
+          backend_account: ${{ vars.BACKEND_ACCOUNT }}
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
+          terraform private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: gh auth login
         # we need gh auth in order to run a gh workflow
@@ -35,7 +36,7 @@ jobs:
         # we need to assume role in order to aws s3api
         uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
         with:
-          account_id: ${{ steps.setup.outputs.account_id }}
+          backend_account: ${{ vars.BACKEND_ACCOUNT }}
           backend_region: ${{ steps.setup.outputs.backend_region }}
           backend_role: slt-0-storm-library-for-terraform-backend
 

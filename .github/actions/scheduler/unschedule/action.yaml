@@ -1,12 +1,12 @@
 name: Unschedule actions
 
 inputs:
-  account_id:
-    required: true
   action:
     required: true
     default: ".*"
   backend_bucket:
+    required: true
+  deployment_account:
     required: true
   deployment_name:
     required: true
@@ -23,7 +23,7 @@ runs:
         # Unschedule actions
         action=${{ inputs.action }}
 
-        account_id=${{ inputs.account_id }}
+        deployment_account=${{ inputs.deployment_account }}
         backend_bucket=${{ inputs.backend_bucket }}
         deployment_name="${{ inputs.deployment_name }}"
         deployment_region=${{ inputs.deployment_region }}
@@ -37,7 +37,7 @@ runs:
 
         [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
 
-        pattern="${action}-${account_id}-${deployment_region}-${deployment_name}"
+        pattern="${action}-${deployment_account}-${deployment_region}-${deployment_name}"
 
         if [ -n "$timestamps" ] ; then
           for key in $timestamps ; do
