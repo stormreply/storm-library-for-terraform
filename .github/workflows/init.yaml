@@ -93,7 +93,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.app_token }}
+          token: ${{ steps.prepare.outputs.token }}
           value: ${{ inputs.backend_account }}
           variable: BACKEND_ACCOUNT
 
@@ -101,6 +101,6 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.app_token }}
+          token: ${{ steps.prepare.outputs.token }}
           value: ${{ inputs.backend_region }}
           variable: BACKEND_REGION
