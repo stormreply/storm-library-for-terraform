@@ -30,7 +30,7 @@ outputs:
     value: ${{ steps.setup.outputs.state_file }}
   token:
     description: Token to use for GitHub calls
-    value: ${{ steps.get-token.outputs.token}}
+    value: ${{ steps.setup.outputs.token}}
 
 runs:
   using: composite
