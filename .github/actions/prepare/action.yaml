@@ -19,18 +19,12 @@ inputs:
     default: "true"
 
 outputs:
-  app_token:  # TODO: rename to "token"
-    description: App token for GitHub API access
-    value: ${{ steps.setup.outputs.token }}
   backend_bucket:
     description: Central administration backend bucket
     value: ${{ steps.setup.outputs.backend_bucket }}
   deployment_name:
     description: Name of this deployment
     value: ${{ steps.setup.outputs.deployment_name}}
-  deployment_region:
-    description: Region resources are being deployed to
-    value: ${{ steps.setup.outputs.deployment_region }}
   state_file:
     description: Name of the state file
     value: ${{ steps.setup.outputs.state_file }}
@@ -104,6 +98,6 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-profile@main
       with:
         deployment_account: ${{ inputs.backend_account }} # TODO:
-        deployment_region: ${{ steps.setup.outputs.deployment_region }}
+        deployment_region: ${{ inputs.backend_region }} # TODO:
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}

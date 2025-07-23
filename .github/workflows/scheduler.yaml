@@ -37,7 +37,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ steps.setup.outputs.backend_region }}
+          backend_region: ${{ vars.BACKEND_REGION }}
           backend_role: slt-0-storm-library-for-terraform-backend
 
       - name: Select
