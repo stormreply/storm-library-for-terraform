@@ -64,6 +64,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Print length of secrets
+        shell: bash
+        run: |
+          echo "Length of STORM_LIBRARY_FOR_TERRAFORM: ${#STORM_LIBRARY_FOR_TERRAFORM}"
+          echo "Length of TERRAFORM_PRIVATE_KEY: ${#TERRAFORM_PRIVATE_KEY}"
+          echo "TERRAFORM_APP_ID: ${TERRAFORM_APP_ID}"
+        env:
+          STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          TERRAFORM_APP_ID: ${{ vars.TERRAFORM_APP_ID }}
+
       - name: Get role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
