@@ -16,11 +16,11 @@ on:
       backend_region:
         type: string
         required: true
-      secrets:
-        STORM_LIBRARY_FOR_TERRAFORM:
-          required: false
-        TERRAFORM_PRIVATE_KEY:
-          required: false
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM:
+        required: false
+      TERRAFORM_PRIVATE_KEY:
+        required: false
 
   workflow_dispatch:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
