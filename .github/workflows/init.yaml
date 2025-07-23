@@ -25,12 +25,14 @@ on:
       access_role:
         type: string
         required: true
+        default: AdministratorAccess
       backend_account:
         type: string
         required: true
       backend_region:
         type: string
         required: true
+        default: eu-central-1
 
 permissions:
   actions: write
