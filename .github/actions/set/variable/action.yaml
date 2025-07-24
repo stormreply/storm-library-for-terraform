@@ -28,12 +28,14 @@ runs:
           https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
           -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
           -f \
-        2> /dev/null \
+        2> /dev/null | tee /tmp/patch-${VARIABLE} \
         || \
         curl -X POST \
           -H "Authorization: Bearer $TOKEN" \
           -H "Accept: application/vnd.github+json" \
           https://api.github.com/repos/$REPO/actions/variables \
           -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
-        2> /dev/null
+        2> /dev/null | tee /tmp/post-${VARIABLE}
+        cat /tmp/patch-${VARIABLE}
+        cat /tmp/post-${VARIABLE}
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"

@@ -33,7 +33,6 @@ runs:
   steps:
 
     - name: Create Github app token
-      if: inputs.terraform_app_id != ''
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
@@ -47,8 +46,9 @@ runs:
       shell: bash
       run: |
         # Get token
-        [ -n "${{ inputs.terraform_app_id }}" ] && token="${{ steps.create-github-app-token.outputs.token }}"
+        token="${{ steps.create-github-app-token.outputs.token }}"
         [ -z "${token}" ] && token=${{ inputs.private_access_token }}
+        # TODO: issue warning if token is empty
         echo "token=${token}" >> $GITHUB_OUTPUT
 
     - name: Get backend bucket
