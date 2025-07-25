@@ -1,6 +1,10 @@
 name: Get Configuration
 
 inputs:
+  access_domain:
+    required: true
+  access_role:
+    required: true
   backend_account:
     required: true
   backend_region:
@@ -30,6 +34,8 @@ runs:
         tpk="${{ inputs.terraform_private_key }}"
 
         echo
+        echo "access domain:         ${{ inputs.access_domain }}"
+        echo "access role:           ${{ inputs.access_role }}"
         echo "backend account:       ${{ inputs.backend_account }}"
         echo "backend region:        ${{ inputs.backend_region }}"
         echo "deployment account:    ${{ inputs.deployment_account }}"

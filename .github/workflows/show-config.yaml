@@ -17,6 +17,8 @@ jobs:
         id: show-current-configuration
         uses: stormreply/storm-library-for-terraform/.github/actions/get/configuration@main
         with:
+          access_domain: ${{ vars.ACCESS_DOMAIN }}
+          access_role: ${{vars.ACCESS_ROLE}}
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
           backend_region: ${{ vars.BACKEND_REGION }}
           deployment_account: ${{ vars.DEPLOYMENT_ACCOUNT }}
