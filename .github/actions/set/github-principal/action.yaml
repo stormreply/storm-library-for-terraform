@@ -12,7 +12,7 @@ runs:
       shell: bash
       run: |
         # Set Github Principal ${{ inputs.github_principal }}
-        github_principal = ${{ inputs.github_principal }}
+        github_principal=${{ inputs.github_principal }}
         [ -z "$github_principal" ] && github_principal=${{ github.repository_owner }}
         cat << EOF >> oidc.tfvars
         github_principal = "${github_principal}"
