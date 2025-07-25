@@ -53,6 +53,12 @@ runs:
         environment: ${{ inputs.environment }}
         token: ${{ steps.get-token.outputs.token}}
 
+    - name: test
+      shell: bash
+      run: |
+        # test deployment_name
+        echo "deployment_name: ${{ steps.get-deployment-name.outputs.deployment_name }}"
+
     - name: Get state file
       id: get-state-file
       uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main

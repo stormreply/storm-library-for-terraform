@@ -30,6 +30,6 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ github.repository }}
-        token: ${{ steps.prepare.outputs.token }}
+        token: ${{ inputs.token }}
         value: ${{ steps.set-github-principal.outputs.github_principal }}
         variable: GITHUB_PRINCIPAL
