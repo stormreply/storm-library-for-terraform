@@ -44,3 +44,4 @@ runs:
 
         echo "deployment_name=${deployment_name}"
         echo "deployment_name=${deployment_name}" >> $GITHUB_OUTPUT
+        echo "backend_bucket=${backend_bucket}" >> $GITHUB_OUTPUT
