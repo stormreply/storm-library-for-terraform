@@ -38,18 +38,18 @@ jobs:
 
       - name: Single sign on
         id: sso
-        uses: stormreply/storm-library-for-terraform/.github/actions/init/single-sign-on@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/single-sign-on@main
         with:
           access_domain: ${{ inputs.access_domain }}
           backend_region: ${{ inputs.backend_region }}
 
-  init:
+  oidc:
     needs: sso
     runs-on: ubuntu-latest
     steps:
 
       - name: Get role credentials
-        uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/get-role-credentials@main
         with:
           access_role: ${{ inputs.access_role }}
           access_token: ${{ needs.sso.outputs.access_token }}
@@ -64,37 +64,30 @@ jobs:
           backend_region: ${{ inputs.backend_region }}
           use_oidc: false
 
-      - name: Check SLT backend bucket
-        # TODO: split into 2 actions
-        if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
-        shell: bash
-        run: |
-          backend_bucket=${{ steps.prepare.outputs.backend_bucket }}
-          github_principal=${{ inputs.github_principal }}
-          aws s3api create-bucket \
-            --bucket ${backend_bucket} \
-            --region ${{ inputs.backend_region }} \
-            --create-bucket-configuration LocationConstraint=${{ inputs.backend_region }} \
-          || true
-          cat << EOF >> init.tfvars
-          backend_bucket   = "${backend_bucket}"
-          github_principal = "${github_principal}"
-          EOF
+      - name: Create backend bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
+        id: create-backend-bucket
+        with:
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+
+      - name: Set Github principal
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/set-github-principal@main
+        id: set-github-principal
+        with:
+          github_principal: ${{ inputs.github_principal }}
 
       - name: Terraform plan
-        # if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ inputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
-          var_file: init.tfvars
+          var_file: oidc.tfvars
 
       - name: Terraform apply
-        # if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ inputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
-          var_file: init.tfvars
+          var_file: oidc.tfvars

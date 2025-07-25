@@ -46,6 +46,10 @@ runs:
       shell: bash
       run: date
 
+    - name: Show current Configuration
+      id: show-current-configuration
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/configuration@yaml
+
     - name: Setup
       id: setup
       uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
