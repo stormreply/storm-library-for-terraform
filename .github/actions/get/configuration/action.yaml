@@ -34,7 +34,7 @@ runs:
         echo "backend region:        ${{ inputs.backend_region }}"
         echo "deployment account:    ${{ inputs.deployment_account }}"
         echo "deployment region:     ${{ inputs.deployment_region }}"
-        echo "private access token:  ${pat} (len: ${#pat})"
+        echo "private access token:  len: ${#pat}"
         echo "terraform app id:      ${{ inputs.terraform_app_id }}"
-        echo "terraform private key: ${tpk} (len: ${#tpk})"
+        echo "terraform private key: len: ${#tpk}"
         echo
