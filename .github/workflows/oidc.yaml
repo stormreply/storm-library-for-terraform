@@ -48,7 +48,7 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          github_principal: ${{ inputs.github_principals || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+          github_principal: ${{ inputs.github_principal || vars.GITHUB_PRINCIPAL || github.repository_owner }}
 
       - name: Single sign on
         id: sso
@@ -70,7 +70,7 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          github_principal: ${{ inputs.github_principals || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+          github_principal: ${{ inputs.github_principal || vars.GITHUB_PRINCIPAL || github.repository_owner }}
 
       - name: Set role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/set/role-credentials@main
