@@ -7,5 +7,5 @@ runs:
       id: get-configuration
       shell: bash
       run: |
-        backend_bucket = ${{ env.FOO }}
+        backend_bucket=${{ env.FOO }}
         echo "backend_bucket=${backend_bucket}"
