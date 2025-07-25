@@ -47,7 +47,7 @@ runs:
         backend_account: ${{ inputs.backend_account }}
 
     - name: Get deployment name
-      id: get-deployment-name
+      id: fubar
       uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
       with:
         environment: ${{ inputs.environment }}
@@ -57,7 +57,7 @@ runs:
       shell: bash
       run: |
         # test deployment_name
-        echo "deployment_name: ${{ steps.get-deployment-name.outputs.deployment_name }}"
+        echo "deployment_name: ${{ steps.fubar.outputs.deployment_name }}"
 
     - name: Get state file
       id: get-state-file
