@@ -3,6 +3,9 @@ name: Get Configuration
 runs:
   using: composite
   steps:
+    - name: Dump all context
+      run: echo '${{ toJson(vars) }}'
+
     - name: Get Configuration
       id: get-configuration
       shell: bash
