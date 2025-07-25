@@ -75,6 +75,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          backend_region: ${{ inputs.backend_region }}
 
       - name: Set Github principal
         id: set-github-principal

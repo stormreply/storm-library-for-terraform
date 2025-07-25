@@ -3,6 +3,8 @@ name: Set backend bucket
 inputs:
   backend_bucket:
     required: true
+  backend_region:
+    required: true
 
 runs:
   using: composite
