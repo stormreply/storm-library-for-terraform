@@ -26,7 +26,7 @@ jobs:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: gh auth login
         # we need gh auth in order to run a gh workflow
