@@ -7,12 +7,12 @@ on:
       access_domain:
         type: string
         required: true
-        description: Access domain to be used for authentication via AWS SSO
+        description: "Access domain"
         default: "DEFAULT"
       access_role:
         type: string
         required: true
-        description: AWS role used for bootstrapping
+        description: "Access role"
         default: AdministratorAccess
       backend_account:
         type: string
