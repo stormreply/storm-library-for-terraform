@@ -5,30 +5,20 @@ on:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
       access_domain:
-        type: string
-        required: true
         description: "Access domain"
-        # default: vars.ACCESS_DOMAIN
+        type: string
       access_role:
-        type: string
-        required: true
         description: "Access role"
-        # default: vars.ACCESS_ROLE
+        type: string
       backend_account:
-        type: string
-        required: true
         description: "Backend account"
-        # default: vars.BACKEND_ACCOUNT
+        type: string
       backend_region:
-        type: string
-        required: true
         description: "Backend region"
-        # default: vars.BACKEND_REGION
-      github_principal:
         type: string
-        required: true
+      github_principal:
         description: "Github principal"
-        # default: vars.GITHUB_PRINCIPAL
+        type: string
 
 permissions:
   actions: write
