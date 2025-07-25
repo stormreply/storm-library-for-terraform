@@ -7,8 +7,8 @@ runs:
       id: get-configuration
       shell: bash
       run: |
-        backend_account=${{ env.BACKEND_ACCOUNT }}
-        backend_region=${{ env.BACKEND_REGION}}
+        backend_account=${{ vars.BACKEND_ACCOUNT }}
+        backend_region=${{ vars.BACKEND_REGION}}
 
         echo "backend account: ${backend_account}"
         echo "backend region:  ${backend_region}"
