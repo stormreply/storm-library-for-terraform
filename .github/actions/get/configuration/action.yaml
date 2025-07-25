@@ -25,12 +25,16 @@ runs:
       shell: bash
       run: |
         # Show current configuration
+
+        pat="${{ inputs.private_access_token }}"
+        tpk="${{ inputs.terraform_private_key }}"
+
         echo
         echo "backend account:       ${{ inputs.backend_account }}"
         echo "backend region:        ${{ inputs.backend_region }}"
         echo "deployment account:    ${{ inputs.deployment_account }}"
         echo "deployment region:     ${{ inputs.deployment_region }}"
-        echo "private access token:  ${{ inputs.private_access_token }}"
+        echo "private access token:  ${pat} (len: ${#pat})"
         echo "terraform app id:      ${{ inputs.terraform_app_id }}"
-        echo "terraform private key: ${{ inputs.terraform_private_key }}"
+        echo "terraform private key: ${tpk} (len: ${#tpk})"
         echo
