@@ -36,9 +36,7 @@ runs:
         token="${{ steps.create-github-app-token.outputs.token }}"
         [ -z "${token}" ] && token=${{ inputs.private_access_token }}
         if [ ${#token} -eq 0 ] ; then
-          cat << EOF
-            ERROR: could not get a token
-          EOF
+          echo "ERROR: could not get a token"
           exit 1
         else
           echo "token=${token}" >> $GITHUB_OUTPUT
