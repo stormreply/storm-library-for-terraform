@@ -34,7 +34,6 @@ runs:
 
     - name: Get Token
       id: get-token
-      uses:
       with:
         private_access_token: ${{ inputs.private_access_token }}
         terraform_app_id: ${{ inputs.terraform_app_id }}
