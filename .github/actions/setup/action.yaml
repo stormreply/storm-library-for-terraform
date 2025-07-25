@@ -34,6 +34,7 @@ runs:
 
     - name: Get Token
       id: get-token
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
         terraform_app_id: ${{ inputs.terraform_app_id }}
