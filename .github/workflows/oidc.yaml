@@ -32,6 +32,12 @@ jobs:
       access_token: ${{ steps.sso.outputs.access_token }}
     steps:
 
+      - name: Test
+        shell: bash
+        run: |
+          echo "inputs.access_domain: ${{ inputs.access_domain }}"
+          echo "vars.ACCESS_dOMAiN: ${{ vars.ACCESS_DOMAIN }}"
+
       - name: Get Token
         id: get-token
         uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
