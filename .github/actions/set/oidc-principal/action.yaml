@@ -26,7 +26,7 @@ runs:
         echo "oidc_principal=${oidc_principal}"
         echo "oidc_principal=${oidc_principal}" >> $GITHUB_OUTPUT
 
-    - name: Save Github principal
+    - name: Save OIDC principal
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ github.repository }}

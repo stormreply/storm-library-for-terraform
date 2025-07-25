@@ -17,7 +17,7 @@ on:
         description: "Backend region"
         type: string
       oidc_principal:
-        description: "Github principal"
+        description: "OIDC principal"
         type: string
 
 permissions:
