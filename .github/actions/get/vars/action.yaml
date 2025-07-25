@@ -35,7 +35,7 @@ runs:
       run: |
         function check() {
           key=$1
-          eval "val=\$$key"
+          val=$2
           if [ -n "$val" ] ; then
             echo "$key=$val" | tee -a $GITHUB_OUTPUT
           else
@@ -43,10 +43,9 @@ runs:
             exit 1
           fi
         }
-        echo "inputs.access_domain: ${{ inputs.access_domain }}"
-
-        check access_domain
-        check access_role
-        check backend_account
-        check backend_region
-        check github_principal
+    
+        check access_domain    "${access_domain}"
+        check access_role      "${access_role}"
+        check backend_account  "${backend_account}"
+        check backend_region   "${backend_region}"
+        check github_principal "${github_principal}"
