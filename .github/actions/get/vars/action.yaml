@@ -5,10 +5,12 @@ inputs:
     required: true
   access_role:
     required: true
+    default: AdministratorAccess
   backend_account:
     required: true
   backend_region:
     required: true
+    default: eu-central-1
   github_principal:
     required: true
 
