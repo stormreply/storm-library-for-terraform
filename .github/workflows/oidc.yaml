@@ -78,7 +78,7 @@ jobs:
 
       - name: Set Github principal
         id: set-github-principal
-        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/set/github-principal@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/github-principal@main
         with:
           github_principal: ${{ inputs.github_principal }}
 
