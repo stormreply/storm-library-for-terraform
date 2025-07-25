@@ -1,28 +1,6 @@
 name: OIDC
 
 on:
-  # workflow_call:
-  #   # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
-  #   inputs:
-  #     access_domain:
-  #       type: string
-  #       required: true
-  #     access_role:
-  #       type: string
-  #       required: true
-  #     backend_account:
-  #       type: string
-  #       required: true
-  #     backend_region:
-  #       type: string
-  #       required: true
-  #   # NOTE: secrets need to be passed explicitly
-  #   secrets:
-  #     STORM_LIBRARY_FOR_TERRAFORM:
-  #       required: false
-  #     TERRAFORM_PRIVATE_KEY:
-  #       required: false
-
   workflow_dispatch:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
@@ -40,6 +18,10 @@ on:
         type: string
         required: true
         default: eu-central-1
+      github_principal:
+        type: string
+        required: true
+        description: "Github principal. Default: ${{github.repository_owner}}"
 
 permissions:
   actions: write
@@ -65,17 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Print length of secrets
-        shell: bash
-        run: |
-          echo "Length of STORM_LIBRARY_FOR_TERRAFORM: ${#STORM_LIBRARY_FOR_TERRAFORM}"
-          echo "Length of TERRAFORM_PRIVATE_KEY: ${#TERRAFORM_PRIVATE_KEY}"
-          echo "TERRAFORM_APP_ID: ${TERRAFORM_APP_ID}"
-        env:
-          STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          TERRAFORM_APP_ID: ${{ vars.TERRAFORM_APP_ID }}
-
       - name: Get role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/init/get-role-credentials@main
         with:
@@ -90,27 +61,27 @@ jobs:
         with:
           backend_account: ${{ inputs.backend_account }}
           backend_region: ${{ inputs.backend_region }}
-          # private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          # terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          # terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           use_oidc: false
 
       - name: Check SLT backend bucket
+        # TODO: split into 2 actions
         if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
         shell: bash
         run: |
           backend_bucket=${{ steps.prepare.outputs.backend_bucket }}
+          github_principal=${{ inputs.github_principal }}
           aws s3api create-bucket \
             --bucket ${backend_bucket} \
             --region ${{ inputs.backend_region }} \
             --create-bucket-configuration LocationConstraint=${{ inputs.backend_region }} \
           || true
           cat << EOF >> init.tfvars
-          backend_bucket = "${backend_bucket}"
+          backend_bucket   = "${backend_bucket}"
+          github_principal = "${github_principal}"
           EOF
 
       - name: Terraform plan
-        if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
+        # if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
@@ -119,26 +90,10 @@ jobs:
           var_file: init.tfvars
 
       - name: Terraform apply
-        if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
+        # if: github.repository == 'stormreply/storm-library-for-terraform' # TODO: not only stormreply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ inputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: init.tfvars
-
-      # - name: Save backend account
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-      #   with:
-      #     repository: ${{ github.repository }}
-      #     token: ${{ steps.prepare.outputs.token }}
-      #     value: ${{ inputs.backend_account }}
-      #     variable: BACKEND_ACCOUNT
-
-      # - name: Save backend region
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-      #   with:
-      #     repository: ${{ github.repository }}
-      #     token: ${{ steps.prepare.outputs.token }}
-      #     value: ${{ inputs.backend_region }}
-      #     variable: BACKEND_REGION
