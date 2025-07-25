@@ -1,0 +1,18 @@
+name: Show Configuration
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+
+  show:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Show current Configuration
+        id: show-current-configuration
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/configuration@main

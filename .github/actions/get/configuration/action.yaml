@@ -1,0 +1,11 @@
+name: Get Configuration
+
+runs:
+  using: composite
+  steps:
+    - name: Get Configuration
+      id: get-configuration
+      shell: bash
+      run: |
+        backend_bucket = ${{ env.FOO }}
+        echo "backend_bucket=${backend_bucket}"
