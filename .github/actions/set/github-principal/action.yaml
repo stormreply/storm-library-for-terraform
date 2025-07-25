@@ -3,12 +3,17 @@ name: Set Github Principal
 inputs:
   github_principal:
     required: true
+  repository:
+    required: true
+  token:
+    required: true
 
 runs:
   using: composite
   steps:
 
     - name: Set Github Principal
+      id: set-github-principal
       shell: bash
       run: |
         # Set Github Principal ${{ inputs.github_principal }}
@@ -20,3 +25,11 @@ runs:
 
         echo "github_principal=${github_principal}"
         echo "github_principal=${github_principal}" >> $GITHUB_OUTPUT
+
+    - name: Save Github principal
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ github.repository }}
+        token: ${{ steps.prepare.outputs.token }}
+        value: ${{ steps.set-github-principal.outputs.github_principal }}
+        variable: GITHUB_PRINCIPAL
