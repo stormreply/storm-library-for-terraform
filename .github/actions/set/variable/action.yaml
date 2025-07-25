@@ -36,6 +36,4 @@ runs:
           https://api.github.com/repos/$REPO/actions/variables \
           -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
         2> /dev/null | tee /tmp/post-${VARIABLE}
-        cat /tmp/patch-${VARIABLE}
-        cat /tmp/post-${VARIABLE}
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
