@@ -41,5 +41,5 @@ runs:
           deployment_name="${deployment_name}-${environment}"
         fi
 
-        echo "deployment name: ${deployment_name}"
-        echo "name=${deployment_name}" >> $GITHUB_OUTPUT
+        echo "deployment_name=${deployment_name}"
+        echo "deployment_name=${deployment_name}" >> $GITHUB_OUTPUT

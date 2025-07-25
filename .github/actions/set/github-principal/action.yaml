@@ -17,3 +17,6 @@ runs:
         cat << EOF >> oidc.tfvars
         github_principal = "${github_principal}"
         EOF
+
+        echo "github_principal=${github_principal}"
+        echo "github_principal=${github_principal}" >> $GITHUB_OUTPUT

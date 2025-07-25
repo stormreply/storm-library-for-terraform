@@ -7,16 +7,22 @@ on:
       access_domain:
         type: string
         required: true
+        description: Access domain to be used for authentication via AWS SSO
+        default: "DEFAULT"
       access_role:
         type: string
         required: true
+        description: AWS role used for bootstrapping
         default: AdministratorAccess
       backend_account:
         type: string
         required: true
+        description: "Backend account"
+        default: "DEFAULT"
       backend_region:
         type: string
         required: true
+        description: "Backend region"
         default: eu-central-1
       github_principal:
         type: string
@@ -48,8 +54,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Get role credentials
-        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/get-role-credentials@main
+      - name: Set role credentials
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/role-credentials@main
         with:
           access_role: ${{ inputs.access_role }}
           access_token: ${{ needs.sso.outputs.access_token }}
@@ -57,33 +63,65 @@ jobs:
           backend_region: ${{ inputs.backend_region }}
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
+        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         with:
           backend_account: ${{ inputs.backend_account }}
           backend_region: ${{ inputs.backend_region }}
           use_oidc: false
 
       - name: Create backend bucket
-        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
         id: create-backend-bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
 
       - name: Set Github principal
-        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/set-github-principal@main
         id: set-github-principal
+        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/set/github-principal@main
         with:
           github_principal: ${{ inputs.github_principal }}
 
       # TODO: save all that stuff which has been collected here
-      # - name: Save access domain
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-      #   with:
-      #     repository: ${{ github.repository }}
-      #     token: ${{ steps.prepare.outputs.token }}
-      #     value: ${{ inputs.backend_account }}
-      #     variable: BACKEND_ACCOUNT
+      - name: Save access domain
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.token }}
+          value: ${{ inputs.access_domain }}
+          variable: ACCESS_DOMAIN
+
+      - name: Save access role
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.token }}
+          value: ${{ inputs.access_role }}
+          variable: ACCESS_ROLE
+
+      - name: Save backend account
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.token }}
+          value: ${{ inputs.backend_account }}
+          variable: BACKEND_ACCOUNT
+
+      - name: Save backend region
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.token }}
+          value: ${{ inputs.backend_region }}
+          variable: BACKEND_REGION
+
+      - name: Save github principal
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ steps.prepare.outputs.token }}
+          value: ${{ steps.set-github-principal.outputs.github_principal }}
+          variable: GITHUB_PRINCIPAL
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
