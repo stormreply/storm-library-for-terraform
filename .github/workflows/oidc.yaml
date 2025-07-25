@@ -43,9 +43,11 @@ jobs:
       - name: Get Vars
         id: get-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
+        env:
+          ACCESS_ROLE: ${{ inputs.access_role || vars.ACCESS_ROLE || 'AdministratorAccess' }}
         with:
           access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
-          access_role: ${{ inputs.access_role || vars.ACCESS_ROLE || 'AdministratorAccess' }}
+          access_role: $ACCESS_ROLE
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION || 'eu-central-1' }}
           github_principal: ${{ inputs.github_principals || vars.GITHUB_PRINCIPAL || github.repository_owner }}
