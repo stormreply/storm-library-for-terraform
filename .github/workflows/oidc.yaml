@@ -16,7 +16,7 @@ on:
       backend_region:
         description: "Backend region"
         type: string
-      github_principal:
+      oidc_principal:
         description: "Github principal"
         type: string
 
@@ -48,7 +48,7 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          github_principal: ${{ inputs.github_principal || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+          oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
 
       - name: Single sign on
         id: sso
@@ -70,7 +70,7 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          github_principal: ${{ inputs.github_principal || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+          oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
 
       - name: Set role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/set/role-credentials@main
@@ -130,10 +130,10 @@ jobs:
           value: ${{ steps.get-vars.outputs.backend_region }}
           variable: BACKEND_REGION
 
-      - name: Set Github principal
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/github-principal@main
+      - name: Set OIDC principal
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/oidc-principal@main
         with:
-          github_principal: ${{ steps.get-vars.outputs.github_principal }}
+          oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
 
