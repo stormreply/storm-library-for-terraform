@@ -21,7 +21,8 @@ on:
       github_principal:
         type: string
         required: true
-        description: "Github principal. Default: ${{github.repository_owner}}"
+        description: "Github principal"
+        default: "DEFAULT"
 
 permissions:
   actions: write
