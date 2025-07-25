@@ -43,9 +43,9 @@ runs:
             exit 1
           fi
         }
-    
-        check access_domain    "${access_domain}"
-        check access_role      "${access_role}"
-        check backend_account  "${backend_account}"
-        check backend_region   "${backend_region}"
-        check github_principal "${github_principal}"
+
+        check access_domain    "${{ inputs.access_domain }}"
+        check access_role      "${{ inputs.access_role }}"
+        check backend_account  "${{ inputs.backend_account }}"
+        check backend_region   "${{ inputs.backend_region }}"
+        check github_principal "${{ inputs.github_principal }}"
