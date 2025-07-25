@@ -64,4 +64,4 @@ runs:
       id: get-state-file
       uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main
       with:
-        deployment_name: ${{ steps.get-deployment-name.outputs.deployment_name }}
+        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
