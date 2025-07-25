@@ -24,6 +24,8 @@ runs:
       id: get-configuration
       shell: bash
       run: |
+        # Show current configuration
+        echo
         echo "backend account:       ${{ inputs.backend_account }}"
         echo "backend region:        ${{ inputs.backend_region }}"
         echo "deployment account:    ${{ inputs.deployment_account }}"
@@ -31,3 +33,4 @@ runs:
         echo "private access token:  ${{ inputs.private_access_token }}"
         echo "terraform app id:      ${{ inputs.terraform_app_id }}"
         echo "terraform private key: ${{ inputs.terraform_private_key }}"
+        echo
