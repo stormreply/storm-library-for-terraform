@@ -8,27 +8,27 @@ on:
         type: string
         required: true
         description: "Access domain"
-        default: vars.ACCESS_DOMAIN
+        # default: vars.ACCESS_DOMAIN
       access_role:
         type: string
         required: true
         description: "Access role"
-        default: vars.ACCESS_ROLE
+        # default: vars.ACCESS_ROLE
       backend_account:
         type: string
         required: true
         description: "Backend account"
-        default: vars.BACKEND_ACCOUNT
+        # default: vars.BACKEND_ACCOUNT
       backend_region:
         type: string
         required: true
         description: "Backend region"
-        default: vars.BACKEND_REGION
+        # default: vars.BACKEND_REGION
       github_principal:
         type: string
         required: true
         description: "Github principal"
-        default: vars.GITHUB_PRINCIPAL
+        # default: vars.GITHUB_PRINCIPAL
 
 permissions:
   actions: write
@@ -42,32 +42,60 @@ jobs:
       access_token: ${{ steps.sso.outputs.access_token }}
     steps:
 
+      - name: Get Token
+        id: get-token
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
+        with:
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+
+      - name: Get Vars
+        id: get-vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
+        with:
+          access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+          access_role: ${{ inputs.access_role || vars.ACCESS_ROLE || "AdministratorAccess" }}
+          backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION || "eu-central-1" }}
+          github_principal: ${{ inputs.github_principals || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+
       - name: Single sign on
         id: sso
         uses: stormreply/storm-library-for-terraform/.github/actions/oidc/single-sign-on@main
         with:
-          access_domain: ${{ inputs.access_domain }}
-          backend_region: ${{ inputs.backend_region }}
+          access_domain: ${{ steps.get-vars.outputs.access_domain }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
 
   oidc:
     needs: sso
     runs-on: ubuntu-latest
     steps:
 
+      - name: Get Vars
+        id: get-vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
+        with:
+          access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+          access_role: ${{ inputs.access_role || vars.ACCESS_ROLE || "AdministratorAccess" }}
+          backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION || "eu-central-1" }}
+          github_principal: ${{ inputs.github_principals || vars.GITHUB_PRINCIPAL || github.repository_owner }}
+
       - name: Set role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/set/role-credentials@main
         with:
-          access_role: ${{ inputs.access_role }}
+          access_role: ${{ steps.get-vars.outputs.access_role }}
           access_token: ${{ needs.sso.outputs.access_token }}
-          backend_account: ${{ inputs.backend_account }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_account: ${{ steps.get-vars.outputs.backend_account }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
 
       - name: Prepare
         id: prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         with:
-          backend_account: ${{ inputs.backend_account }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_account: ${{ steps.get-vars.outputs.backend_account }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
@@ -78,49 +106,44 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
 
       - name: Set access domain
-        if: inputs.access_domain != 'vars.ACCESS_DOMAIN'
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
-          value: ${{ inputs.access_domain }}
+          value: ${{ steps.get-vars.outputs.access_domain }}
           variable: ACCESS_DOMAIN
 
       - name: Set access role
-        if: inputs.access_role != 'vars.ACCESS_ROLE'
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
-          value: ${{ inputs.access_role }}
+          value: ${{ steps.get-vars.outputs.access_role }}
           variable: ACCESS_ROLE
 
       - name: Set backend account
-        if: inputs.backend_account != 'vars.BACKEND_ACCOUNT'
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
-          value: ${{ inputs.backend_account }}
+          value: ${{ steps.get-vars.outputs.backend_account }}
           variable: BACKEND_ACCOUNT
 
       - name: Set backend region
-        if: inputs.backend_region != 'vars.BACKEND_REGION'
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
-          value: ${{ inputs.backend_region }}
+          value: ${{ steps.get-vars.outputs.backend_region }}
           variable: BACKEND_REGION
 
       - name: Set Github principal
-        if: inputs.github_principal != 'vars.GITHUB_PRINCIPAL'
         uses: stormreply/storm-library-for-terraform/.github/actions/set/github-principal@main
         with:
-          github_principal: ${{ inputs.github_principal }}
+          github_principal: ${{ steps.get-vars.outputs.github_principal }}
           repository: ${{ github.repository }}
           token: ${{ steps.prepare.outputs.token }}
 
@@ -128,7 +151,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: oidc.tfvars
 
@@ -136,6 +159,6 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
           state_file: ${{ steps.prepare.outputs.state_file }}
           var_file: oidc.tfvars

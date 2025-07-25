@@ -1,0 +1,45 @@
+name: Get token
+
+inputs:
+
+  private_access_token:
+    required: false
+  terraform_app_id:
+    required: false
+  terraform_private_key:
+    required: false
+
+
+outputs:
+  token:
+    description: Token to use for GitHub calls
+    value: ${{ steps.get-token.outputs.token}}
+
+runs:
+  using: composite
+  steps:
+
+    - name: Create Github app token
+      if: inputs.terraform_app_id != ''
+      id: create-github-app-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ inputs.terraform_app_id }}
+        private-key: ${{ inputs.terraform_private_key }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Get Token
+      id: get-token
+      shell: bash
+      run: |
+        # Get token
+        token="${{ steps.create-github-app-token.outputs.token }}"
+        [ -z "${token}" ] && token=${{ inputs.private_access_token }}
+        if [ ${#token} -eq 0 ] ; then
+          cat << EOF
+            ERROR: could not get a token
+          EOF
+          exit 1
+        else
+          echo "token=${token}" >> $GITHUB_OUTPUT
+        fi

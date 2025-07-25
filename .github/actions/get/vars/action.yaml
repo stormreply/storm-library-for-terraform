@@ -1,0 +1,49 @@
+name: Get bucket name
+
+inputs:
+  access_domain:
+    required: true
+  access_role:
+    required: true
+  backend_account:
+    required: true
+  backend_region:
+    required: true
+  github_principal:
+    required: true
+
+outputs:
+  access_domain:
+    value: ${{ steps.get-vars.outputs.access_domain }}
+  access_role:
+    value: ${{ steps.get-vars.outputs.access_role }}
+  backend_account:
+    value: ${{ steps.get-vars.outputs.backend_account }}
+  backend_region:
+    value: ${{ steps.get-vars.outputs.backend_region }}
+  github_principal:
+    value: ${{ steps.get-vars.outputs.github_principal }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get vars
+      id: get-vars
+      shell: bash
+      run: |
+        function check() {
+          key=$1
+          eval "val=\$$key"
+          if [ -n "$val" ] ; then
+            echo "$key=$val" | tee -a $GITHUB_OUTPUT
+          else
+            echo "ERROR: $key is empty. exiting."
+            exit 1
+          fi
+        }
+
+        check access_domain
+        check access_role
+        check backend_account
+        check backend_region
+        check github_principal
