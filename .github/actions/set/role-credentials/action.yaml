@@ -1,4 +1,4 @@
-name: Get role credentials
+name: Set role credentials
 
 inputs:
   access_role:
