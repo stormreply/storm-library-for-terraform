@@ -76,6 +76,15 @@ jobs:
         with:
           github_principal: ${{ inputs.github_principal }}
 
+      # TODO: save all that stuff which has been collected here
+      # - name: Save access domain
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      #   with:
+      #     repository: ${{ github.repository }}
+      #     token: ${{ steps.prepare.outputs.token }}
+      #     value: ${{ inputs.backend_account }}
+      #     variable: BACKEND_ACCOUNT
+
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:

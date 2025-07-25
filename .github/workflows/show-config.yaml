@@ -19,3 +19,5 @@ jobs:
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
           backend_region: ${{ vars.BACKEND_REGION }}
+          deployment_account: ${{ vars.DEPLOYMENT_ACCOUNT }}
+          deployment_region: ${{ vars.DEPLOYMENT_REGION }}

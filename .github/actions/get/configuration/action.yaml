@@ -9,6 +9,13 @@ inputs:
     required: true
   deployment_region:
     required: true
+  private_access_token:
+    required: true
+  terraform_app_id:
+    required: true
+  terraform_private_key:
+    required: true
+
 
 runs:
   using: composite
@@ -17,5 +24,10 @@ runs:
       id: get-configuration
       shell: bash
       run: |
-        echo "backend account: ${{ inputs.backend_account }}"
-        echo "backend region:  ${{ inputs.backend_region }}"
+        echo "backend account:       ${{ inputs.backend_account }}"
+        echo "backend region:        ${{ inputs.backend_region }}"
+        echo "deployment account:    ${{ inputs.deployment_account }}"
+        echo "deployment region:     ${{ inputs.deployment_region }}"
+        echo "private access token:  ${{ inputs.private_access_token }}"
+        echo "terraform app id:      ${{ inputs.terraform_app_id }}"
+        echo "terraform private key: ${{ inputs.terraform_private_key }}"
