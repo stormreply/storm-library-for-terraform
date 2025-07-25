@@ -1,17 +1,21 @@
 name: Get Configuration
 
+inputs:
+  backend_account:
+    required: true
+  backend_region:
+    required: true
+  deployment_account:
+    required: true
+  deployment_region:
+    required: true
+
 runs:
   using: composite
   steps:
-    - name: Dump all context
-      run: echo '${{ toJson(vars) }}'
-
     - name: Get Configuration
       id: get-configuration
       shell: bash
-      env:
-        backend_account: ${{ vars.BACKEND_ACCOUNT }}
-        backend_region: ${{ vars.BACKEND_REGION }}
       run: |
-        echo "backend account: ${backend_account}"
-        echo "backend region:  ${backend_region}"
+        echo "backend account: ${{ inputs.backend_account }}"
+        echo "backend region:  ${{ inputs.backend_region }}"
