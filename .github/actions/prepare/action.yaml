@@ -2,7 +2,7 @@ name: Prepare
 
 inputs:
 
-  access_domain:
+  acces s_domain:
     required: true
   access_role:
     required: true
