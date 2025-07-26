@@ -21,16 +21,16 @@ inputs:
 outputs:
   backend_bucket:
     description: Central administration backend bucket
-    value: ${{ steps.setup.outputs.backend_bucket }}
+    value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
   deployment_name:
     description: Name of this deployment
-    value: ${{ steps.setup.outputs.deployment_name}}
+    value: ${{ steps.get-deployment-name.outputs.name}}
   state_file:
     description: Name of the state file
-    value: ${{ steps.setup.outputs.state_file }}
+    value: ${{ steps.get-state-file.outputs.state_file }}
   token:
     description: Token to use for GitHub calls
-    value: ${{ steps.setup.outputs.token}}
+    value: ${{ steps.get-token.outputs.token}}
 
 runs:
   using: composite
@@ -81,7 +81,7 @@ runs:
       shell: bash
       run: |
         # Git config rewrite URLs
-        TOKEN=${{ steps.setup.outputs.token }}
+        TOKEN=${{ steps.get-token.outputs.token }}
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
         # git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "git@github.com:"
 
@@ -93,13 +93,13 @@ runs:
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
       with:
-        token: ${{ steps.setup.outputs.token }}
+        token: ${{ steps.get-token.outputs.token }}
         file: providers.tf
 
     - name: Set deployment tags
       uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
       with:
-        deployment_name: ${{ steps.setup.outputs.deployment_name }}
+        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
         environment: ${{ inputs.environment }}
 
     - name: Set backend profile in AWS config

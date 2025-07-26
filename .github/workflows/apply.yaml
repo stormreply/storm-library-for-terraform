@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # TODO: reduce Prepare here to sth leaner, e.g. setup + downloads
+      # TODO: reduce Prepare here to sth leaner like checkout repo + rewrite git config
       - name: Prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
