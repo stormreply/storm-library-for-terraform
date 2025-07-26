@@ -103,6 +103,7 @@ jobs:
         with:
           access_domain: ${{ steps.get-vars.outputs.access_domain }}
           access_role: ${{ steps.get-vars.outputs.access_role }}
+          access_token: ${{ needs.sso.outputs.access_token }}
           backend_account: ${{ steps.get-vars.outputs.backend_account }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
