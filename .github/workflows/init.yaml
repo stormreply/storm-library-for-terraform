@@ -98,8 +98,8 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ steps.get-vars.outputs.token }}
 
-      - name: set AWS access
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/access@main
+      - name: set AWS config
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/config@main
         with:
           access_domain: ${{ steps.get-vars.outputs.access_domain }}
           access_role: ${{ steps.get-vars.outputs.access_role }}

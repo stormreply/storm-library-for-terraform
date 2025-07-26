@@ -1,4 +1,4 @@
-name: Set AWS access
+name: Set AWS config
 
 inputs:
   access_domain:
