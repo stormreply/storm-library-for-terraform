@@ -47,9 +47,9 @@ jobs:
         with:
           access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
-          backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
+          backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          deployment_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }} # TODO:
           deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
           environment: ${{ github.repository_owner }}
           oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
@@ -75,9 +75,9 @@ jobs:
         with:
           access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
-          backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
+          backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-          deployment_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }} # TODO:
           deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
           environment: ${{ github.repository_owner }}
           oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
@@ -101,8 +101,8 @@ jobs:
           access_role: ${{ steps.get-vars.outputs.access_role }}
           backend_account: ${{ steps.get-vars.outputs.backend_account }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
-          deployment_account: ${{ steps.get-vars.outputs.deployment_account }}
-          deployment_region: ${{ steps.get-vars.outputs.deployment_region }}
+          deployment_account: ${{ steps.get-vars.outputs.backend_account }} # TODO:
+          deployment_region: ${{ steps.get-vars.outputs.backend_region }} # TODO:
           environment: ${{ inputs.environment }} # TODO: get from get-vars
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}

@@ -62,9 +62,9 @@ runs:
       with:
         access_domain: ${{ inputs.access_domain }}
         access_role: ${{ inputs.access_role }}
-        backend_account: ${{ inputs.backend_accounts }}
+        backend_account: ${{ inputs.backend_account }}
         backend_region: ${{ inputs.backend_region }}
-        deployment_account: ${{ inputs.deployment_accounts }}
+        deployment_account: ${{ inputs.deployment_account }}
         deployment_region: ${{ inputs.deployment_region }}
         environment: ${{ inputs.environment }}
         oidc_principal: ${{ inputs.oidc_principal }}
