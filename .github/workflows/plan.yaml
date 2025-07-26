@@ -7,10 +7,40 @@ permissions:
 on:
   workflow_call:
     inputs:
+
       var_file:
         type: string
         required: false
         default: ""
+
+      access_domain:
+        type: string
+        required: true
+      access_role:
+        type: string
+        required: true
+      backend_account:
+        type: string
+        required: true
+      backend_region:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
+      oidc_principal:
+        type: string
+        required: true
+      private_access_token:
+        type: string
+        required: true
+      terraform_app_id:
+        type: string
+        required: true
+      terraform_private_key:
+        type: string
+        required: true
+
 
 jobs:
 
@@ -22,11 +52,15 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          access_domain: ${{ inputs.access_domain }}
+          access_role: ${{ inputs.access_role }}
+          backend_account: ${{ inputs.backend_account }}
+          backend_region: ${{ inputs.backend_region }}
+          environment: ${{ inputs.environment }}
+          oidc_principal: ${{ inputs.oidc_principal }}
+          private_access_token: ${{ inputs.private_access_token }}
+          terraform_app_id: ${{ inputs.terraform_app_id }}
+          terraform_private_key: ${{ inputs.terraform_private_key }}
 
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
@@ -42,11 +76,15 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          access_domain: ${{ inputs.access_domain }}
+          access_role: ${{ inputs.access_role }}
+          backend_account: ${{ inputs.backend_account }}
+          backend_region: ${{ inputs.backend_region }}
+          environment: ${{ inputs.environment }}
+          oidc_principal: ${{ inputs.oidc_principal }}
+          private_access_token: ${{ inputs.private_access_token }}
+          terraform_app_id: ${{ inputs.terraform_app_id }}
+          terraform_private_key: ${{ inputs.terraform_private_key }}
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main

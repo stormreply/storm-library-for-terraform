@@ -28,7 +28,7 @@ runs:
       id: get-configuration
       shell: bash
       run: |
-        # Show current configuration
+        # get/configuration
 
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"

@@ -33,8 +33,12 @@ outputs:
     value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
   backend_region:
     value: ${{ steps.get-vars.outputs.backend_region }}
+  deployment_account:
+    value: ${{ steps.get-vars.outputs.backend_account }} # TODO:
   deployment_name:
     value: ${{ steps.get-deployment-name.outputs.name }}
+  deployment_region:
+    value: ${{ steps.get-vars.outputs.backend_region }} # TODO:
   environment:
     value: ${{ inputs.environment }}
   oidc_principal:
@@ -50,7 +54,7 @@ runs:
       id: get-vars
       shell: bash
       run: |
-        # get-vars
+        #
         function check() {
           key=$1
           val=$2
@@ -93,6 +97,7 @@ runs:
       id: show-vars
       shell: bash
       run: |
+        #
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
         echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
@@ -100,7 +105,9 @@ runs:
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
         echo "backend bucket:        ${{ steps.get-backend-bucket.outputs.backend_bucket}}"
         echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
+        echo "deployment account:    ${{ steps.get-vars.outputs.backend_account }}" # TODO:
         echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
+        echo "deployment region:     ${{ steps.get-vars.outputs.backend_region }}" # TODO:
         echo "environment:           ${{ inputs.environment }}"
         echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
         echo "private access token:  length: ${#pat}"

@@ -11,7 +11,7 @@ runs:
     - name: Execute
       shell: bash
       run: |
-        # Execute
+        # scheduler/execute
 
         for e in $(cat /tmp/selected) ; do
 

@@ -22,6 +22,7 @@ runs:
       shell: bash
       id: sso
       run: |
+        # oidc/single-sign-on
 
         cd ${{ github.action_path }}
         mkdir -p ${HOME}/.aws

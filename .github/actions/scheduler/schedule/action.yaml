@@ -34,7 +34,7 @@ runs:
     - name: Schedule action
       shell: bash
       run: |
-        # Schedule action
+        # scheduler/schedule
         action=${{ inputs.action }}
 
         deployment_account=${{ inputs.deployment_account }}

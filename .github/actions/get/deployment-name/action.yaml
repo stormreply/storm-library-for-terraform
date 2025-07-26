@@ -17,7 +17,7 @@ runs:
       id: get-deployment-name
       shell: bash
       run: |
-        # Get deployment name
+        # get/deployment-name
         TOKEN=${{ inputs.token }}
         curl \
           -H "Accept: application/vnd.github.raw" \
