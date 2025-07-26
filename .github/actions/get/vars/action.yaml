@@ -98,7 +98,7 @@ runs:
         echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
-        echo "backend bucket:        §{{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        echo "backend bucket:        ${{ steps.get-backend-bucket.outputs.backend_bucket}}"
         echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
         echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
         echo "environment:           ${{ inputs.environment }}"
