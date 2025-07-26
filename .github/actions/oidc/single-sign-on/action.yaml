@@ -38,12 +38,18 @@ runs:
         while [ ! -f login-output.txt ]; do
           sleep 1
         done
+        cat << EOF
+
+        Click the link below:
+
+        EOF
+        echo -e ""
         while ! cat login-output.txt | grep "?user_code=" ; do sleep 1 ; done
         i=0
         echo
         # echo -ne "remaining seconds: "
         while [ -n "$(ps -p ${pid} -o pid=)" ]; do
-          echo -ne .
+          echo -ne . && true
           i=$((i+1))
           sleep 1
         done
