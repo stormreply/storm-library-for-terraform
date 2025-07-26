@@ -40,6 +40,7 @@ jobs:
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
+      # TODO: reduce to get-access-domain, get-backend-region
       - name: Get Vars
         id: get-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
@@ -48,6 +49,8 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+          deployment_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
           environment: ${{ github.repository_owner }}
           oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
@@ -74,12 +77,13 @@ jobs:
           access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
           backend_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }}
           backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+          deployment_account: ${{ inputs.backend_accounts || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
           environment: ${{ github.repository_owner }}
           oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-
 
       - name: Set role credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/set/role-credentials@main
@@ -93,11 +97,16 @@ jobs:
         id: prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         with:
+          access_domain: ${{ steps.get-vars.outputs.access_domain }}
+          access_role: ${{ steps.get-vars.outputs.access_role }}
           backend_account: ${{ steps.get-vars.outputs.backend_account }}
+          backend_bucket: ${{ steps.get-var.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          deployment_account: ${{ steps.get-vars.outputs.deployment_account }}
+          deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
+          deployment_region: ${{ steps.get-vars.outputs.deployment_region }}
+          environment: ${{ inputs.environment }} # TODO: get from get-vars
+          oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           use_oidc: false
 
       - name: Set backend bucket

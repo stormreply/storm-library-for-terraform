@@ -11,6 +11,11 @@ inputs:
   backend_region:
     required: true
     default: eu-central-1
+  deployment_account:
+    required: true
+  deployment_region:
+    required: true
+    default: eu-central-1
   environment:
     required: true
   oidc_principal:

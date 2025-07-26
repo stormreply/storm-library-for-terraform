@@ -10,6 +10,10 @@ inputs:
     required: true
   backend_region:
     required: true
+  deployment_account:
+    required: true
+  deployment_region:
+    required: true
   environment:
     required: true
   oidc_principal:
@@ -33,6 +37,8 @@ outputs:
   deployment_name:
     description: Name of this deployment
     value: ${{ steps.get-deployment-name.outputs.name}}
+  deployment_region:
+
   state_file:
     description: Name of the state file
     value: ${{ steps.get-state-file.outputs.state_file }}
@@ -62,6 +68,8 @@ runs:
         access_role: ${{ inputs.access_role }}
         backend_account: ${{ inputs.backend_accounts }}
         backend_region: ${{ inputs.backend_region }}
+        deployment_account: ${{ inputs.deployment_accounts }}
+        deployment_region: ${{ inputs.deployment_region }}
         environment: ${{ inputs.environment }}
         oidc_principal: ${{ inputs.oidc_principal }}
         private_access_token: ${{ inputs.private_access_token }}
