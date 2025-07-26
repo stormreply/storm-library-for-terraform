@@ -57,7 +57,7 @@ runs:
       shell: bash
       run: |
         # test deployment_name
-        echo "deployment_name: ${{ steps.get-deployment-name.outputs.name }}"
+        echo "deployment_name: ${{ steps.get-deployment-name.outputs.deployment_name }}"
 
     - name: Get state file
       id: get-state-file

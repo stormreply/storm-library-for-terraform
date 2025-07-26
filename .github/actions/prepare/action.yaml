@@ -75,7 +75,7 @@ runs:
       shell: bash
       run: |
         # test deployment_name
-        echo "deployment_name: ${{ steps.setup.outputs.name }}"
+        echo "deployment_name: ${{ steps.setup.outputs.deployment_name }}"
 
     - name: Checkout repository
       uses: actions/checkout@v4

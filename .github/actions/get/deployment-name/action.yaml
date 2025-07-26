@@ -43,5 +43,5 @@ runs:
         fi
 
         echo "deployment_name=${deployment_name}"
-        # NOTE: github shows unexpected behaviour with "deployment_name" as a variable name!
+        echo "deployment_name=${deployment_name}" >> $GITHUB_OUTPUT
         echo "name=${deployment_name}" >> $GITHUB_OUTPUT
