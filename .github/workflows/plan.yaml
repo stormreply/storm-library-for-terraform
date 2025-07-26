@@ -31,15 +31,15 @@ on:
       oidc_principal:
         type: string
         required: false
-      private_access_token:
-        type: string
-        required: true
+      # private_access_token:
+      #   type: string
+      #   required: true
       terraform_app_id:
         type: string
         required: false
-      terraform_private_key:
-        type: string
-        required: true
+      # terraform_private_key:
+      #   type: string
+      #   required: true
 
 
 jobs:
@@ -52,17 +52,17 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
-          access_domain: ${{ inputs.access_domain }}
-          access_role: ${{ inputs.access_role }}
-          backend_account: ${{ inputs.backend_account }}
-          backend_region: ${{ inputs.backend_region }}
-          deployment_account: ${{ inputs.deployment_account }}
-          deployment_region: ${{ inputs.deployment_region }}
-          environment: ${{ inputs.environment }}
-          oidc_principal: ${{ inputs.oidc_principal }}
-          private_access_token: ${{ inputs.private_access_token }}
-          terraform_app_id: ${{ inputs.terraform_app_id }}
-          terraform_private_key: ${{ inputs.terraform_private_key }}
+          access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+          access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
+          backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+          deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
+          environment: ${{ github.repository_owner }}
+          oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
@@ -78,17 +78,17 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
         id: prepare
         with:
-          access_domain: ${{ inputs.access_domain }}
-          access_role: ${{ inputs.access_role }}
-          backend_account: ${{ inputs.backend_account }}
-          backend_region: ${{ inputs.backend_region }}
-          deployment_account: ${{ inputs.deployment_account }}
-          deployment_region: ${{ inputs.deployment_region }}
-          environment: ${{ inputs.environment }}
-          oidc_principal: ${{ inputs.oidc_principal }}
-          private_access_token: ${{ inputs.private_access_token }}
-          terraform_app_id: ${{ inputs.terraform_app_id }}
-          terraform_private_key: ${{ inputs.terraform_private_key }}
+          access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+          access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
+          backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+          backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+          deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }} # TODO:
+          deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }} # TODO:
+          environment: ${{ github.repository_owner }}
+          oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
