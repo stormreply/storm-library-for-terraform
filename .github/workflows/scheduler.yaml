@@ -19,18 +19,23 @@ jobs:
         shell: bash
         run: date
 
-      - name: Setup
-        id: setup
-        uses: stormreply/storm-library-for-terraform/.github/actions/setup@main
+      - name: Get Token
+        id: get-token
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
+      - name: Get backend bucket
+        id: get-backend-bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
+        with:
+          backend_account: ${{ vars.BACKEND_ACCOUNT }}
+
       - name: gh auth login
         # we need gh auth in order to run a gh workflow
-        run: echo "${{ steps.setup.outputs.token }}" | gh auth login --with-token
+        run: echo "${{ steps.get-token.outputs.token }}" | gh auth login --with-token
 
       - name: Set backend profile in AWS config
         # we need to assume role in order to aws s3api
@@ -43,9 +48,9 @@ jobs:
       - name: Select
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/select@main
         with:
-          backend_bucket: ${{ steps.setup.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
 
       - name: Execute
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/execute@main
         with:
-          backend_bucket: ${{ steps.setup.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.get-backend-bucket.outputs.backend_bucket }}

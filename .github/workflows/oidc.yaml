@@ -91,9 +91,9 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           use_oidc: false
 
-      - name: Create backend bucket
-        id: create-backend-bucket
-        uses: stormreply/storm-library-for-terraform/.github/actions/oidc/create-backend-bucket@main
+      - name: Set backend bucket
+        id: set-backend-bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-bucket@main
         with:
           backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
