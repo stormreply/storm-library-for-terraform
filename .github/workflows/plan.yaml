@@ -15,28 +15,28 @@ on:
 
       access_domain:
         type: string
-        required: true
+        required: false
       access_role:
         type: string
-        required: true
+        required: false
       backend_account:
         type: string
-        required: true
+        required: false
       backend_region:
         type: string
-        required: true
+        required: false
       environment:
         type: string
-        required: true
+        required: false
       oidc_principal:
         type: string
-        required: true
+        required: false
       private_access_token:
         type: string
         required: true
       terraform_app_id:
         type: string
-        required: true
+        required: false
       terraform_private_key:
         type: string
         required: true
