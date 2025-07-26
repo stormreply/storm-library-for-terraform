@@ -56,7 +56,7 @@ runs:
       shell: bash
       run: date
 
-    - name: Get Vars
+    - name: Get vars
       id: get-vars
       uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
       with:
