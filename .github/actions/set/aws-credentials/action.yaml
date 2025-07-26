@@ -1,4 +1,4 @@
-name: Set role credentials
+name: Set AWS credentials
 
 inputs:
   access_role:
@@ -13,9 +13,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Export AWS environment variables
+    - name: Set AWS credentials
       shell: bash
       run: |
+        # set/aws-credentials
+
         echo "login into account ${{ inputs.backend_account }} with role ${{ inputs.access_role }}"
 
         # TODO: fix masking or write to .env before and take from .env here
