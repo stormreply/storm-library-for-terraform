@@ -30,13 +30,17 @@ outputs:
   backend_account:
     value: ${{ steps.get-vars.outputs.backend_account }}
   backend_bucket:
-    value: ${{ steps.get-vars.outputs.backend_bucket }}
+    value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
   backend_region:
     value: ${{ steps.get-vars.outputs.backend_region }}
+  deployment_name:
+    value: ${{ steps.get-deployment-name.outputs.name }}
+  environment:
+    value: ${{ inputs.environment }}
   oidc_principal:
     value: ${{ steps.get-vars.outputs.oidc_principal }}
   token:
-    value: ${{ steps.get-vars.outputs.token }}
+    value: ${{ steps.get-token.outputs.token }}
 
 runs:
   using: composite
@@ -51,7 +55,8 @@ runs:
           key=$1
           val=$2
           if [ -n "$val" ] ; then
-            echo "$key=$val" | tee -a $GITHUB_OUTPUT
+            # echo "$key=$val" | tee -a $GITHUB_OUTPUT
+            echo "$key=$val" >> $GITHUB_OUTPUT
           else
             echo "ERROR: $key is empty. exiting."
             exit 1
@@ -83,3 +88,21 @@ runs:
       with:
         environment: ${{ inputs.environment }}
         token: ${{ steps.get-token.outputs.token}}
+
+    - name: Show vars
+      id: show-vars
+      shell: bash
+      run: |
+        pat="${{ inputs.private_access_token }}"
+        tpk="${{ inputs.terraform_private_key }}"
+        echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
+        echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
+        echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
+        echo "backend bucket:        §{{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
+        echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
+        echo "environment:           ${{ inputs.environment }}"
+        echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
+        echo "private access token:  length: ${#pat}"
+        echo "terraform app id:      ${{ inputs.terraform_app_id }}"
+        echo "terraform private key: length: ${#tpk}"
