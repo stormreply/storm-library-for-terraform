@@ -38,9 +38,13 @@ runs:
         while [ ! -f login-output.txt ]; do
           sleep 1
         done
-        while [ -n "$(ps -p ${pid} -o pid=)" ]; do
-          cat login-output.txt | grep "?user_code=" || true
-          sleep 5
+        while ! cat login-output.txt | grep "?user_code=" ; do sleep 1 ; done
+        cat login-output.txt | grep "?user_code="
+        i=60
+        while [ -n "$(ps -p ${pid} -o pid=)" -a $i -gt 0 ]; do
+          echo -ne "remaining: $i seconds   \r"
+          i=$((i-1))
+          sleep 1
         done
 
         export "ACCESS_TOKEN=$(jq -r '. | select(.accessToken != null) | .accessToken' ${HOME}/.aws/sso/cache/*.json)"
