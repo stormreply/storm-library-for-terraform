@@ -114,14 +114,14 @@ jobs:
         id: set-backend-bucket
         uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-bucket@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
 
       - name: Set access domain
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.token }}
+          token: ${{ steps.get-vars .outputs.token }}
           value: ${{ steps.get-vars.outputs.access_domain }}
           variable: ACCESS_DOMAIN
 
@@ -129,7 +129,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.token }}
+          token: ${{ steps.get-vars.outputs.token }}
           value: ${{ steps.get-vars.outputs.access_role }}
           variable: ACCESS_ROLE
 
@@ -137,7 +137,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.token }}
+          token: ${{ steps.get-vars.outputs.token }}
           value: ${{ steps.get-vars.outputs.backend_account }}
           variable: BACKEND_ACCOUNT
 
@@ -145,7 +145,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.token }}
+          token: ${{ steps.get-vars.outputs.token }}
           value: ${{ steps.get-vars.outputs.backend_region }}
           variable: BACKEND_REGION
 
@@ -154,20 +154,20 @@ jobs:
         with:
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           repository: ${{ github.repository }}
-          token: ${{ steps.prepare.outputs.token }}
+          token: ${{ steps.get-vars.outputs.token }}
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
-          state_file: ${{ steps.prepare.outputs.state_file }}
+          state_file: ${{ steps.get-vars.outputs.state_file }}
           var_file: oidc.tfvars
 
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
+          backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
-          state_file: ${{ steps.prepare.outputs.state_file }}
+          state_file: ${{ steps.get-vars.outputs.state_file }}
           var_file: oidc.tfvars
