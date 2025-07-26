@@ -100,13 +100,16 @@ jobs:
           access_domain: ${{ steps.get-vars.outputs.access_domain }}
           access_role: ${{ steps.get-vars.outputs.access_role }}
           backend_account: ${{ steps.get-vars.outputs.backend_account }}
-          backend_bucket: ${{ steps.get-var.outputs.backend_bucket }}
+          # backend_bucket: ${{ steps.get-var.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           deployment_account: ${{ steps.get-vars.outputs.deployment_account }}
-          deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
+          # deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
           deployment_region: ${{ steps.get-vars.outputs.deployment_region }}
           environment: ${{ inputs.environment }} # TODO: get from get-vars
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           use_oidc: false
 
       - name: Set backend bucket
