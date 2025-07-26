@@ -2,8 +2,12 @@ name: plan
 
 inputs:
 
-
-
+  backend_bucket:
+    required: true
+  backend_region:
+    required: true
+  state_file:
+    required: true
   var_file:
     required: true
 
