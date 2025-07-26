@@ -1,4 +1,4 @@
-name: Get bucket name
+name: Get backend bucket
 
 inputs:
   backend_account:

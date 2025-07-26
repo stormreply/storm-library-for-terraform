@@ -22,6 +22,8 @@ outputs:
   backend_bucket:
     description: Central administration backend bucket
     value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
+  backend_region:
+    value: ${{ inputs.backend_region }}
   deployment_name:
     description: Name of this deployment
     value: ${{ steps.get-deployment-name.outputs.name}}

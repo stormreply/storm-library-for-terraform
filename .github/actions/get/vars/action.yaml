@@ -11,7 +11,15 @@ inputs:
   backend_region:
     required: true
     default: eu-central-1
+  environment:
+    required: true
   oidc_principal:
+    required: true
+  private_access_token:
+    required: true
+  terraform_app_id:
+    required: true
+  terraform_private_key:
     required: true
 
 outputs:
@@ -21,18 +29,24 @@ outputs:
     value: ${{ steps.get-vars.outputs.access_role }}
   backend_account:
     value: ${{ steps.get-vars.outputs.backend_account }}
+  backend_bucket:
+    value: ${{ steps.get-vars.outputs.backend_bucket }}
   backend_region:
     value: ${{ steps.get-vars.outputs.backend_region }}
   oidc_principal:
     value: ${{ steps.get-vars.outputs.oidc_principal }}
+  token:
+    value: ${{ steps.get-vars.outputs.token }}
 
 runs:
   using: composite
   steps:
+
     - name: Get vars
       id: get-vars
       shell: bash
       run: |
+        # get-vars
         function check() {
           key=$1
           val=$2
@@ -47,4 +61,25 @@ runs:
         check access_role      "${{ inputs.access_role }}"
         check backend_account  "${{ inputs.backend_account }}"
         check backend_region   "${{ inputs.backend_region }}"
-        check oidc_principal "${{ inputs.oidc_principal }}"
+        check oidc_principal   "${{ inputs.oidc_principal }}"
+
+    - name: Get Token
+      id: get-token
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
+      with:
+        private_access_token: ${{ inputs.private_access_token }}
+        terraform_app_id: ${{ inputs.terraform_app_id }}
+        terraform_private_key: ${{ inputs.terraform_private_key }}
+
+    - name: Get backend bucket
+      id: get-backend-bucket
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
+      with:
+        backend_account: ${{ steps.get-vars.outputs.backend_account }}
+
+    - name: Get deployment name
+      id: get-deployment-name
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
+      with:
+        environment: ${{ inputs.environment }}
+        token: ${{ steps.get-token.outputs.token}}
