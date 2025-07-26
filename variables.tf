@@ -3,7 +3,7 @@ variable "backend_bucket" {
   type        = string
 }
 
-variable "github_principal" {
+variable "oidc_principal" {
   description = "Github owner (org or user) of repositories permitted to deploy to AWS"
   type        = string
 }
