@@ -21,7 +21,7 @@ runs:
   steps:
 
     - name: Set backend profile in AWS config
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/profiles/backend@main
       with:
         backend_account: ${{ inputs.backend_account }}
         backend_region: ${{ inputs.backend_region }}
@@ -29,7 +29,7 @@ runs:
         use_oidc: ${{ inputs.use_oidc }}
 
     - name: Set deployment profile in AWS config
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-profile@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/profiles/deployment@main
       with:
         deployment_account: ${{ inputs.deployment_account }}
         deployment_region: ${{ inputs.deployment_region }}
