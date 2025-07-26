@@ -11,21 +11,6 @@ inputs:
 runs:
   using: composite
   steps:
-
-    - name: Set OIDC Principal
-      id: set-oidc-principal
-      shell: bash
-      run: |
-        # Set Github Principal ${{ inputs.oidc_principal }}
-        oidc_principal=${{ inputs.oidc_principal }}
-        [ -z "$oidc_principal" ] && oidc_principal=${{ github.repository_owner }}
-        cat << EOF >> oidc.tfvars
-        oidc_principal = "${oidc_principal}"
-        EOF
-
-        echo "oidc_principal=${oidc_principal}"
-        echo "oidc_principal=${oidc_principal}" >> $GITHUB_OUTPUT
-
     - name: Save OIDC principal
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:

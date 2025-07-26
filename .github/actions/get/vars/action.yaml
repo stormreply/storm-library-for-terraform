@@ -61,7 +61,7 @@ runs:
       id: get-vars
       shell: bash
       run: |
-        #
+        # get/vars
         function check() {
           key=$1
           val=$2

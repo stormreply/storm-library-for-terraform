@@ -33,7 +33,7 @@ jobs:
     steps:
 
       # TODO: reduce to get-access-domain, get-backend-region
-      - name: Get vars
+      - name: get vars
         id: get-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
         with:
@@ -49,7 +49,7 @@ jobs:
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
-      - name: Single sign on
+      - name: single sign on
         id: sso
         uses: stormreply/storm-library-for-terraform/.github/actions/sso@main
         with:
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Get vars
+      - name: get vars
         id: get-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/get/vars@main
         with:
@@ -77,82 +77,43 @@ jobs:
           terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
 
-      - name: Set AWS credentials
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws-credentials@main
-        with:
-          access_role: ${{ steps.get-vars.outputs.access_role }}
-          access_token: ${{ needs.sso.outputs.access_token }}
-          backend_account: ${{ steps.get-vars.outputs.backend_account }}
-          backend_region: ${{ steps.get-vars.outputs.backend_region }}
+      # - name: set AWS credentials
 
-      - name: Prepare
+      - name: prepare
         id: prepare
         uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        with:
+          backend_account: ${{ steps.get-vars.outputs.backend_account }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
+          deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
+          environment: ${{ inputs.environment }} # TODO: get from get-vars
+          token: ${{ steps.get-vars.outputs.token }}
+          use_oidc: false
+
+      - name: set backend
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/backend@main
+        with:
+          backend_account: ${{ steps.get-vars.outputs.backend_account }}
+          backend_region: ${{ steps.get-vars.outputs.backend_region }}
+          repository: ${{ github.repository }}
+          token: ${{ steps.get-vars.outputs.token }}
+
+      - name: set AWS access
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/access@main
         with:
           access_domain: ${{ steps.get-vars.outputs.access_domain }}
           access_role: ${{ steps.get-vars.outputs.access_role }}
           backend_account: ${{ steps.get-vars.outputs.backend_account }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
-          deployment_account: ${{ steps.get-vars.outputs.backend_account }} # TODO:
-          deployment_region: ${{ steps.get-vars.outputs.backend_region }} # TODO:
-          environment: ${{ inputs.environment }} # TODO: get from get-vars
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          use_oidc: false
-
-
-
-      - name: Set backend account
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-        with:
           repository: ${{ github.repository }}
           token: ${{ steps.get-vars.outputs.token }}
-          value: ${{ steps.get-vars.outputs.backend_account }}
-          variable: BACKEND_ACCOUNT
 
-      - name: Set backend region
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-        with:
-          repository: ${{ github.repository }}
-          token: ${{ steps.get-vars.outputs.token }}
-          value: ${{ steps.get-vars.outputs.backend_region }}
-          variable: BACKEND_REGION
-
-      - name: Set backend bucket
-        id: set-backend-bucket
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-bucket@main
+      - name: set tfvars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
         with:
           backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
-          backend_region: ${{ steps.get-vars.outputs.backend_region }}
-
-
-
-      - name: Set access domain
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-        with:
-          repository: ${{ github.repository }}
-          token: ${{ steps.get-vars.outputs.token }}
-          value: ${{ steps.get-vars.outputs.access_domain }}
-          variable: ACCESS_DOMAIN
-
-      - name: Set access role
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
-        with:
-          repository: ${{ github.repository }}
-          token: ${{ steps.get-vars.outputs.token }}
-          value: ${{ steps.get-vars.outputs.access_role }}
-          variable: ACCESS_ROLE
-
-      - name: Set OIDC principal
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/oidc-principal@main
-        with:
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
-          repository: ${{ github.repository }}
-          token: ${{ steps.get-vars.outputs.token }}
-
-
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main

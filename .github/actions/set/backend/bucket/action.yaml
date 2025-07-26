@@ -3,23 +3,18 @@ name: Set backend bucket
 inputs:
   backend_bucket:
     required: true
-  backend_region:
-    required: true
 
 runs:
   using: composite
   steps:
 
-    - name: Set backend bucket
+    - name: set backend bucket
       shell: bash
       run: |
-        # Set backend bucket ${{ inputs.backend_bucket }}
+        # set/backend-bucket
         backend_bucket=${{ inputs.backend_bucket }}
         aws s3api create-bucket \
           --bucket ${backend_bucket} \
           --region ${{ inputs.backend_region }} \
           --create-bucket-configuration LocationConstraint=${{ inputs.backend_region }} \
         || true
-        cat << EOF >> oidc.tfvars
-        backend_bucket   = "${backend_bucket}"
-        EOF

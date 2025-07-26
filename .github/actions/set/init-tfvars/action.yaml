@@ -1,0 +1,21 @@
+name: Set init.tfvars
+
+inputs:
+  backend_bucket:
+    required: true
+  oidc_principal:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: Set backend bucket
+      shell: bash
+      run: |
+        cat << EOF >> init.tfvars
+        backend_bucket = "${{ inputs.backend_bucket }}"
+        oidc_principal = "${{ inputs.oidc_principal }}"
+        EOF
+        echo "init.tfvars:"
+        cat init.tfvars

@@ -1,0 +1,53 @@
+name: Set AWS access
+
+inputs:
+  access_domain:
+    required: true
+  access_role:
+    required: true
+  backend_account:
+    required: true
+  backend_region:
+    required: true
+  oidc_principal:
+    required: true
+  repository:
+    required: true
+  token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: set AWS access domain
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ github.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.access_domain }}
+        variable: ACCESS_DOMAIN
+
+    - name: set AWS access role
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ github.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.access_role }}
+        variable: ACCESS_ROLE
+
+    - name: set AWS access principal
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ github.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.oidc_principal }}
+        variable: OIDC_PRINCIPAL
+
+    - name: set AWS credentials
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/credentials@main
+      with:
+        access_role: ${{ inputs.access_role }}
+        access_token: ${{ needs.sso.outputs.access_token }}
+        backend_account: ${{ inputs.backend_account }}
+        backend_region: ${{ inputs.backend_region }}

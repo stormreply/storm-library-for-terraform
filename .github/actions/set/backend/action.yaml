@@ -1,0 +1,40 @@
+name: Set backend
+
+inputs:
+  backend_account:
+    required: true
+  backend_region:
+    required: true
+  repository:
+    required: true
+  token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: Set backend account
+      id: set-backend-account
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.backend_account }}
+        variable: BACKEND_ACCOUNT
+
+    - name: Set backend bucket
+      id: set-backend-bucket
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/backend/bucket@main
+      with:
+        backend_bucket: ${{ inputs.backend_bucket }}
+        backend_region: ${{ inputs.backend_region }}
+
+    - name: Set backend region
+      id: set-backend-region
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.backend_region }}
+        variable: BACKEND_REGION
