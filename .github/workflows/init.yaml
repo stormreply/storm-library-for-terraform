@@ -127,7 +127,7 @@ jobs:
           backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           state_file: ${{ steps.get-vars.outputs.state_file }}
-          var_file: oidc.tfvars
+          var_file: init.tfvars
 
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
@@ -135,4 +135,4 @@ jobs:
           backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           state_file: ${{ steps.get-vars.outputs.state_file }}
-          var_file: oidc.tfvars
+          var_file: init.tfvars
