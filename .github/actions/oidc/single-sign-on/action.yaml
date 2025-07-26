@@ -42,17 +42,23 @@ runs:
 
         Click the link below:
 
+
         EOF
-        echo -e ""
-        while ! cat login-output.txt | grep "?user_code=" ; do sleep 1 ; done
         i=0
-        echo
-        # echo -ne "remaining seconds: "
+        cat login-output.txt | grep "?user_code="
         while [ -n "$(ps -p ${pid} -o pid=)" ]; do
-          echo -ne . && true
-          i=$((i+1))
-          sleep 1
+          cat login-output.txt | grep "?user_code=" || true
+          echo -ne .
+          # i=$((i + 1))
+          sleep 5
         done
+        # echo
+        # # echo -ne "remaining seconds: "
+        # while [ -n "$(ps -p ${pid} -o pid=)" ]; do
+        #   echo -ne . && true
+        #   i=$((i+1))
+        #   sleep 1
+        # done
         # [ $i -eq 0 ] && exit 1
 
         export "ACCESS_TOKEN=$(jq -r '. | select(.accessToken != null) | .accessToken' ${HOME}/.aws/sso/cache/*.json)"
