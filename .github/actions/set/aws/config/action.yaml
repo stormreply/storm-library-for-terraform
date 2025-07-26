@@ -5,8 +5,6 @@ inputs:
     required: true
   access_role:
     required: true
-  access_token:
-    required: true
   backend_account:
     required: true
   backend_region:
@@ -45,11 +43,3 @@ runs:
         token: ${{ inputs.token }}
         value: ${{ inputs.oidc_principal }}
         variable: OIDC_PRINCIPAL
-
-    # - name: set AWS credentials
-    #   uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/credentials@main
-    #   with:
-    #     access_role: ${{ inputs.access_role }}
-    #     access_token: ${{ inputs.access_token }}
-    #     backend_account: ${{ inputs.backend_account }}
-    #     backend_region: ${{ inputs.backend_region }}
