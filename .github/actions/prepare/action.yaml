@@ -30,21 +30,17 @@ inputs:
 
 outputs:
   backend_bucket:
-    description: Central administration backend bucket
-    value: ${{ steps.get-backend-bucket.outputs.backend_bucket }}
+    value: ${{ steps.get-vars.outputs.backend_bucket }}
   backend_region:
-    value: ${{ inputs.backend_region }}
+    value: ${{ steps.get-vars.outputs.backend_region }}
   deployment_name:
-    description: Name of this deployment
-    value: ${{ steps.get-deployment-name.outputs.name}}
+    value: ${{ steps.get-vars.outputs.deployment_name}}
   deployment_region:
-
+    value: ${{ steps.get-vars.outputs.deployment_region}}
   state_file:
-    description: Name of the state file
     value: ${{ steps.get-state-file.outputs.state_file }}
   token:
-    description: Token to use for GitHub calls
-    value: ${{ steps.get-token.outputs.token}}
+    value: ${{ steps.get-vars.outputs.token}}
 
 runs:
   using: composite

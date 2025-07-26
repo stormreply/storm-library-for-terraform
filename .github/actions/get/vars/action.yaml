@@ -98,6 +98,12 @@ runs:
         environment: ${{ inputs.environment }}
         token: ${{ steps.get-token.outputs.token}}
 
+    - name: Get state file
+      id: get-state-file
+      uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main
+      with:
+        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
+
     - name: Show vars
       id: show-vars
       shell: bash
@@ -116,5 +122,6 @@ runs:
         echo "environment:           ${{ inputs.environment }}"
         echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
         echo "private access token:  length: ${#pat}"
+        echo "state file:            ${{ steps.get-state-file.outputs.state_file }}"
         echo "terraform app id:      ${{ inputs.terraform_app_id }}"
         echo "terraform private key: length: ${#tpk}"

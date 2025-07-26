@@ -17,5 +17,5 @@ runs:
       run: |
         # get/state-file
         state_file="${{ inputs.deployment_name }}.tfstate"
-        echo "state_file=${state_file}"
+        # echo "state_file=${state_file}"
         echo "state_file=${state_file}" >> $GITHUB_OUTPUT
