@@ -3,6 +3,8 @@ name: Set backend
 inputs:
   backend_account:
     required: true
+  backend_bucket:
+    required: true
   backend_region:
     required: true
   repository:
