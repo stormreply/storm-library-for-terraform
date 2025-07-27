@@ -2,6 +2,8 @@ name: plan
 
 inputs:
 
+  backend_account:
+    required: true
   backend_bucket:
     required: true
   backend_region:
@@ -27,6 +29,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
       with:
         backend_account: ${{ inputs.backend_account }}
+        backend_bucket: ${{ inputs.backend_bucket }}
         backend_region: ${{ inputs.backend_region }}
         deployment_name: ${{ inputs.deployment_name }}
         environment: ${{ inputs.environment }}

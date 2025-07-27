@@ -4,6 +4,8 @@ inputs:
 
   backend_account:
     required: true
+  backend_bucket:
+    required: false # init workflow only
   backend_region:
     required: true
   deployment_name:
@@ -57,8 +59,8 @@ runs:
       if: inputs.oidc_principal != ''
       uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
       with:
-        backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
-        oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
+        backend_bucket: ${{ inputs.backend_bucket }}
+        oidc_principal: ${{ inputs.oidc_principal }}
 
     - name: Set github.tfvars
       uses: stormreply/storm-library-for-terraform/.github/actions/set/github-tfvars@main

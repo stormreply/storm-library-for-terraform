@@ -113,6 +113,7 @@ jobs:
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan2@main
         with:
+          backend_account: ${{ steps.get-vars.outputs.backend_account }}
           backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
