@@ -110,8 +110,6 @@ jobs:
           backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
 
-
-
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan2@main
         with:
