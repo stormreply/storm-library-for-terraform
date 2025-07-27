@@ -10,7 +10,7 @@ inputs:
     required: true
   environment:
     required: true
-  oidc_princiap:
+  oidc_principal:
     required: false # init workflow only
   state_file:
     required: true
