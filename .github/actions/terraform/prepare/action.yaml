@@ -77,4 +77,4 @@ runs:
         deployment_account: ${{ inputs.backend_account }} # TODO:
         deployment_region: ${{ inputs.backend_region }} # TODO:
         deployment_role: slt-0-storm-library-for-terraform-deployment
-        use_oidc: ${{ inputs.oidc_principal != '' }}
+        use_oidc: ${{ inputs.oidc_principal == '' }}
