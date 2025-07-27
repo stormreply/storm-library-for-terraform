@@ -25,7 +25,7 @@ runs:
 
     - name: Set backend bucket
       id: set-backend-bucket
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/backend/bucket@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/bucket@main
       with:
         backend_bucket: ${{ inputs.backend_bucket }}
         backend_region: ${{ inputs.backend_region }}
