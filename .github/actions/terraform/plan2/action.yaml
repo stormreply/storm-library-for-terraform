@@ -19,7 +19,7 @@ inputs:
   token:
     required: true
   var_file:
-    required: false
+    required: false # init workflow doesn't need
 
 runs:
   using: composite
