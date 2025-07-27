@@ -26,14 +26,15 @@ runs:
     #   shell: bash
     #   run: echo "$GITHUB_CONTEXT"
 
-    - name: Time
-      shell: bash
-      run: date
+    # TODO: move to very beginning of each workflow
+    # - name: Time
+    #   shell: bash
+    #   run: date
 
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # NOTE: position *behind* checkout
+    # NOTE: important to position *behind* checkout
     - name: Git config rewrite URLs
       shell: bash
       run: |
@@ -53,13 +54,13 @@ runs:
         token: ${{ inputs.token }}
         file: providers.tf
 
-    - name: Set deployment tags
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
+    - name: Set github.tfvars
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/github-tfvars@main
       with:
         deployment_name: ${{ inputs.deployment_name }}
         environment: ${{ inputs.environment }}
 
-    - name: Set AWS profiles
+    - name: Set AWS profiles # TODO: move out
       uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles@main
       with:
         backend_account: ${{ inputs.backend_account }}

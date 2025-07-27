@@ -32,7 +32,7 @@ jobs:
     steps:
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
@@ -61,7 +61,7 @@ jobs:
 
       # TODO: reduce Prepare here to sth leaner like checkout repo + rewrite git config
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
@@ -80,7 +80,7 @@ jobs:
     steps:
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
@@ -109,7 +109,7 @@ jobs:
       #     name: tfplan
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}

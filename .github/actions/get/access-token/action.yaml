@@ -1,4 +1,4 @@
-name: Single sign on
+name: Get access token
 
 inputs:
   access_domain:
@@ -8,21 +8,17 @@ inputs:
 
 outputs:
   access_token:
-    value:  ${{ steps.sso.outputs.ACCESS_TOKEN }}
+    value:  ${{ steps.get-access-token.outputs.ACCESS_TOKEN }}
 
 runs:
   using: composite
   steps:
 
-    - name: Check AWS CLI version
+    - name: get access token
       shell: bash
-      run: aws --version
-
-    - name: aws sso login
-      shell: bash
-      id: sso
+      id: get-access-token
       run: |
-        # sso
+        # get/access-token
 
         cd ${{ github.action_path }}
         mkdir -p ${HOME}/.aws

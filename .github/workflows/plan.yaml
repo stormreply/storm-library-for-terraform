@@ -28,9 +28,9 @@ on:
       environment:
         type: string
         required: false
-      oidc_principal:
-        type: string
-        required: false
+      # oidc_principal:
+      #   type: string
+      #   required: false
       # private_access_token:
       #   type: string
       #   required: true
@@ -48,9 +48,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
-        id: prepare
+      - name: prepare terraform
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
+        id: prepare-terraform
         with:
           # access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
           # access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
@@ -74,9 +74,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
-        id: prepare
+      - name: prepare terraform
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
+        id: prepare-terraform
         with:
           # access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
           # access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
@@ -93,7 +93,7 @@ jobs:
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ steps.prepare.outputs.backend_region }}
-          state_file: ${{ steps.prepare.outputs.state_file }}
+          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }} # TODO:
+          backend_region: ${{ steps.prepare.outputs.backend_region }} # TODO:
+          state_file: ${{ steps.prepare.outputs.state_file }} # TODO:
           var_file: ${{ inputs.var_file}}

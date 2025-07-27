@@ -1,4 +1,4 @@
-name: Set deployment tags
+name: Set github.tfvars
 
 inputs:
   deployment_name:
@@ -10,10 +10,10 @@ runs:
   using: composite
   steps:
 
-    - name: Create deployment tags
+    - name: Set github.tfvars
       shell: bash
       run: |
-        # Create deployment tags
+        # set/github-tfvars
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment_name=${{ inputs.deployment_name }}
@@ -35,5 +35,5 @@ runs:
           time        = "$(date)"
         }
         EOF
-
+        echo "github.tfvars"
         cat github.tfvars

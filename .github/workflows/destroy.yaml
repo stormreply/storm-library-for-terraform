@@ -24,7 +24,7 @@ jobs:
     steps:
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
@@ -51,7 +51,7 @@ jobs:
     steps:
 
       - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/prepare@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
         id: prepare
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
