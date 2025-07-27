@@ -10,11 +10,10 @@ inputs:
     required: true
   environment:
     required: true
+  oidc_principal:
+    required: false # init workflow only
   token:
     required: true
-  use_oidc:
-    required: false
-    default: "true"
 
 runs:
   using: composite
@@ -54,6 +53,13 @@ runs:
         token: ${{ inputs.token }}
         file: providers.tf
 
+    - name: set init.tfvars
+      if: inputs.oidc_principal != ''
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
+      with:
+        backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
+        oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
+
     - name: Set github.tfvars
       uses: stormreply/storm-library-for-terraform/.github/actions/set/github-tfvars@main
       with:
@@ -69,4 +75,4 @@ runs:
         deployment_account: ${{ inputs.backend_account }} # TODO:
         deployment_region: ${{ inputs.backend_region }} # TODO:
         deployment_role: slt-0-storm-library-for-terraform-deployment
-        use_oidc: ${{ inputs.use_oidc }}
+        use_oidc: ${{ inputs.oidc_principal != '' }}

@@ -10,14 +10,14 @@ inputs:
     required: true
   environment:
     required: true
+  oidc_princiap:
+    required: false # init workflow only
   state_file:
     required: true
   token:
     required: true
-  use_oidc:
-    required: true
   var_file:
-    required: true
+    required: false
 
 runs:
   using: composite
@@ -30,8 +30,8 @@ runs:
         backend_region: ${{ inputs.backend_region }}
         deployment_name: ${{ inputs.deployment_name }}
         environment: ${{ inputs.environment }}
+        oidc_principal: ${{ inputs.oidc_principal }}
         token: ${{ inputs.token }}
-        use_oidc: ${{ inputs.use_oidc }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -58,6 +58,7 @@ runs:
         echo "AWS_PROFILE=deployment" >> $GITHUB_ENV
 
         tfvars=github.tfvars
+        [ -n "${{ inputs.oidc_principal }}" ] && tfvars="init.tfvars $tfvars"
         [ -n "${{ inputs.var_file}}" ] && tfvars="${{ inputs.var_file}} $tfvars"
 
         terraform version

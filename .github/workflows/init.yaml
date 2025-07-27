@@ -104,11 +104,11 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ steps.get-vars.outputs.token }}
 
-      - name: set init.tfvars
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
-        with:
-          backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
-          oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
+      # - name: set init.tfvars
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
+      #   with:
+      #     backend_bucket: ${{ steps.get-vars.outputs.backend_bucket }}
+      #     oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan2@main
@@ -117,10 +117,9 @@ jobs:
           backend_region: ${{ steps.get-vars.outputs.backend_region }}
           deployment_name: ${{ steps.get-vars.outputs.deployment_name }}
           environment: ${{ inputs.environment }} # TODO: not set; get from get-vars
+          oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           state_file: ${{ steps.get-vars.outputs.state_file }}
           token: ${{ steps.get-vars.outputs.token }}
-          use_oidc: false
-          var_file: init.tfvars
 
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
