@@ -66,6 +66,7 @@ runs:
         terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: Get backend bucket
+      if: steps.get-vars.outputs.backend_account != ''
       id: get-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
       with:
