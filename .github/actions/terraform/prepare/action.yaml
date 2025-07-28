@@ -62,7 +62,7 @@ runs:
         backend_bucket: ${{ inputs.backend_bucket }}
         oidc_principal: ${{ inputs.oidc_principal }}
 
-    - name: Set github.tfvars
+    - name: Set github.tfvars # TODO: rename
       uses: stormreply/storm-library-for-terraform/.github/actions/set/github-tfvars@main
       with:
         deployment_name: ${{ inputs.deployment_name }}

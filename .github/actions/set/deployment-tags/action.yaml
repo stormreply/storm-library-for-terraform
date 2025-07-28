@@ -1,0 +1,57 @@
+name: Set deployment tags
+
+inputs:
+  deployment_name:
+    required: true
+  environment:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: set deployment tags
+      shell: bash
+      run: |
+        # set/deployment-tags
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        deployment_name=${{ inputs.deployment_name }}
+
+        [ -n "${{ inputs.environment }}" ] \
+        && environment="${{ inputs.environment }}" \
+        || environment="${{ github.actor }}"
+
+        cat << EOF >> deployment.tf
+        variable "deployment" {
+          type = object({
+            actor       = string # Github actor (deployer) of the deployment
+            environment = string # environment of the deployment
+            name        = string # name of the deployment
+            ref         = string # Git reference of the deployment
+            ref_name    = string # Git ref_name (branch) of the deployment
+            repo        = string # GitHub short repository name (without owner) of the deployment
+            repository  = string # GitHub full repository name (including owner) of the deployment
+            sha         = string # Git (full-length, 40 char) commit SHA of the deployment
+            time        = string # Timestamp of the deployment
+          })
+          default = {
+            actor       = "${{ github.actor }}"
+            environment = "${environment}"
+            name        = "${state}"
+            ref         = "${{ github.ref }}"
+            ref_name    = "${{ github.ref_name }}"
+            repo        = "${repo}"
+            repository  = "${{ github.repository }}"
+            sha         = "${{ github.sha }}"
+            time        = "$(date)"
+          }
+        }
+
+        output "deployment" {
+          value = var.deployment
+        }
+        EOF
+
+        echo "deployment.tf"
+        cat deployment.tf

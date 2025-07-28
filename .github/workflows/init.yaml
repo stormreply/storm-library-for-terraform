@@ -109,6 +109,7 @@ jobs:
           oidc_principal: ${{ steps.get-vars.outputs.oidc_principal }}
           state_file: ${{ steps.get-vars.outputs.state_file }}
           token: ${{ steps.get-vars.outputs.token }}
+          var_file: init.tfvars
 
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
