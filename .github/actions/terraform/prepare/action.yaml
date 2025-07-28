@@ -21,12 +21,6 @@ runs:
   using: composite
   steps:
 
-    # - name: Dump GitHub context
-    #   env:
-    #     GITHUB_CONTEXT: ${{ toJson(github) }}
-    #   shell: bash
-    #   run: echo "$GITHUB_CONTEXT"
-
     # TODO: move to very beginning of each workflow
     # - name: Time
     #   shell: bash
@@ -62,13 +56,13 @@ runs:
         backend_bucket: ${{ inputs.backend_bucket }}
         oidc_principal: ${{ inputs.oidc_principal }}
 
-    - name: Set github.tfvars # TODO: rename
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/github-tfvars@main
+    - name: set deployment-tags
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
       with:
         deployment_name: ${{ inputs.deployment_name }}
         environment: ${{ inputs.environment }}
 
-    - name: Set AWS profiles # TODO: move out
+    - name: Set AWS profiles
       uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles@main
       with:
         backend_account: ${{ inputs.backend_account }}
