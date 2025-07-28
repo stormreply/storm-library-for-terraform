@@ -22,7 +22,7 @@ runs:
         && environment="${{ inputs.environment }}" \
         || environment="${{ github.actor }}"
 
-        cat << EOF >> deployment.tf
+        cat << EOF > deployment.tf
         variable "deployment" {
           type = object({
             actor       = string # Github actor (deployer) of the deployment
@@ -38,7 +38,7 @@ runs:
           default = {
             actor       = "${{ github.actor }}"
             environment = "${environment}"
-            name        = "${state}"
+            name        = "${deployment_name}"
             ref         = "${{ github.ref }}"
             ref_name    = "${{ github.ref_name }}"
             repo        = "${repo}"
