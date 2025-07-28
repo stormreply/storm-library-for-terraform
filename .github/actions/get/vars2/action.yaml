@@ -1,12 +1,12 @@
 name: Get vars
 
 inputs:
-  yaml:
-    required: true
   private_access_token:
     required: false
   terraform_private_key:
     required: false
+  yaml:
+    required: true
 
 outputs:
   access_domain:
