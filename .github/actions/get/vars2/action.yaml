@@ -51,8 +51,9 @@ runs:
             echo "$key=$val" >> $GITHUB_OUTPUT
           else
             if [[ "$key" != "private_access_token" && "$key" != "terraform_private_key" ]]; then # TODO: improve
-            echo "ERROR: $key is empty. exiting."
-            exit 1
+              echo "ERROR: $key is empty. exiting."
+              exit 1
+            fi
           fi
         done
 
