@@ -1,7 +1,7 @@
 name: Get vars
 
 inputs:
-  personal_access_token:
+  private_access_token:
     required: false
   terraform_private_key:
     required: false
@@ -66,7 +66,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
-        terraform_app_id: $TERRAFORM_APP_ID
+        terraform_app_id: ${{ steps.get-vars.outputs.terraform_app_id }}
         terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: Get backend bucket
@@ -74,13 +74,13 @@ runs:
       id: get-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
       with:
-        backend_account: $BACKEND_ACCOUNT
+        backend_account: ${{ steps.get-vars.outputs.backend_account }}
 
     - name: Get deployment name
       id: get-deployment-name
       uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
       with:
-        environment: $ENVIRONMENT
+        environment: ${{ steps.get-vars.outputs.environment }}
         token: ${{ steps.get-token.outputs.token }}
 
     - name: Get state file
