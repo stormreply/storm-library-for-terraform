@@ -98,10 +98,17 @@ runs:
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
 
-        echo "BACKEND_BUCKET=${{ steps.get-backend-bucket.outputs.backend_bucket}}" >> $GITHUB_ENV
-        echo "DEPLOYMENT_NAME=${{ steps.get-deployment-name.outputs.name }}"        >> $GITHUB_ENV
-        echo "STATE_FILE=${{ steps.get-state-file.outputs.state_file }}"            >> $GITHUB_ENV
-        echo "TOKEN=${{ steps.get-token.outputs.token }}"                           >> $GITHUB_ENV
+        BACKEND_BUCKET="${{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        DEPLOYMENT_NAME="${{ steps.get-deployment-name.outputs.name }}"
+        STATE_FILE="${{ steps.get-state-file.outputs.state_file }}"
+        TOKEN="${{ steps.get-token.outputs.token }}"
+
+        cat << EOF >> $GITHUB_ENV
+        BACKEND_BUCKET="$BACKEND_BUCKET"
+        DEPLOYMENT_NAME="$DEPLOYMENT_NAME"
+        STATE_FILE="$STATE_FILE"
+        TOKEN="$TOKEN"
+        EOF
 
         echo "access domain:         $ACCESS_DOMAIN"
         echo "access role:           $ACCESS_ROLE"
