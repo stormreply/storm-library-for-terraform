@@ -52,11 +52,12 @@ runs:
           fi
         }
 
-        echo "[${{inputs.yaml}}]"
-
-        for line in ${{ inputs.yaml }} ; do
-          key=${line%%:.*}
-          val=§(line##.*:)
+        yaml="${{ inputs.yaml }}"
+        echo "[$yaml]"
+        IFS=$'\n' lines=($yaml)
+        for l in "${lines[@]}" ; do
+          key=${l%%:*}
+          val=${l##*: }
           if [ -n "$val" ] ; then
             # echo "$key=$val" | tee -a $GITHUB_OUTPUT
             echo "$key=$val" >> $GITHUB_OUTPUT
