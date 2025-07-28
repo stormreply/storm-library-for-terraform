@@ -43,7 +43,7 @@ runs:
       shell: bash
       run: |
         # get/vars
-
+        echo "$BASH_VERSION"
         yaml="${{ inputs.yaml }}"
         echo "$yaml"
         IFS=$'\n' lines=($yaml)
@@ -53,7 +53,7 @@ runs:
           if [ -n "$val" ] ; then
             # echo "$key=$val" | tee -a $GITHUB_OUTPUT
             echo "$key=$val" >> $GITHUB_OUTPUT
-            # echo "$key=$val" >> $GITHUB_ENV
+            echo "$key=$val" >> $GITHUB_ENV
           else
             echo "ERROR: $key is empty. exiting."
             exit 1
@@ -81,7 +81,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
       with:
         environment: ${{ steps.get-vars.outputs.environment }}
-        token: ${{ steps.get-token.outputs.token}}
+        token: ${{ steps.get-token.outputs.token }}
 
     - name: Get state file
       id: get-state-file
@@ -99,7 +99,7 @@ runs:
 
         token=${{ steps.get-token.outputs.token }}
 
-        echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
+        echo "access domain:         $access_domain"
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
         echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
