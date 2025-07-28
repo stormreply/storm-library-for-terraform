@@ -63,7 +63,7 @@ runs:
         done
 
     - name: Get Token
-      if: inputs.get_token
+      if: inputs.get_token == true
       id: get-token
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
