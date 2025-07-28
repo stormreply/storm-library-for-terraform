@@ -104,10 +104,10 @@ runs:
         TOKEN="${{ steps.get-token.outputs.token }}"
 
         cat << EOF >> $GITHUB_ENV
-        BACKEND_BUCKET="$BACKEND_BUCKET"
-        DEPLOYMENT_NAME="$DEPLOYMENT_NAME"
-        STATE_FILE="$STATE_FILE"
-        TOKEN="$TOKEN"
+        BACKEND_BUCKET=$BACKEND_BUCKET
+        DEPLOYMENT_NAME=$DEPLOYMENT_NAME
+        STATE_FILE=$STATE_FILE
+        TOKEN=$TOKEN
         EOF
 
         echo "access domain:         $ACCESS_DOMAIN"
