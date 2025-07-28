@@ -45,7 +45,7 @@ runs:
         # get/vars
 
         yaml="${{ inputs.yaml }}"
-        echo "[$yaml]"
+        echo "$yaml"
         IFS=$'\n' lines=($yaml)
         for l in "${lines[@]}" ; do
           key=${l%%:*}
@@ -61,6 +61,7 @@ runs:
         done
 
     - name: Get Token
+      if: inputs.private_access_token != '' || inputs.terraform_private_key != ''
       id: get-token
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
