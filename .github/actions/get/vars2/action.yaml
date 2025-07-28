@@ -92,7 +92,7 @@ runs:
       shell: bash
       run: |
 
-        echo "${{ fromJSON(steps.set-output.outputs | toJson) }}"
+        echo "${{ toJSON(steps.get-vars.outputs }}"
 
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
