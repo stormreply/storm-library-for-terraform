@@ -51,7 +51,7 @@ runs:
             echo "$key=$val" >> $GITHUB_OUTPUT
             # echo "$key=$val" >> $GITHUB_ENV
           else
-            [ "$key" = "private_access_key" ]    && continue
+            [ "$key" = "private_access_token" ]  && continue
             [ "$key" = "terraform_private_key" ] && continue
             echo "ERROR: $key is empty. exiting."
             exit 1
@@ -92,21 +92,25 @@ runs:
       shell: bash
       run: |
 
-        echo "${{ toJSON(steps.get-vars.outputs) }}"
+        pat="${{ steps.get-vars.outputs.private_access_token }}"
+        tpk="${{ steps.get-vars.outputs.terraform_private_key }}"
 
-        pat="${{ inputs.private_access_token }}"
-        tpk="${{ inputs.terraform_private_key }}"
+        has_pat=$(echo "${{ toJSON(steps.get-vars.outputs) }}" | jq '(.private_access_token // "") | length > 0')
+        has_tpk=$(echo "${{ toJSON(steps.get-vars.outputs) }}" | jq '(.terraform_private_key // "") | length > 0')
+
         echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
-        echo "backend bucket:        ${{ steps.get-backend-bucket.outputs.backend_bucket}}"
         echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
         echo "deployment account:    ${{ steps.get-vars.outputs.backend_account }}" # TODO:
-        echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
         echo "deployment region:     ${{ steps.get-vars.outputs.backend_region }}" # TODO:
         echo "environment:           ${{ steps.get-vars.outputs.environment }}"
         echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
-        echo "state file:            ${{ steps.get-state-file.outputs.state_file }}"
         echo "terraform app id:      ${{ steps.get-vars.outputs.terraform_app_id }}"
-        echo "private access token:  length: ${#pat}"
-        echo "terraform private key: length: ${#tpk}"
+        echo
+        echo "backend bucket:        ${{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
+        echo "state file:            ${{ steps.get-state-file.outputs.state_file }}"
+        echo
+        echo "has private access token:  ${has_pat}, length: ${#pat}"
+        echo "has terraform private key: ${has_tpk}, length: ${#tpk}"
