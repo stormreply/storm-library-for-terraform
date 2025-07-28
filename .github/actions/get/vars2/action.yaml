@@ -5,6 +5,9 @@ inputs:
     required: false
   terraform_private_key:
     required: false
+  get_token:
+    required: false
+    default: true
   yaml:
     required: true
 
@@ -60,6 +63,7 @@ runs:
         done
 
     - name: Get Token
+      if: inputs.get_token
       id: get-token
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:

@@ -37,6 +37,7 @@ jobs:
         id: get-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/get/vars2@main
         with:
+          get_token: false
           yaml: |
             access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
             backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
