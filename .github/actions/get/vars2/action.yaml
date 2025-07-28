@@ -51,6 +51,8 @@ runs:
             echo "$key=$val" >> $GITHUB_OUTPUT
             # echo "$key=$val" >> $GITHUB_ENV
           else
+            [ "$key" = "private_access_key" ]    && continue
+            [ "$key" = "terraform_private_key" ] && continue
             echo "ERROR: $key is empty. exiting."
             exit 1
           fi
@@ -89,28 +91,8 @@ runs:
       id: show-vars
       shell: bash
       run: |
-        #
 
-        yaml="${{ inputs.yaml }}"
-        echo "[$yaml]"
-        IFS=$'\n' lines=($yaml)
-        for l in "${lines[@]}" ; do
-          key=${l%%:*}
-          val=${l##*: }
-          printf "%19s %s\n" "${key/_//}" "$val"
-        done
-
-
-
-
-
-
-        # TODO: reduce output
-
-
-
-
-
+        echo "${{ fromJSON(steps.set-output.outputs | toJson) }}"
 
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
