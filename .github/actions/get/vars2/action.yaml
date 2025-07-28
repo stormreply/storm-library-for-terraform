@@ -91,7 +91,7 @@ runs:
       id: show-vars
       shell: bash
       run: |
-
+        # show-vars
         pat="${{ steps.get-vars.outputs.private_access_token }}"
         tpk="${{ steps.get-vars.outputs.terraform_private_key }}"
 
@@ -102,8 +102,8 @@ runs:
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
         echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
-        echo "deployment account:    ${{ steps.get-vars.outputs.backend_account }}" # TODO:
-        echo "deployment region:     ${{ steps.get-vars.outputs.backend_region }}" # TODO:
+        echo "deployment account:    ${{ steps.get-vars.outputs.backend_account }}"
+        echo "deployment region:     ${{ steps.get-vars.outputs.backend_region }}"
         echo "environment:           ${{ steps.get-vars.outputs.environment }}"
         echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
         echo "terraform app id:      ${{ steps.get-vars.outputs.terraform_app_id }}"
