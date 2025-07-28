@@ -95,6 +95,7 @@ runs:
         pat="${{ steps.get-vars.outputs.private_access_token }}"
         tpk="${{ steps.get-vars.outputs.terraform_private_key }}"
 
+        echo "${{ toJSON(steps.get-vars.outputs) }}"
         has_pat=$(echo "${{ toJSON(steps.get-vars.outputs) }}" | jq '(.private_access_token // "") | length > 0')
         has_tpk=$(echo "${{ toJSON(steps.get-vars.outputs) }}" | jq '(.terraform_private_key // "") | length > 0')
 
