@@ -52,6 +52,8 @@ runs:
           fi
         }
 
+        echo "[${{inputs.yaml}}]"
+
         for line in ${{ inputs.yaml }} ; do
           key=${line%%:.*}
           val=§(line##.*:)
