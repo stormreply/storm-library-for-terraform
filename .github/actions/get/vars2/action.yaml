@@ -1,6 +1,10 @@
 name: Get vars
 
 inputs:
+  personal_access_token:
+    required: false
+  terraform_private_key:
+    required: false
   yaml:
     required: true
 
@@ -51,15 +55,12 @@ runs:
             echo "$key=$val" >> $GITHUB_OUTPUT
             # echo "$key=$val" >> $GITHUB_ENV
           else
-            [ "$key" = "private_access_token" ]  && continue
-            [ "$key" = "terraform_private_key" ] && continue
             echo "ERROR: $key is empty. exiting."
             exit 1
           fi
         done
 
     - name: Get Token
-      if: inputs.get_token == true
       id: get-token
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
@@ -92,11 +93,10 @@ runs:
       shell: bash
       run: |
         # show-vars
-        pat="${{ steps.get-vars.outputs.private_access_token }}"
-        tpk="${{ steps.get-vars.outputs.terraform_private_key }}"
-        json="${{ toJSON(steps.get-vars.outputs) }}"
-        has_pat=$([ $(echo "$json" | grep -c .personal_access_token) -gt 0 ] && echo true || echo false)
-        has_tpk=$([ $(echo "$json" | grep -c .terraform_private_key) -gt 0 ] && echo true || echo false)
+        pat="${{ inputs.private_access_token }}"
+        tpk="${{ inputs.terraform_private_key }}"
+
+        token=${{ steps.get-token.outputs.token }}
 
         echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
@@ -112,5 +112,7 @@ runs:
         echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
         echo "state file:            ${{ steps.get-state-file.outputs.state_file }}"
         echo
-        echo "has private access token:  ${has_pat}, length: ${#pat}"
-        echo "has terraform private key: ${has_tpk}, length: ${#tpk}"
+        echo "private access token length:  ${#pat}"
+        echo "terraform private key length: ${#tpk}"
+        echo
+        echo "token length: ${#token}"
