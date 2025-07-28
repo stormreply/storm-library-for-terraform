@@ -3,6 +3,10 @@ name: Get vars
 inputs:
   yaml:
     required: true
+  private_access_token:
+    required: false
+  terraform_private_key:
+    required: false
 
 outputs:
   access_domain:
@@ -50,10 +54,8 @@ runs:
             # echo "$key=$val" | tee -a $GITHUB_OUTPUT
             echo "$key=$val" >> $GITHUB_OUTPUT
           else
-            if [[ "$key" != "private_access_token" && "$key" != "terraform_private_key" ]]; then # TODO: improve
-              echo "ERROR: $key is empty. exiting."
-              exit 1
-            fi
+            echo "ERROR: $key is empty. exiting."
+            exit 1
           fi
         done
 
@@ -61,9 +63,9 @@ runs:
       id: get-token
       uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
       with:
-        private_access_token: ${{ steps.get-vars.outputs.private_access_token }}
+        private_access_token: ${{ inputs.private_access_token }}
         terraform_app_id: ${{ steps.get-vars.outputs.terraform_app_id }}
-        terraform_private_key: ${{ steps.get-vars.outputs.terraform_private_key }}
+        terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: Get backend bucket
       id: get-backend-bucket
@@ -89,8 +91,8 @@ runs:
       shell: bash
       run: |
         #
-        pat="${{ steps.get-vars.outputs.private_access_token }}"
-        tpk="${{ steps.get-vars.outputs.terraform_private_key }}"
+        pat="${{ inputs.private_access_token }}"
+        tpk="${{ inputs.terraform_private_key }}"
         echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
         echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
         echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
