@@ -1,13 +1,6 @@
 name: Get vars
 
 inputs:
-  private_access_token:
-    required: false
-  terraform_private_key:
-    required: false
-  get_token:
-    required: false
-    default: true
   yaml:
     required: true
 
@@ -56,7 +49,7 @@ runs:
           if [ -n "$val" ] ; then
             # echo "$key=$val" | tee -a $GITHUB_OUTPUT
             echo "$key=$val" >> $GITHUB_OUTPUT
-            echo "$key=$val" >> $GITHUB_ENV
+            # echo "$key=$val" >> $GITHUB_ENV
           else
             echo "ERROR: $key is empty. exiting."
             exit 1
@@ -76,7 +69,7 @@ runs:
       id: get-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
       with:
-        backend_account: $backend_account
+        backend_account: ${{ steps.get-vars.outputs.backend_account }}
 
     - name: Get deployment name
       id: get-deployment-name
@@ -105,7 +98,7 @@ runs:
           val=${l##*: }
           printf "%19s %s\n" "${key/_//}" "$val"
         done
-        echo
+
 
 
 
@@ -116,12 +109,21 @@ runs:
 
 
 
-        pat="$private_access_token"
-        tpk="$terraform_private_key"
 
-        echo "backend bucket:        $backend_bucket"
-        echo "deployment name:       $deployment_name"
-        echo "state file:            $state_file"
-        echo
+
+        pat="${{ inputs.private_access_token }}"
+        tpk="${{ inputs.terraform_private_key }}"
+        echo "access domain:         ${{ steps.get-vars.outputs.access_domain }}"
+        echo "access role:           ${{ steps.get-vars.outputs.access_role }}"
+        echo "backend account:       ${{ steps.get-vars.outputs.backend_account }}"
+        echo "backend bucket:        ${{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        echo "backend region:        ${{ steps.get-vars.outputs.backend_region }}"
+        echo "deployment account:    ${{ steps.get-vars.outputs.backend_account }}" # TODO:
+        echo "deployment name:       ${{ steps.get-deployment-name.outputs.name }}"
+        echo "deployment region:     ${{ steps.get-vars.outputs.backend_region }}" # TODO:
+        echo "environment:           ${{ steps.get-vars.outputs.environment }}"
+        echo "oidc principal:        ${{ steps.get-vars.outputs.oidc_principal }}"
+        echo "state file:            ${{ steps.get-state-file.outputs.state_file }}"
+        echo "terraform app id:      ${{ steps.get-vars.outputs.terraform_app_id }}"
         echo "private access token:  length: ${#pat}"
         echo "terraform private key: length: ${#tpk}"
