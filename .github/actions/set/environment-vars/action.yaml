@@ -60,21 +60,23 @@ runs:
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
 
-        echo "access domain:         $ACCESS_DOMAIN"
-        echo "access role:           $ACCESS_ROLE"
-        echo "backend account:       $BACKEND_ACCOUNT"
-        echo "backend region:        $BACKEND_REGION"
-        echo "deployment account:    $BACKEND_ACCOUNT"
-        echo "deployment region:     $BACKEND_REGION"
-        echo "environment:           $ENVIRONMENT"
-        echo "oidc principal:        $OIDC_PRINCIPAL"
-        echo "terraform app id:      $TERRAFORM_APP_ID"
-        echo
-        echo "backend bucket:        $BACKEND_BUCKET"
-        echo "deployment name:       $DEPLOYMENT_NAME"
-        echo "state file:            $STATE_FILE"
-        echo
-        echo "private access token length:  ${#pat}"
-        echo "terraform private key length: ${#tpk}"
-        echo
-        echo "token length: ${#TOKEN}"
+        cat << EOF | tee -a >> $GITHUB_STEP_SUMMARY
+        access domain:         $ACCESS_DOMAIN
+        access role:           $ACCESS_ROLE
+        backend account:       $BACKEND_ACCOUNT
+        backend region:        $BACKEND_REGION
+        deployment account:    $BACKEND_ACCOUNT
+        deployment region:     $BACKEND_REGION
+        environment:           $ENVIRONMENT
+        oidc principal:        $OIDC_PRINCIPAL
+        terraform app id:      $TERRAFORM_APP_ID
+
+        backend bucket:        $BACKEND_BUCKET
+        deployment name:       $DEPLOYMENT_NAME
+        state file:            $STATE_FILE
+
+        private access token length:  ${#pat}
+        terraform private key length: ${#tpk}
+
+        token length: ${#TOKEN}
+        EOF
