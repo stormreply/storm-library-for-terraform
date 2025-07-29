@@ -13,16 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Show current Configuration
-        id: show-current-configuration
-        uses: stormreply/storm-library-for-terraform/.github/actions/get/configuration@main
+      - name: set environment vars
+        id: set-environment-vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/environment-vars@main
         with:
-          access_domain: ${{ vars.ACCESS_DOMAIN }}
-          access_role: ${{vars.ACCESS_ROLE}}
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          deployment_account: ${{ vars.DEPLOYMENT_ACCOUNT }}
-          deployment_region: ${{ vars.DEPLOYMENT_REGION }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+            access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
+            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }}
+            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
