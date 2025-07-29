@@ -15,7 +15,8 @@ on:
         type: string
         required: true
     secrets:
-      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+      STORM_LIBRARY_FOR_TERRAFORM:
+        required: false
 
 jobs:
 
