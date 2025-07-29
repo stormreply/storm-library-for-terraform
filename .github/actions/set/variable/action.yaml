@@ -41,6 +41,7 @@ runs:
         status=$(echo "$output" | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
+          echo "$output"
           echo "::error ::status from set variable call is $status"
           exit 1
         fi

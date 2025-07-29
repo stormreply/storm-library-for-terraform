@@ -19,13 +19,19 @@ runs:
       run: |
         # get/deployment-name
         TOKEN=${{ inputs.token }}
-        curl \
-          -H "Accept: application/vnd.github.raw" \
-          -o catalog.yaml \
-          https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml
-        # 2> /dev/null
-
-        cat catalog.yaml
+        output=$(
+          curl \
+            -H "Accept: application/vnd.github.raw" \
+            -o catalog.yaml \
+            https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml
+        )
+        status=$(echo "$output" | jq '( .status // empty )')
+        # status is "" or HTTP error code
+        if [ -n "$status" ] ; then
+          echo "$output"
+          echo "::error ::status from set variable call is $status"
+          exit 1
+        fi
 
         repository=${{ github.repository }}
         repo=${repository##*/}
@@ -44,6 +50,5 @@ runs:
           deployment_name="${deployment_name}-${environment}"
         fi
 
-        echo "deployment_name=${deployment_name}"
         echo "deployment_name=${deployment_name}" >> $GITHUB_OUTPUT
         echo "name=${deployment_name}" >> $GITHUB_OUTPUT
