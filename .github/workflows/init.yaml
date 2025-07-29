@@ -91,7 +91,6 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
           backend_region: ${{ env.BACKEND_REGION }}
           repository: ${{ github.repository }}
           token: ${{ env.TOKEN }}

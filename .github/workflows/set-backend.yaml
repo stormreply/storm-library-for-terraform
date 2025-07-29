@@ -1,0 +1,37 @@
+name: Plan
+
+# permissions:
+#   contents: read
+#   id-token: write
+
+on:
+  workflow_call:
+    inputs:
+
+      backend_account:
+        type: string
+        required: true
+      backend_region:
+        type: string
+        required: true
+      token:
+        type: string
+        required: false
+
+jobs:
+
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Time
+        shell: bash
+        run: date
+
+      - name: save AWS backend vars in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
+        with:
+          backend_account: ${{ inputs.backend_account }}
+          backend_region: ${{ inputs.backend_region }}
+          repository: ${{ github.repository }}
+          token: ${{ inputs.token }}
