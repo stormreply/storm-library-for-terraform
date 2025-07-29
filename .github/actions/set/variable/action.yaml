@@ -22,18 +22,19 @@ runs:
         REPO: ${{ inputs.repository }}
       run: |
         # set/variable vars.${{ inputs.variable }} from ${{ inputs.repository }}
-        curl -X PATCH \
-          -H "Authorization: Bearer $TOKEN" \
-          -H "Accept: application/vnd.github+json" \
-          https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
-          -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
-          -f \
-        2> /dev/null | tee /tmp/patch-${VARIABLE} \
-        || \
-        curl -X POST \
-          -H "Authorization: Bearer $TOKEN" \
-          -H "Accept: application/vnd.github+json" \
-          https://api.github.com/repos/$REPO/actions/variables \
-          -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
-        2> /dev/null | tee /tmp/post-${VARIABLE}
+        output=$(
+          curl -X PATCH \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
+            -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
+            -f \
+          || \
+          curl -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/actions/variables \
+            -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}"
+        )
+        echo "$output"
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
