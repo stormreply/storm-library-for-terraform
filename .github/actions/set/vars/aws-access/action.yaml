@@ -1,4 +1,4 @@
-name: Set AWS config
+name: Set repo vars for AWS access
 
 inputs:
   access_domain:

@@ -73,16 +73,22 @@ jobs:
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
 
-      - name: set AWS credentials
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/credentials@main
+      - name: set AWS backend credentials
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/credentials@main
         with:
           access_role: ${{ env.ACCESS_ROLE }}
           access_token: ${{ needs.sso.outputs.access_token }}
           backend_account: ${{ env.BACKEND_ACCOUNT }}
           backend_region: ${{ env.BACKEND_REGION }}
 
-      - name: set AWS backend
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend@main
+      - name: create AWS backend bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/bucket@main
+        with:
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          backend_region: ${{ env.BACKEND_REGION }}
+
+      - name: save AWS backend vars in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
           backend_bucket: ${{ env.BACKEND_BUCKET }}
@@ -90,8 +96,8 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ env.TOKEN }}
 
-      - name: set AWS access
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/access@main
+      - name: save AWS access vars in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-access@main
         with:
           access_domain: ${{ env.ACCESS_DOMAIN }}
           access_role: ${{ env.ACCESS_ROLE }}

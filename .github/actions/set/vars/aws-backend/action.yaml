@@ -1,9 +1,7 @@
-name: Set backend
+name: Set repo vars for AWS backend
 
 inputs:
   backend_account:
-    required: true
-  backend_bucket:
     required: true
   backend_region:
     required: true
@@ -24,13 +22,6 @@ runs:
         token: ${{ inputs.token }}
         value: ${{ inputs.backend_account }}
         variable: BACKEND_ACCOUNT
-
-    - name: Set backend bucket
-      id: set-backend-bucket
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/bucket@main
-      with:
-        backend_bucket: ${{ inputs.backend_bucket }}
-        backend_region: ${{ inputs.backend_region }}
 
     - name: Set backend region
       id: set-backend-region
