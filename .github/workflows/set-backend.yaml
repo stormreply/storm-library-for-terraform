@@ -14,9 +14,8 @@ on:
       backend_region:
         type: string
         required: true
-      token:
-        type: string
-        required: false
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
 
 jobs:
 
@@ -28,10 +27,19 @@ jobs:
         shell: bash
         run: date
 
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+        with:
+          yaml: |
+            backend_account: ${{ inputs.backend_account }}
+            backend_region: ${{ inputs.backend_region }}
+            private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+
       - name: save AWS backend vars in ${{github.repository}}.vars
         uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
         with:
-          backend_account: ${{ inputs.backend_account }}
-          backend_region: ${{ inputs.backend_region }}
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
           repository: ${{ github.repository }}
-          token: ${{ inputs.token }}
+          token: ${{ env.TOKEN }}
