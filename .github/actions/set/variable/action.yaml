@@ -38,7 +38,9 @@ runs:
             -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
           2> /dev/null
         )
-        echo "output [$output]"
         status=$(echo "$output" | jq '( .status // empty )')
-        echo "status: $status"
+        # status is "" or HTTP error code
+        if [ -n "$status" ] ; then
+          echo "::error title=That's bad::status from set variable call is $status"
+        fi
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
