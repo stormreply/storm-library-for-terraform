@@ -1,4 +1,4 @@
-name: Set env vars from repo
+name: Set environment vars from repo
 
 inputs:
   repository:
@@ -37,7 +37,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repository }}
       run: |
-        # set/env-vars-from-repo
+        # set/env/from-repo
         for variable in ${{ inputs.vars }} ; do
           VARIABLE=${variable^^}
           value=$(

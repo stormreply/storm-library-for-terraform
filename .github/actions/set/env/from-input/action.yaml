@@ -1,0 +1,47 @@
+name: Set environment vars from input
+
+inputs:
+  yaml:
+    required: true
+
+# outputs:
+#   access_domain:
+#     value: ${{ steps.get-vars.outputs.access_domain }}
+#   access_role:
+#     value: ${{ steps.get-vars.outputs.access_role }}
+#   backend_account:
+#     value: ${{ steps.get-vars.outputs.backend_account }}
+#   backend_region:
+#     value: ${{ steps.get-vars.outputs.backend_region }}
+#   deployment_account:
+#     value: ${{ steps.get-vars.outputs.backend_account }}
+#   deployment_region:
+#     value: ${{ steps.get-vars.outputs.backend_region }}
+#   environment:
+#     value: ${{ steps.get-vars.outputs.environment }}
+#   oidc_principal:
+#     value: ${{ steps.get-vars.outputs.oidc_principal }}
+
+runs:
+  using: composite
+  steps:
+    - name: set env vars from input
+      id: set-env-vars-from-input
+      shell: bash
+      run: |
+        # set/env/from-input
+        echo "$BASH_VERSION"
+        yaml="${{ inputs.yaml }}"
+        echo "$yaml"
+        IFS=$'\n' lines=($yaml)
+        for l in "${lines[@]}" ; do
+          key=${l%%:*}
+          val=${l##*: }
+          if [ -n "$val" ] ; then
+            echo "$key=$val"     >> $GITHUB_OUTPUT
+            echo "${key^^}=$val" >> $GITHUB_ENV
+          else
+            echo "ERROR: $key is empty. exiting."
+            exit 1
+          fi
+        done

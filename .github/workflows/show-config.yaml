@@ -14,8 +14,8 @@ jobs:
     steps:
 
       - name: set environment vars
-        id: set-environment-vars
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/environment-vars@main
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
