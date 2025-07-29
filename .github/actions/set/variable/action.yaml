@@ -38,6 +38,7 @@ runs:
             -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
           2> /dev/null
         )
+        echo "output [$output]"
         status=$(echo "$output" | jq '{ .status // empty }')
         echo "status: $status"
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
