@@ -25,7 +25,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Get vars
+    - name: set env vars from input
       id: set-env-vars-from-input
       shell: bash
       run: |

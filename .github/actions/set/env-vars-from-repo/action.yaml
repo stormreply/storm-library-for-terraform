@@ -30,7 +30,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Set env vars from repo
+    - name: set env vars from repo
       id: set-env-vars-from-repo
       shell: bash
       env:
@@ -44,7 +44,7 @@ runs:
             curl -s -H "Authorization: Bearer $TOKEN" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
-            | jq -r '.value'
+            | jq -r '.value' || ""
           )
           echo "${variable}=$value" >> $GITHUB_OUTPUT
           echo "${VARIABLE}=$value" >> $GITHUB_ENV

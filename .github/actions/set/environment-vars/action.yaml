@@ -51,7 +51,7 @@ runs:
           key=${l%%:*}
           val=${l##*: }
           if [ -n "$val" ] ; then
-            # echo "$key=$val" | tee -a $GITHUB_OUTPUT
+            echo "$key=$val" | tee -a $GITHUB_OUTPUT
             echo "$key=$val" >> $GITHUB_OUTPUT
             echo "${key^^}=$val" >> $GITHUB_ENV
           else
