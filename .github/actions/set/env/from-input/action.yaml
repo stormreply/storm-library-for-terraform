@@ -30,9 +30,8 @@ runs:
       shell: bash
       run: |
         # set/env/from-input
-        echo "$BASH_VERSION"
         yaml="${{ inputs.yaml }}"
-        echo "$yaml"
+        # echo "$yaml"
         IFS=$'\n' lines=($yaml)
         for l in "${lines[@]}" ; do
           key=${l%%:*}

@@ -20,7 +20,7 @@ on:
 
 jobs:
 
-  check:
+  set-backend:
     runs-on: ubuntu-latest
     steps:
 
