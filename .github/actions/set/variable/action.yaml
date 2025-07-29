@@ -41,6 +41,6 @@ runs:
         status=$(echo "$output" | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
-          echo "::error title=That's bad::status from set variable call is $status"
+          echo "::setFailed ::status from set variable call is $status"
         fi
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
