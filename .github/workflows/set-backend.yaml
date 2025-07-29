@@ -32,10 +32,10 @@ jobs:
         id: set-env
         uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           yaml: |
             backend_account: ${{ inputs.backend_account }}
             backend_region: ${{ inputs.backend_region }}
-            private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
 
       - name: save AWS backend vars in ${{github.repository}}.vars
         uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
