@@ -39,7 +39,7 @@ jobs:
 
       - name: Set backend profile in AWS config
         # we need to assume role in order to aws s3api
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/backend-profile@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles/backend@main
         with:
           backend_account: ${{ vars.BACKEND_ACCOUNT }}
           backend_region: ${{ vars.BACKEND_REGION }}
