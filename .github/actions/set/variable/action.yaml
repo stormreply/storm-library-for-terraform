@@ -13,7 +13,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set repository variable via API
+    - name: Set repository variable
       shell: bash
       env:
         TOKEN: ${{ inputs.token }}
@@ -21,7 +21,7 @@ runs:
         VALUE: ${{ inputs.value }}
         REPO: ${{ inputs.repository }}
       run: |
-        # Set repository variable vars.${{ inputs.variable }} via API
+        # set/variable vars.${{ inputs.variable }} from ${{ inputs.repository }}
         curl -X PATCH \
           -H "Authorization: Bearer $TOKEN" \
           -H "Accept: application/vnd.github+json" \

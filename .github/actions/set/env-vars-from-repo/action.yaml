@@ -1,0 +1,52 @@
+name: Set env vars from repo
+
+inputs:
+  repository:
+    required: true
+  token:
+    required: true
+  vars:
+    required: false
+    default: "access_domain access_role backend_account backend_region deployment_account deployment_region environment oidc_principal"
+
+outputs:
+  access_domain:
+    value: ${{ steps.get-vars.outputs.access_domain }}
+  access_role:
+    value: ${{ steps.get-vars.outputs.access_role }}
+  backend_account:
+    value: ${{ steps.get-vars.outputs.backend_account }}
+  backend_region:
+    value: ${{ steps.get-vars.outputs.backend_region }}
+  deployment_account:
+    value: ${{ steps.get-vars.outputs.backend_account }}
+  deployment_region:
+    value: ${{ steps.get-vars.outputs.backend_region }}
+  environment:
+    value: ${{ steps.get-vars.outputs.environment }}
+  oidc_principal:
+    value: ${{ steps.get-vars.outputs.oidc_principal }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set env vars from repo
+      id: set-env-vars-from-repo
+      shell: bash
+      env:
+        TOKEN: ${{ inputs.token }}
+        REPO: ${{ inputs.repository }}
+      run: |
+        # set/env-vars-from-repo
+        for variable in ${{ inputs.vars }} ; do
+          VARIABLE=${variable^^}
+          value=$(
+            curl -s -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
+            | jq -r '.value'
+          )
+          echo "${variable}=$value" >> $GITHUB_OUTPUT
+          echo "${VARIABLE}=$value" >> $GITHUB_ENV
+          echo "set env $VARIABLE=$value from $REPO"
+        done

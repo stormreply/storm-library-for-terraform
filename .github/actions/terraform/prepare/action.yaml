@@ -21,10 +21,6 @@ runs:
   using: composite
   steps:
 
-    # TODO: move to very beginning of each workflow
-    # - name: Time
-    #   shell: bash
-    #   run: date
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -68,7 +64,7 @@ runs:
         backend_account: ${{ inputs.backend_account }}
         backend_region: ${{ inputs.backend_region }}
         backend_role: slt-0-storm-library-for-terraform-backend
-        deployment_account: ${{ inputs.backend_account }} # TODO:
-        deployment_region: ${{ inputs.backend_region }} # TODO:
+        deployment_account: ${{ inputs.backend_account }}
+        deployment_region: ${{ inputs.backend_region }}
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.oidc_principal == '' }}

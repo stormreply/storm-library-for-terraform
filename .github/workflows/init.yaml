@@ -32,7 +32,11 @@ jobs:
       access_token: ${{ steps.get-access-token.outputs.access_token }}
     steps:
 
-      - name: get vars
+      - name: Time
+        shell: bash
+        run: date
+
+      - name: set environment vars
         id: set-environment-vars
         uses: stormreply/storm-library-for-terraform/.github/actions/set/environment-vars@main
         with:

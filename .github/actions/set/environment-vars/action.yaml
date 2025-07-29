@@ -20,11 +20,11 @@ outputs:
   backend_region:
     value: ${{ steps.get-vars.outputs.backend_region }}
   deployment_account:
-    value: ${{ steps.get-vars.outputs.backend_account }} # TODO:
+    value: ${{ steps.get-vars.outputs.backend_account }}
   deployment_name:
     value: ${{ steps.get-deployment-name.outputs.name }}
   deployment_region:
-    value: ${{ steps.get-vars.outputs.backend_region }} # TODO:
+    value: ${{ steps.get-vars.outputs.backend_region }}
   environment:
     value: ${{ steps.get-vars.outputs.environment }}
   oidc_principal:
