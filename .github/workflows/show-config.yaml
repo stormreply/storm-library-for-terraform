@@ -1,4 +1,4 @@
-name: Show Configuration
+name: Show Config
 
 on:
   workflow_dispatch:

@@ -63,7 +63,7 @@ jobs:
           backend_region: ${{ env.BACKEND_REGION }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
           environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env TOKEN }}
+          token: ${{ env.TOKEN }}
 
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
