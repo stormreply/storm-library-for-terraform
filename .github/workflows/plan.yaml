@@ -1,5 +1,8 @@
 name: Plan
 
+permissions:
+  id-token: write
+
 on:
   workflow_call:
     inputs:

@@ -9,10 +9,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Download File
+    - name: download File
       id: download-file
       shell: bash
       run: |
+        # download ${{ inputs.file }}
         api="x-access-token:${{ inputs.token }}@api.github.com"
         path="repos/stormreply/storm-library-for-terraform/contents"
         file=${{ inputs.file }}
@@ -21,4 +22,6 @@ runs:
           -o "${file}" \
           -H "Accept: application/vnd.github.raw" \
           "https://${api}/${path}/${file}"
-        2> /dev/null
+        > /dev/null 2&>1
+
+        # TODO: check content if containing error status
