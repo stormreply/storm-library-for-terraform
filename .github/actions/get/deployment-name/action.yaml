@@ -27,7 +27,10 @@ runs:
             2> /dev/null
         )
         cat catalog.yaml
-        status=$(cat catalog.yaml | jq '( .status // empty )' || true)
+        status=$(
+          cat catalog.yaml | jq '( .status // empty ) 2> /dev/null' \
+          || true
+        ) # "|| true" is for jq can't parse - as it ought to be yaml
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
           cat catalog.yaml
@@ -40,6 +43,9 @@ runs:
 
         yq '.catalog["'${repo}'"]' catalog.yaml > catalog_item.yaml
         catalog_id=$(cat catalog_item.yaml | yq .id)
+        [ "$catalog_id" = "null" ] \
+          && echo "::error ::${repo} or its id are not known to the catalog" \
+          && exit 1
         echo "SLT catalog id for $repo: $catalog_id"
         catalog_reference="slt-${catalog_id}"
         rm catalog.yaml
