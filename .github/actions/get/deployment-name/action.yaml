@@ -27,6 +27,8 @@ runs:
             2> /dev/null
         )
         echo "$output"
+        echo "---"
+        cat catalog.yaml
         status=$(echo "$output" | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
