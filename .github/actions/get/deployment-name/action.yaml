@@ -18,15 +18,19 @@ runs:
       shell: bash
       run: |
         # get/deployment-name
-        TOKEN=${{ inputs.token }}
+
+        api="x-access-token:${{ inputs.token }}@api.github.com"
+        path="repos/stormreply/storm-library-for-terraform/contents"
+        file=catalog.yaml
+
         output=$(
           curl \
+            -o "${file}" \
             -H "Accept: application/vnd.github.raw" \
-            -o catalog.yaml \
-            https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
-            2> /dev/null
+            "https://${api}/${path}/${file}" \
+          2> /dev/null
         )
-        # cat catalog.yaml
+
         status=$(
           cat catalog.yaml | jq '( .status // empty ) 2> /dev/null' \
           || true

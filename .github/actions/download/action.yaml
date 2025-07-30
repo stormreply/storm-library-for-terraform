@@ -14,14 +14,17 @@ runs:
       shell: bash
       run: |
         # download ${{ inputs.file }}
+
         api="x-access-token:${{ inputs.token }}@api.github.com"
         path="repos/stormreply/storm-library-for-terraform/contents"
         file=${{ inputs.file }}
 
-        output=$(curl \
-          -o "${file}" \
-          -H "Accept: application/vnd.github.raw" \
-          "https://${api}/${path}/${file}"
+        output=$(
+          curl \
+            -o "${file}" \
+            -H "Accept: application/vnd.github.raw" \
+            "https://${api}/${path}/${file}" \
+          2> /dev/null
         )
 
         # cat $file
