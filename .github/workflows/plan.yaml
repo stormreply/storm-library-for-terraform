@@ -17,15 +17,9 @@ on:
       environment:
         type: string
         required: false
-      # private_access_token:
-      #   type: string
-      #   required: true
       terraform_app_id:
         type: string
         required: false
-      # terraform_private_key:
-      #   type: string
-      #   required: true
       var_file:
         type: string
         required: false

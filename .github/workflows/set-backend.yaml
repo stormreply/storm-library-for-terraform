@@ -17,6 +17,8 @@ on:
     secrets:
       STORM_LIBRARY_FOR_TERRAFORM:
         required: false
+      TERRAFORM_PRIVATE_KEY:
+        required: false
 
 jobs:
 
@@ -33,6 +35,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
             backend_account: ${{ inputs.backend_account }}
             backend_region: ${{ inputs.backend_region }}
