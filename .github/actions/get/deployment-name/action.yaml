@@ -24,7 +24,7 @@ runs:
             -H "Accept: application/vnd.github.raw" \
             -o catalog.yaml \
             https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
-            > /dev/null
+            2> /dev/null
         )
         echo "$output"
         status=$(echo "$output" | jq '( .status // empty )')
