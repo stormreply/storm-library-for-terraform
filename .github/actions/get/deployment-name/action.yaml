@@ -27,7 +27,7 @@ runs:
             2> /dev/null
         )
         cat catalog.yaml
-        status=$(cat catalog.yaml | jq '( .status // empty )')
+        status=$(cat catalog.yaml | jq '( .status // empty )' || true)
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
           cat catalog.yaml
