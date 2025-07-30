@@ -24,7 +24,7 @@ runs:
           "https://${api}/${path}/${file}"
         )
 
-        cat $file
+        # cat $file
 
         # TODO: countercheck/unify with get/deployment-name
         # TODO: check content if containing error status

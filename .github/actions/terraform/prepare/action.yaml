@@ -36,10 +36,12 @@ runs:
         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
         # git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "git@github.com:"
 
-        echo "global .gitconfig:"
-        cat ~/.gitconfig
-        echo "local .git/config:"
-        cat .git/config
+        # TODO: show only in debug mode
+        # echo "global .gitconfig:"
+        # cat ~/.gitconfig
+        # echo "local .git/config:"
+        # cat .git/config
+      # TODO: move into action
 
     - name: Download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
