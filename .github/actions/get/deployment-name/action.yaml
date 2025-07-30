@@ -32,7 +32,7 @@ runs:
         )
 
         status=$(
-          cat catalog.yaml | jq '( .status // empty ) 2> /dev/null' \
+          cat catalog.yaml | jq '( .status // empty )' 2> /dev/null \
           || true
         ) # "|| true" is for jq can't parse - as it ought to be yaml
         # status is "" or HTTP error code
