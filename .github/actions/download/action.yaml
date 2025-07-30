@@ -22,10 +22,9 @@ runs:
           -o "${file}" \
           -H "Accept: application/vnd.github.raw" \
           "https://${api}/${path}/${file}"
-        > /dev/null 2&>1
         )
 
         cat $file
-        
+
         # TODO: countercheck/unify with get/deployment-name
         # TODO: check content if containing error status
