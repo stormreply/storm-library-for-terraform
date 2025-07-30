@@ -26,15 +26,11 @@ runs:
             https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
             2> /dev/null
         )
-        echo "exit status: $?"
-        echo "$output"
-        echo "---"
-        cat catalog.yaml
-        status=$(echo "$output" | jq '( .status // empty )')
+        status=$(cat catalog.yaml | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
-          echo "$output"
-          echo "::error ::status from set variable call is $status"
+          cat catalog.yaml
+          echo "::error ::status from download call is $status"
           exit 1
         fi
 
