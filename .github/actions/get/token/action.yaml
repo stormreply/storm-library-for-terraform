@@ -33,10 +33,16 @@ runs:
       shell: bash
       run: |
         # get/token
+        type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
-        [ -z "${token}" ] && token=${{ inputs.private_access_token }}
+        if [ -z "${token}" ] ; then
+          token=${{ inputs.private_access_token }}
+          type="Personal Access Token"
+        else
+        fi
+        "using your $type as token"
         if [ ${#token} -eq 0 ] ; then
-          echo "ERROR: could not get a token"
+          echo "::error title=No valid token::could not get a token"
           exit 1
         else
           echo "token=${token}" >> $GITHUB_OUTPUT
