@@ -20,7 +20,7 @@ runs:
   steps:
 
     - name: Create Github app token
-      if: inputs.terraform_app_id != ''
+      if: inputs.terraform_app_id != '' && inputs.terraform_app_id != 'NONE'
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
