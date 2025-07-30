@@ -26,6 +26,7 @@ runs:
             https://x-access-token:$TOKEN@api.github.com/repos/stormreply/storm-library-for-terraform/contents/catalog.yaml \
             > /dev/null
         )
+        echo "$output"
         status=$(echo "$output" | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
