@@ -38,7 +38,6 @@ runs:
         if [ -z "${token}" ] ; then
           token=${{ inputs.private_access_token }}
           type="Personal Access Token"
-        else
         fi
         "using your $type as token"
         if [ ${#token} -eq 0 ] ; then
