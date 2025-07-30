@@ -39,7 +39,7 @@ runs:
           token=${{ inputs.private_access_token }}
           type="Personal Access Token"
         fi
-        "using your $type as token"
+        echo "::notice ::using your $type as token"
         if [ ${#token} -eq 0 ] ; then
           echo "::error title=No valid token::could not get a token"
           exit 1
