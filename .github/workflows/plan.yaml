@@ -1,13 +1,8 @@
 name: Plan
 
-permissions:
-  contents: read
-  id-token: write
-
 on:
   workflow_call:
     inputs:
-
       backend_account:
         type: string
         required: false
@@ -24,8 +19,11 @@ on:
         type: string
         required: false
         default: ""
-
-
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM:
+        required: false
+      TERRAFORM_PRIVATE_KEY:
+        required: false
 
 jobs:
 
