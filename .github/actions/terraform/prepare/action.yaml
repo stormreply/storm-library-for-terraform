@@ -24,6 +24,8 @@ runs:
 
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.token }}
 
     # NOTE: important to position *behind* checkout
     - name: Git config rewrite URLs
