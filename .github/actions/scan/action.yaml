@@ -18,5 +18,5 @@ runs:
         token: ${{ env.TOKEN }}
 
     - name: run pre-commit
-      uses: stormreply/storm-library-for-terraform/.github/actions/codecheck/pre-commit@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/scan/pre-commit@main
       id: pre-commit
