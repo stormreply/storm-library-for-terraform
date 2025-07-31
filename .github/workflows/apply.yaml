@@ -93,9 +93,9 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           token: ${{ env.TOKEN }}
 
-      - name: Check Code
-        uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
-        id: check-code
+      - name: run pre-commit
+        uses: stormreply/storm-library-for-terraform/.github/actions/pre-commit@main
+        id: pre-commit
 
   plan:
     runs-on: ubuntu-latest
