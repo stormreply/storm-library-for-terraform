@@ -84,18 +84,8 @@ jobs:
             environment: ${{ github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
-        with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-
-      - name: run pre-commit
-        uses: stormreply/storm-library-for-terraform/.github/actions/pre-commit@main
-        id: pre-commit
+      - name: scan
+        uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
 
   plan:
     runs-on: ubuntu-latest
@@ -123,7 +113,7 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           token: ${{ env.TOKEN }}
 
-      - name: Terraform plan
+      - name: terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
           backend_bucket: ${{ env.BACKEND_BUCKET }}
@@ -158,7 +148,7 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           token: ${{ env.TOKEN }}
 
-      - name: Terraform apply
+      - name: terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
           backend_bucket: ${{ env.BACKEND_BUCKET }}

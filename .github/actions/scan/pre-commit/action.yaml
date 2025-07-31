@@ -12,7 +12,7 @@ runs:
       id: pre-commit-terraform
       shell: bash
       run: |
-        # Check via pre-commit-terraform
+        # scan/pre-commit
         docker run \
           --entrypoint /bin/bash \
           -e "USERID=$(id -u):$(id -g)" \

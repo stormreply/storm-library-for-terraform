@@ -1,4 +1,4 @@
-name: Code Check
+name: Scan code
 
 inputs:
   token:
