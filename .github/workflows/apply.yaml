@@ -22,6 +22,11 @@ on:
         type: string
         required: false
         default: ""
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM:
+        required: false
+      TERRAFORM_PRIVATE_KEY:
+        required: false
 
 jobs:
 
