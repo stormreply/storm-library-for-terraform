@@ -31,6 +31,8 @@ runs:
           2> /dev/null
         )
 
+        # TODO: split
+
         status=$(
           cat catalog.yaml | jq '( .status // empty )' 2> /dev/null \
           || true
@@ -50,7 +52,7 @@ runs:
         [ "$catalog_id" = "null" ] \
           && echo "::error ::${repo} or its id are not known to the catalog" \
           && exit 1
-        echo "SLT catalog id for $repo: $catalog_id"
+        echo "slt catalog id for $repo: $catalog_id"
         catalog_reference="slt-${catalog_id}"
         rm catalog.yaml
 

@@ -1,8 +1,7 @@
 name: Set backend
 
-# permissions:
-#   contents: read
-#   actions: write
+permissions:
+  read-all
 
 on:
   workflow_call:
