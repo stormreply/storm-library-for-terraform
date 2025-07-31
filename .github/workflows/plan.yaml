@@ -23,6 +23,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Time
+        shell: bash
+        run: date
+
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+        with:
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
       - name: scan
         uses: stormreply/storm-library-for-terraform/.github/actions/codecheck@main
 
