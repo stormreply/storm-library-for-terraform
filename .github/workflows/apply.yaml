@@ -41,8 +41,8 @@ jobs:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
             environment: ${{ github.repository_owner }} # TODO: check: should be actor?
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
@@ -54,7 +54,7 @@ jobs:
           deployment_account: ${{ env.BACKEND_ACCOUNT }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
           deployment_region: ${{ env.DEPLOYMENT_REGION }}
-          environment: ${{ inputs.environment }}
+          environment: ${{ env.ENVIRONMENT }}
           lifetime: ${{ inputs.lifetime }}
           wait: ${{ inputs.wait }}
 
@@ -73,8 +73,8 @@ jobs:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
             environment: ${{ github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
@@ -103,10 +103,10 @@ jobs:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
             environment: ${{ github.repository_owner }}
-            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
       - name: checkout code
@@ -138,10 +138,10 @@ jobs:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
             environment: ${{ github.repository_owner }}
-            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
       - name: checkout code
