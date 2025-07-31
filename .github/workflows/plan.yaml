@@ -1,6 +1,7 @@
 name: Plan
 
 permissions:
+  contents: read
   id-token: write
 
 on:

@@ -1,6 +1,7 @@
 name: Apply
 
 permissions:
+  contents: read
   id-token: write
 
 on:
