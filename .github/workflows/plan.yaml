@@ -38,27 +38,27 @@ jobs:
         shell: bash
         run: date
 
-      - name: set environment vars
-        id: set-env
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
-        with:
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-            environment: ${{ github.repository_owner }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+      # - name: set environment vars
+      #   id: set-env
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+      #   with:
+      #     private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+      #     terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+      #     yaml: |
+      #       backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+      #       backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+      #       environment: ${{ github.repository_owner }}
+      #       terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
-      - name: prepare terraform
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare-terraform
-        with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
+      # - name: prepare terraform
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
+      #   id: prepare-terraform
+      #   with:
+      #     backend_account: ${{ env.BACKEND_ACCOUNT }}
+      #     backend_region: ${{ env.BACKEND_REGION }}
+      #     deployment_name: ${{ env.DEPLOYMENT_NAME }}
+      #     environment: ${{ env.ENVIRONMENT }}
+      #     token: ${{ env.TOKEN }}
 
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
