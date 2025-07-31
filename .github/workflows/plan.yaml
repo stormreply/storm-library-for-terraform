@@ -40,7 +40,7 @@ jobs:
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
       - name: scan
-        uses: stormreply/storm-library-for-terraform/.github/actions/codecheck@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
 
       # - name: Time
       #   shell: bash
