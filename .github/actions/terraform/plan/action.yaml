@@ -9,7 +9,7 @@ inputs:
   state_file:
     required: true
   var_file:
-    required: true
+    required: false
 
 runs:
   using: composite
@@ -39,14 +39,13 @@ runs:
         export AWS_PROFILE=deployment
         echo "AWS_PROFILE=deployment" >> $GITHUB_ENV
 
-        tfvars=github.tfvars
-        [ -n "${{ inputs.var_file}}" ] && tfvars="${{ inputs.var_file}} $tfvars"
+        [ -n "${{ inputs.var_file }}" ] && var_file="-var-file=${{ inputs.var_file }}"
 
         terraform version
         terraform plan \
           -input=false \
           -out=tfplan \
-          -var-file=<(cat $tfvars) \
+          $var_file \
         && terraform show tfplan
 
     - name: Upload tfplan

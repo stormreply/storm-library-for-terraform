@@ -50,9 +50,8 @@ jobs:
             environment: ${{ github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
-      - name: prepare terraform
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare-terraform
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
           backend_region: ${{ env.BACKEND_REGION }}
@@ -81,14 +80,19 @@ jobs:
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
-      - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan2@main
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
           backend_region: ${{ env.BACKEND_REGION }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
           environment: ${{ env.ENVIRONMENT }}
-          state_file: ${{ env.STATE_FILE }}
           token: ${{ env.TOKEN }}
+
+      - name: Terraform plan
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
+        with:
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}

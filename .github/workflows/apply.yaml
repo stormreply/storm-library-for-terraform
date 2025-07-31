@@ -1,7 +1,6 @@
 name: Apply
 
 permissions:
-  contents: read
   id-token: write
 
 on:
@@ -31,109 +30,144 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare
+      - name: Time
+        shell: bash
+        run: date
+
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          environment: ${{ inputs.environment }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }} # TODO: check: should be actor?
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
       - name: Schedule apply
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: apply
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          deployment_account: ${{ vars.BACKEND_ACCOUNT }} # TODO:
-          deployment_name: ${{ steps.prepare.outputs.deployment_name }}
-          deployment_region: ${{ steps.prepare.outputs.deployment_region }}
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          deployment_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          deployment_region: ${{ env.DEPLOYMENT_REGION }}
           environment: ${{ inputs.environment }}
           lifetime: ${{ inputs.lifetime }}
           wait: ${{ inputs.wait }}
 
   check:
-    if: inputs.wait == ''
     runs-on: ubuntu-latest
     steps:
 
-      # TODO: reduce Prepare here to sth leaner like checkout repo + rewrite git config
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare
+      - name: Time
+        shell: bash
+        run: date
+
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
+      - name: prepare terraform
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
+        id: prepare-terraform
+        with:
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          environment: ${{ env.ENVIRONMENT }}
+          token: ${{ env.TOKEN }}
 
       - name: Check Code
         uses: stormreply/storm-library-for-terraform/.github/actions/check-code@main
         id: check-code
 
   plan:
-    if: inputs.wait == ''
     runs-on: ubuntu-latest
     steps:
 
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          environment: ${{ inputs.environment }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }}
+            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+        with:
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          environment: ${{ env.ENVIRONMENT }}
+          token: ${{ env.TOKEN }}
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ steps.prepare.outputs.backend_region }}
-          state_file: ${{ steps.prepare.outputs.state_file }}
-          var_file: ${{ inputs.var_file}}
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          state_file: ${{ env.STATE_FILE }}
+          var_file: ${{ inputs.var_file }}
 
   apply:
     needs: plan
     runs-on: ubuntu-latest
     steps:
 
-      # - name: Download tfplan
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: tfplan
-
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          environment: ${{ inputs.environment }}
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            environment: ${{ github.repository_owner }}
+            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+        with:
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          environment: ${{ env.ENVIRONMENT }}
+          token: ${{ env.TOKEN }}
 
       - name: Terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
         with:
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          backend_region: ${{ steps.prepare.outputs.backend_region }}
-          state_file: ${{ steps.prepare.outputs.state_file }}
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}
 
       - name: Schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: destroy
-          backend_bucket: ${{ steps.prepare.outputs.backend_bucket }}
-          deployment_account: ${{ vars.BACKEND_ACCOUNT }} # TODO:
-          deployment_name: ${{ steps.prepare.outputs.deployment_name }}
-          deployment_region: ${{ steps.prepare.outputs.deployment_region }}
-          environment: ${{ inputs.environment }}
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          deployment_region: ${{ env.BACKEND_REGION }}
+          environment: ${{ env.ENVIRONMENT }}
           wait: ${{ inputs.lifetime }}

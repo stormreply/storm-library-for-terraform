@@ -17,10 +17,11 @@ inputs:
   token:
     required: true
 
+# TODO: rename prepare into terraform/checkout and maybe move set-aws-profiles out of it
+
 runs:
   using: composite
   steps:
-
 
     - name: Checkout repository
       uses: actions/checkout@v4

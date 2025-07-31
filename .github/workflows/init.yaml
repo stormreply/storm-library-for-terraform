@@ -73,6 +73,7 @@ jobs:
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
 
+      # TODO: start here to put into one init action
       - name: set AWS backend credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/credentials@main
         with:
@@ -105,18 +106,30 @@ jobs:
           oidc_principal: ${{ env.OIDC_PRINCIPAL }}
           repository: ${{ github.repository }}
           token: ${{ env.TOKEN }}
+      # TODO: stop here init action
 
-      - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan2@main
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
           backend_region: ${{ env.BACKEND_REGION }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
           environment: ${{ env.ENVIRONMENT }}
-          oidc_principal: ${{ env.OIDC_PRINCIPAL }}
-          state_file: ${{ env.STATE_FILE }}
           token: ${{ env.TOKEN }}
+          use_oidc: false # the oidc_principal has not yet been created up to here
+
+      - name: set init.tfvars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
+        with:
+          backend_bucket: ${{ env.backend_bucket }}
+          oidc_principal: ${{ env.oidc_principal }}
+
+      - name: Terraform plan
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
+        with:
+          backend_bucket: ${{ env.BACKEND_BUCKET }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          state_file: ${{ env.STATE_FILE }}
           var_file: init.tfvars
 
       - name: Terraform apply
