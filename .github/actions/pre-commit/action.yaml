@@ -1,4 +1,4 @@
-name: Static Code Checks
+name: pre-commit
 
 inputs:
   token:
