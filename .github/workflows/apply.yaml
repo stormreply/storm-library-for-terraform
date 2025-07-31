@@ -78,9 +78,8 @@ jobs:
             environment: ${{ github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
-      - name: prepare terraform
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare-terraform
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
           backend_region: ${{ env.BACKEND_REGION }}
