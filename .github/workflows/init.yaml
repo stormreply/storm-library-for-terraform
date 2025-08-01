@@ -69,7 +69,7 @@ jobs:
             backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
             deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
             deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-            environment: ${{ github.repository_owner }}
+            environment: ${{ github.actor }}
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
 

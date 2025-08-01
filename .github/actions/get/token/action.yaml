@@ -26,7 +26,7 @@ runs:
       with:
         app-id: ${{ inputs.terraform_app_id }}
         private-key: ${{ inputs.terraform_private_key }}
-        owner: ${{ github.repository_owner }}
+        owner: ${{ github.actor }}
 
     - name: Get Token
       id: get-token

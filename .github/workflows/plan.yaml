@@ -36,7 +36,7 @@ jobs:
           yaml: |
             backend_account: ${{ vars.BACKEND_ACCOUNT }}
             backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.repository_owner }}
+            environment: ${{ github.actor }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
       - name: scan
@@ -55,7 +55,7 @@ jobs:
           yaml: |
             backend_account: ${{ vars.BACKEND_ACCOUNT }}
             backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.repository_owner }}
+            environment: ${{ github.actor }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
 #            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.repository_owner }}
