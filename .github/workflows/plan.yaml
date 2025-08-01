@@ -56,8 +56,9 @@ jobs:
             backend_account: ${{ vars.BACKEND_ACCOUNT }}
             backend_region: ${{ vars.BACKEND_REGION }}
             environment: ${{ github.repository_owner }}
-            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.repository_owner }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
+#            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.repository_owner }}
 
       - name: checkout code
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
