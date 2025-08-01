@@ -57,7 +57,7 @@ jobs:
         with:
           action: apply
           backend_bucket: ${{ env.BACKEND_BUCKET }}
-          deployment_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
           deployment_region: ${{ env.DEPLOYMENT_REGION }}
           environment: ${{ env.ENVIRONMENT }}
@@ -163,8 +163,8 @@ jobs:
         with:
           action: destroy
           backend_bucket: ${{ env.BACKEND_BUCKET   }}
-          deployment_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.BACKEND_REGION }}
+          deployment_region: ${{ env.DEPLOYMENT_REGION }}
           environment: ${{ env.ENVIRONMENT }}
           wait: ${{ inputs.lifetime }}
