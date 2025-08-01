@@ -74,7 +74,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
         with:
           backend_bucket: ${{ env.BACKEND_BUCKET }}
-          deployment_account: ${{ env.BACKEND_ACCOUNT }}
+          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
           deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.BACKEND_REGION‚ }}
+          deployment_region: ${{ env.DEPLOYMENT_REGION }}
         continue-on-error: true
