@@ -77,7 +77,7 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           token: ${{ env.TOKEN }}
 
-        - name: Terraform destroy
+      - name: Terraform destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/destroy@main
         with:
           backend_bucket: ${{ env.BACKEND_BUCKET }}
