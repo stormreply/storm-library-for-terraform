@@ -68,6 +68,15 @@ jobs:
             environment: ${{ inputs.environment || github.actor }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
 
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+        with:
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          deployment_name: ${{ env.DEPLOYMENT_NAME }}
+          environment: ${{ env.ENVIRONMENT }}
+          token: ${{ env.TOKEN }}
+
       - name: Terraform destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/destroy@main
         with:
