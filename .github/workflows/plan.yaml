@@ -59,7 +59,7 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          vars_json: "${{ toJson(vars) }}""
+          vars_json: "${{ toJson(vars) }}"
           yaml: |
             backend_account: ${{ vars.BACKEND_ACCOUNT }}
             backend_region: ${{ vars.BACKEND_REGION }}
