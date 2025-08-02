@@ -24,7 +24,7 @@ runs:
       id: get-environment
       uses: stormreply/storm-library-for-terraform/.github/actions/get/environment@main
       with:
-        vars_json: ${{ inputs.vars.json }}
+        vars_json: ${{ inputs.vars_json }}
 
     - name: set env from others
       id: set-env-from-others
