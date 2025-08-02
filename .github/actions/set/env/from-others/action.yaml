@@ -50,6 +50,11 @@ runs:
         STATE_FILE="${{ steps.get-state-file.outputs.state_file }}"
         TOKEN="${{ steps.get-token.outputs.token }}"
 
+        # TEMPORARILY
+        DEPLOYMENT_ACCOUNT=${{ env.BACKEND_ACCOUNT }}
+        DEPLOYMENT_REGION=${{ env.BACKEND_REGION }}
+        # TEMPORARILY
+
         cat << EOF >> $GITHUB_ENV
         BACKEND_BUCKET=$BACKEND_BUCKET
         DEPLOYMENT_NAME=$DEPLOYMENT_NAME
