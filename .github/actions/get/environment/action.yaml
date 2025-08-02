@@ -1,10 +1,6 @@
 name: Get environment
 
 inputs:
-  private_access_token:
-    required: false
-  terraform_private_key:
-    required: false
   vars_json:
     required: true
 
@@ -12,11 +8,14 @@ runs:
   using: composite
   steps:
 
-    - name: show vars
-      id: show-vars
+    - name: get-environment-from-vars
+      id: get-environment-from-vars
       shell: bash
       run: |
-        echo "[ ${{ inputs.vars_json }} ]"
+        # get/environment-from-vars
+        echo "${{ inputs.vars_json }}" \
+        | jq -r 'to_entries | map("export \(.key | ascii_upcase)=\(.value)") | .[]' \
+        >> $GITHUB_ENV
 
     # - name: set env from input
     #   id: set-env-from-input
