@@ -3,8 +3,6 @@ name: Get environment
 inputs:
   vars_json:
     required: true
-  vars_string:
-    required: true
 
 runs:
   using: composite
@@ -16,7 +14,6 @@ runs:
       run: |
         # get/environment-from-vars
         echo "${{ inputs.vars_json }}" >> vars.json
-        echo "[${{ inputs.vars_string }}]"
         cat vars.json
         # cat vars.json | jq -r 'to_entries | map("export \(.key | ascii_upcase)=\(.value)") | .[]' \
         # >> vars.json

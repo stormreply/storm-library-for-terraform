@@ -9,8 +9,6 @@ inputs:
     required: false
   vars_json:
     required: false
-  vars_string:
-    required: false
 
 runs:
   using: composite
@@ -27,7 +25,6 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/get/environment@main
       with:
         vars_json: ${{ inputs.vars_json }}
-        vars_string: ${{ inputs.vars_string }}
 
     - name: set env from others
       id: set-env-from-others
