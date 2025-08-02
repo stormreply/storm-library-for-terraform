@@ -88,14 +88,6 @@ jobs:
           backend_bucket: ${{ env.BACKEND_BUCKET }}
           backend_region: ${{ env.BACKEND_REGION }}
 
-      - name: save AWS backend vars in ${{github.repository}}.vars
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
-        with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          repository: ${{ github.repository }}
-          token: ${{ env.TOKEN }}
-
       - name: save AWS access vars in ${{github.repository}}.vars
         uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-access@main
         with:
@@ -104,6 +96,22 @@ jobs:
           backend_account: ${{ env.BACKEND_ACCOUNT }}
           backend_region: ${{ env.BACKEND_REGION }}
           oidc_principal: ${{ env.OIDC_PRINCIPAL }}
+          repository: ${{ github.repository }}
+          token: ${{ env.TOKEN }}
+
+      - name: save AWS backend vars in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
+        with:
+          backend_account: ${{ env.BACKEND_ACCOUNT }}
+          backend_region: ${{ env.BACKEND_REGION }}
+          repository: ${{ github.repository }}
+          token: ${{ env.TOKEN }}
+
+      - name: save AWS deployment vars in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-deployment@main
+        with:
+          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
+          deployment_region: ${{ env.DEPLOYMENT_REGION }}
           repository: ${{ github.repository }}
           token: ${{ env.TOKEN }}
       # TODO: stop here init action

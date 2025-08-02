@@ -25,8 +25,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: set env vars from input
-      id: set-env-vars-from-input
+    - name: set env from input
+      id: set-env-from-input
       shell: bash
       run: |
         # set/env/from-input

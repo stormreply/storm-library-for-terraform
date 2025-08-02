@@ -30,8 +30,8 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: set env vars from repo
-      id: set-env-vars-from-repo
+    - name: set env from repo
+      id: set-env-from-repo
       shell: bash
       env:
         TOKEN: ${{ inputs.token }}

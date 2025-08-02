@@ -1,0 +1,33 @@
+name: Set repo vars for AWS deployment
+
+inputs:
+  deployment_account:
+    required: true
+  deployment_region:
+    required: true
+  repository:
+    required: true
+  token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: Set deployment account
+      id: set-deployment-account
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.deployment_account }}
+        variable: DEPLOYMENT_ACCOUNT
+
+    - name: Set deployment region
+      id: set-deployment-region
+      uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        value: ${{ inputs.deployment_region }}
+        variable: DEPLOYMENT_REGION

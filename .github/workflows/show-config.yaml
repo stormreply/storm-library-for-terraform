@@ -20,12 +20,12 @@ jobs:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           yaml: |
-            access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
-            access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-            deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            access_domain: ${{ vars.ACCESS_DOMAIN }}
+            access_role: ${{ vars.ACCESS_ROLE }}
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
+            deployment_account: ${{ vars.DEPLOYMENT_ACCOUNT }}
+            deployment_region: ${{ vars.DEPLOYMENT_REGION }}
             environment: ${{ github.actor }}
-            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.actor }}
+            oidc_principal: ${{ vars.OIDC_PRINCIPAL || github.actor }}
             terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}

@@ -39,7 +39,8 @@ runs:
       with:
         deployment_name: ${{ steps.get-deployment-name.outputs.name }}
 
-    - name: set env vars from others
+    - name: set env from others
+      id: set-env-from-others
       shell: bash
       run: |
         # set/env/from-others

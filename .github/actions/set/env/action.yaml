@@ -12,14 +12,14 @@ runs:
   using: composite
   steps:
 
-    - name: set env vars from input
-      id: set-env-vars-from-input
+    - name: set env from input
+      id: set-env-from-input
       uses: stormreply/storm-library-for-terraform/.github/actions/set/env/from-input@main
       with:
         yaml: ${{ inputs.yaml }}
 
-    - name: set env vars from others
-      id: set-env-vars-from-others
+    - name: set env from others
+      id: set-env-from-others
       uses: stormreply/storm-library-for-terraform/.github/actions/set/env/from-others@main
       with:
         private_access_token: ${{ inputs.private_access_token }}

@@ -16,7 +16,7 @@ inputs:
     required: false
     default: true
 
-# TODO: rename prepare into terraform/checkout and maybe move set-aws-profiles out of it
+# TODO: maybe move set-aws-profiles somewhere else
 
 runs:
   using: composite
@@ -62,7 +62,7 @@ runs:
         backend_account: ${{ inputs.backend_account }}
         backend_region: ${{ inputs.backend_region }}
         backend_role: slt-0-storm-library-for-terraform-backend
-        deployment_account: ${{ inputs.backend_account }}
-        deployment_region: ${{ inputs.backend_region }}
+        deployment_account: ${{ inputs.backend_account }} # TODO: urgent
+        deployment_region: ${{ inputs.backend_region }} # TODO: urgent
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}
