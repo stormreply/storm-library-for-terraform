@@ -11,6 +11,11 @@ on:
         type: string
         required: false
         default: ""
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM:
+        required: false
+      TERRAFORM_PRIVATE_KEY:
+        required: false
 
 jobs:
 
@@ -18,20 +23,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # TODO: reduce Prepare here to sth leaner like checkout repo + rewrite git config
-      - name: Prepare
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/prepare@main
-        id: prepare
-        with:
-          backend_account: ${{ vars.BACKEND_ACCOUNT }}
-          backend_region: ${{ vars.BACKEND_REGION }}
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+      - name: Time
+        shell: bash
+        run: date
 
-      - name: run pre-commit
-        uses: stormreply/storm-library-for-terraform/.github/actions/pre-commit@main
-        id: pre-commit
+      - name: set environment vars
+        id: set-env
+        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+        with:
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            backend_account: ${{ vars.BACKEND_ACCOUNT }}
+            backend_region: ${{ vars.BACKEND_REGION }}
+            environment: ${{ github.actor }}
+            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+
+      - name: scan
+        uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
 
   plan:
     runs-on: ubuntu-latest
