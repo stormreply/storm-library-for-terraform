@@ -1,0 +1,18 @@
+name: Set environment from secrets
+
+inputs:
+  private_access_token:
+    required: false
+  terraform_private_key:
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: set environment from secrets
+      shell: bash
+      run: |
+        cat << EOF >> $GITHUB_ENV
+          PRIVATE_ACCESS_TOKEN=${{ inputs.private_access_token }}
+          TERRAFORM_PRIVATE_KEY=${{ inputs.terraform_private_key }}
+        EOF

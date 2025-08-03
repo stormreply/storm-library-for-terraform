@@ -1,4 +1,4 @@
-name: Set environment vars from input
+name: Set environment from inputs
 
 inputs:
   yaml:
@@ -7,8 +7,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: set env from input
-      id: set-env-from-input
+    - name: set environment from inputs
+      id: set-environment-from-inputs
       shell: bash
       run: |
         # set/env/from-input

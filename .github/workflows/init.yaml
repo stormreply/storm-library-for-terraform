@@ -36,9 +36,9 @@ jobs:
         shell: bash
         run: date
 
-      - name: set environment vars
-        id: set-env
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+      - name: set environment
+        id: set-environment
+        uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
@@ -46,10 +46,7 @@ jobs:
 
       - name: get access token
         id: get-access-token
-        uses: stormreply/storm-library-for-terraform/.github/actions/get/access-token@main
-        with:
-          access_domain: ${{ env.ACCESS_DOMAIN }}
-          backend_region: ${{ env.BACKEND_REGION }}
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/get-access-token@main
 
   init:
     needs: sso
@@ -57,12 +54,13 @@ jobs:
     steps:
 
       # TODO:
-      - name: set environment vars
-        id: set-env
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+      - name: set environment
+        id: set-environment
+        uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          json: ${{ toJson(vars) }}
           yaml: |
             access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
             access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
@@ -93,9 +91,6 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
           init: true
-
-      # - name: set init.tfvars
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main

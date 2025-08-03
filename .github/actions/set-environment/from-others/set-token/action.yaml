@@ -4,8 +4,6 @@ inputs:
 
   private_access_token:
     required: false
-  terraform_app_id:
-    required: false
   terraform_private_key:
     required: false
 
@@ -20,11 +18,11 @@ runs:
   steps:
 
     - name: Create Github app token
-      if: inputs.terraform_app_id != '' && inputs.terraform_app_id != 'NONE'
+      if: env.TERRAFORM_APP_ID != '' && env.TERRAFORM_APP_ID != 'NONE'
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
-        app-id: ${{ inputs.terraform_app_id }}
+        app-id: ${{ env.TERRAFORM_APP_ID }}
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
@@ -44,5 +42,7 @@ runs:
           echo "::error title=No valid token::could not get a token"
           exit 1
         else
-          echo "token=${token}" >> $GITHUB_OUTPUT
+          cat << EOF | tee -a $GITHUB_ENV
+          TOKEN=$token
+          EOF
         fi

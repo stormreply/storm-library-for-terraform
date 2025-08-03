@@ -1,4 +1,4 @@
-name: Set environment vars from others
+name: Set environment from others
 
 inputs:
   private_access_token:
@@ -13,25 +13,19 @@ runs:
     - name: get token
       if: inputs.private_access_token != '' || inputs.terraform_private_key != ''
       id: get-token
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/token@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-token@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
-        terraform_app_id: ${{ env.TERRAFORM_APP_ID }}
         terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: get backend bucket
       if: env.BACKEND_ACCOUNT != ''
       id: get-backend-bucket
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/backend-bucket@main
-      with:
-        backend_account: ${{ env.BACKEND_ACCOUNT }}
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-backend-bucket@main
 
     - name: get deployment name
       id: get-deployment-name
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/deployment-name@main
-      with:
-        environment: ${{ env.ENVIRONMENT }}
-        token: ${{ steps.get-token.outputs.token }}
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-deployment-name@main
 
     - name: get state file
       id: get-state-file
@@ -40,10 +34,10 @@ runs:
         deployment_name: ${{ steps.get-deployment-name.outputs.name }}
 
     - name: set env from others
-      id: set-env-from-others
+      id: set-environment-from-others
       shell: bash
       run: |
-        # set/env/from-others
+        # set-environment/from-others
 
         BACKEND_BUCKET="${{ steps.get-backend-bucket.outputs.backend_bucket}}"
         DEPLOYMENT_NAME="${{ steps.get-deployment-name.outputs.name }}"

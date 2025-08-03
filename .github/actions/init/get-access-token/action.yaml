@@ -1,11 +1,5 @@
 name: Get access token
 
-inputs:
-  access_domain:
-    required: true
-  backend_region:
-    required: false
-
 outputs:
   access_token:
     value:  ${{ steps.get-access-token.outputs.ACCESS_TOKEN }}
@@ -25,8 +19,8 @@ runs:
 
         cat << EOF >> ${HOME}/.aws/config
         [profile default]
-        sso_region=${{ inputs.backend_region }}
-        sso_start_url=https://${{ inputs.access_domain }}.awsapps.com/start/#
+        sso_region=${{ env.BACKEND_REGION }}
+        sso_start_url=https://${{ env.ACCESS_DOMAIN }}.awsapps.com/start/#
         EOF
 
         aws sso login --no-browser > login-output.txt &

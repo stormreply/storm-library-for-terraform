@@ -19,9 +19,9 @@ jobs:
         shell: bash
         run: date
 
-      - name: set environment vars
-        id: set-env
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
+      - name: set environment
+        id: set-environment
+        uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}

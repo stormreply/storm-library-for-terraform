@@ -1,15 +1,5 @@
 name: Get deployment name
 
-inputs:
-  environment:
-    required: true
-  token:
-    required: true
-
-outputs:
-  name:
-    value: ${{ steps.get-deployment-name.outputs.deployment_name }}
-
 runs:
   using: composite
   steps:
@@ -17,9 +7,9 @@ runs:
       id: get-deployment-name
       shell: bash
       run: |
-        # get/deployment-name
+        # set-environment/from-others/set-deployment-name
 
-        api="x-access-token:${{ inputs.token }}@api.github.com"
+        api="x-access-token:${{ env.TOKEN }}@api.github.com"
         path="repos/stormreply/storm-library-for-terraform/contents"
         file=catalog.yaml
 
@@ -59,11 +49,12 @@ runs:
         deployment_name="${catalog_reference}-${repo}"
 
         if [ "${catalog_id}" != "0" ] ; then
-          [ -n "${{ inputs.environment }}" ] \
-          && environment="${{ inputs.environment }}" \
+          [ -n "${{ env.ENVIRONMENT }}" ] \
+          && environment="${{ env.ENVIRONMENT }}" \
           || environment="${{ github.actor }}"
           deployment_name="${deployment_name}-${environment}"
         fi
 
-        echo "deployment_name=${deployment_name}" >> $GITHUB_OUTPUT
-        echo "name=${deployment_name}" >> $GITHUB_OUTPUT
+        echo << EOF | tee -a $GITHUB_ENV
+        DEPLOYMENT_NAME=$deployment_name
+        EOF

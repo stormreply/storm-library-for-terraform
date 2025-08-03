@@ -41,14 +41,14 @@ runs:
         file: providers.tf
 
     - name: set deployment-tags
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/deployment-tags@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/deployment-tags@main
       with:
         deployment_name: ${{ env.DEPLOYMENT_NAME }}
         environment: ${{ env.ENVIRONMENT }}
 
     - name: set init.tfvars
       if: inputs.init == 'true'
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/init-tfvars@main
 
     # TODO: check if can be moved to plan, apply, destroy
     - name: Set AWS profiles
