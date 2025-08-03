@@ -33,6 +33,7 @@ runs:
         [ "$catalog_id" = "null" ] \
           && echo "::error ::${repo} or its id are not known to the catalog" \
           && exit 1
+
         echo "catalog_id=$catalog_id" | tee -a >> $GITHUB_OUTPUT
 
     - name: set deployment name
@@ -40,7 +41,7 @@ runs:
       shell: bash
       run: |
         # set-environment/from-others/set-deployment-name
-        catalog_id=$${{ steps.get-catalog-id.outputs.catalog_id }}
+        catalog_id=${{ steps.get-catalog-id.outputs.catalog_id }}
         catalog_reference="slt-${catalog_id}"
         rm catalog.yaml
 
