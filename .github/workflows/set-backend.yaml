@@ -6,7 +6,6 @@ permissions:
 on:
   workflow_call:
     inputs:
-
       backend_account:
         type: string
         required: true
@@ -35,14 +34,19 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ inputs.backend_account }}
-            backend_region: ${{ inputs.backend_region }}
 
-      - name: save AWS backend vars in ${{github.repository}}.vars
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
+      - name: set backend account
+        id: set-backend-account
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
         with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
           repository: ${{ github.repository }}
-          token: ${{ env.TOKEN }}
+          value: ${{ env.BACKEND_ACCOUNT }}
+          variable: BACKEND_ACCOUNT
+
+      - name: set backend region
+        id: set-backend-region
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+        with:
+          repository: ${{ github.repository }}
+          value: ${{ env.BACKEND_REGION }}
+          variable: BACKEND_REGION

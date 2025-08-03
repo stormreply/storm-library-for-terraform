@@ -26,6 +26,3 @@ runs:
         )
 
         # cat $file
-
-        # TODO: countercheck/unify with get/deployment-name
-        # TODO: check content if containing error status

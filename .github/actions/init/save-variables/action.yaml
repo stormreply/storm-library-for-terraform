@@ -29,7 +29,7 @@ runs:
         value: ${{ env.OIDC_PRINCIPAL }}
         variable: OIDC_PRINCIPAL
 
-    - name: Set backend account
+    - name: set backend account
       id: set-backend-account
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
@@ -37,7 +37,7 @@ runs:
         value: ${{ env.BACKEND_ACCOUNT }}
         variable: BACKEND_ACCOUNT
 
-    - name: Set backend region
+    - name: set backend region
       id: set-backend-region
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
@@ -45,7 +45,7 @@ runs:
         value: ${{ env.BACKEND_REGION }}
         variable: BACKEND_REGION
 
-    - name: Set deployment account
+    - name: set deployment account
       id: set-deployment-account
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
@@ -53,7 +53,7 @@ runs:
         value: ${{ env.DEPLOYMENT_ACCOUNT }}
         variable: DEPLOYMENT_ACCOUNT
 
-    - name: Set deployment region
+    - name: set deployment region
       id: set-deployment-region
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
