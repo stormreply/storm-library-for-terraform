@@ -32,7 +32,10 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
 
       - name: Select
+        id: select
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/select@main
 
       - name: Execute
+        id: execute
+        if: steps.select.outputs.has_selected == 'true'
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/execute@main
