@@ -15,5 +15,5 @@ runs:
         # set-environment/from-secrets
         cat << EOF | tee -a $GITHUB_ENV
           PRIVATE_ACCESS_TOKEN=${{ inputs.private_access_token }}
-          TERRAFORM_PRIVATE_KEY="${{ inputs.terraform_private_key }}""
+          TERRAFORM_PRIVATE_KEY='${{ inputs.terraform_private_key }}'
         EOF
