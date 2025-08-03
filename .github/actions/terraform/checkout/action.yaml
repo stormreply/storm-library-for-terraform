@@ -46,7 +46,7 @@ runs:
         environment: ${{ env.ENVIRONMENT }}
 
     - name: set init.tfvars
-      if: inputs.init
+      if: inputs.init == 'true'
       uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
 
     # TODO: check if can be moved to plan, apply, destroy

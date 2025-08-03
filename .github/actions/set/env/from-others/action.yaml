@@ -57,9 +57,11 @@ runs:
 
         cat << EOF >> $GITHUB_ENV
         BACKEND_BUCKET=$BACKEND_BUCKET
+        BACKEND_ROLE=slt-0-storm-library-for-terraform-backend
         DEPLOYMENT_ACCOUNT=$DEPLOYMENT_ACCOUNT
         DEPLOYMENT_NAME=$DEPLOYMENT_NAME
         DEPLOYMENT_REGION=$DEPLOYMENT_REGION
+        DEPLOYMENT_ROLE=slt-0-storm-library-for-terraform-deployment
         STATE_FILE=$STATE_FILE
         TOKEN=$TOKEN
         EOF
