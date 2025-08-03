@@ -64,5 +64,5 @@ jobs:
       - name: Unschedule actions
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
         with:
-          actions: ".*"
+          action: ".*"
         continue-on-error: true
