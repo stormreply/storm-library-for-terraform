@@ -3,15 +3,6 @@ name: Unschedule actions
 inputs:
   action:
     required: true
-    default: ".*"
-  backend_bucket:
-    required: true
-  deployment_account:
-    required: true
-  deployment_name:
-    required: true
-  deployment_region:
-    required: true
 
 runs:
   using: composite
@@ -24,10 +15,10 @@ runs:
 
         action=${{ inputs.action }}
 
-        deployment_account=${{ inputs.deployment_account }}
-        backend_bucket=${{ inputs.backend_bucket }}
-        deployment_name="${{ inputs.deployment_name }}"
-        deployment_region=${{ inputs.deployment_region }}
+        deployment_account=${{ env.DEPLOYMENT_ACCOUNT }}
+        backend_bucket=${{ env.BACKEND_BUCKET }}
+        deployment_name=${{ env.DEPLOYMENT_NAME }}
+        deployment_region=${{ env.DEPLOYMENT_REGION }}
 
         timestamps=$(
           aws s3api list-objects-v2 \

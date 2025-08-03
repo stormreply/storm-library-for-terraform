@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_call:
     inputs:
-      wait:
+      delay:
         type: string
         required: false
         default: ""
@@ -24,7 +24,7 @@ on:
 jobs:
 
   schedule:
-    if: inputs.wait != ''
+    if: inputs.delay != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -34,25 +34,16 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ inputs.environment || github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
       - name: Schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: destroy
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.DEPLOYMENT_REGION }}
-          environment: ${{ env.ENVIRONMENT }}
-          wait: ${{ inputs.wait }}
+          delay: ${{ inputs.delay }}
 
   destroy:
-    if: inputs.wait == ''
+    if: inputs.delay == ''
     runs-on: ubuntu-latest
     steps:
 
@@ -62,33 +53,13 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ inputs.environment || github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
-        with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-
-      - name: Terraform destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/destroy@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
+      - name: destroy
+        uses: stormreply/storm-library-for-terraform/.github/actions/destroy@main
 
       - name: Unschedule actions
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
         with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.DEPLOYMENT_REGION }}
+          actions: ".*"
         continue-on-error: true

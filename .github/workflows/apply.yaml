@@ -11,7 +11,7 @@ on:
         type: string
         required: false
         default: 1 hour
-      wait:
+      delay:
         type: string
         required: false
         default: ""
@@ -32,7 +32,7 @@ on:
 jobs:
 
   schedule:
-    if: inputs.wait != ''
+    if: inputs.delay != ''
     runs-on: ubuntu-latest
     steps:
 
@@ -52,13 +52,8 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: apply
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.DEPLOYMENT_REGION }}
-          environment: ${{ env.ENVIRONMENT }}
           lifetime: ${{ inputs.lifetime }}
-          wait: ${{ inputs.wait }}
+          delay: ${{ inputs.delay }}
 
   check:
     runs-on: ubuntu-latest
@@ -91,21 +86,9 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+      - name: plan
+        uses: stormreply/storm-library-for-terraform/.github/actions/plan@main
         with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-
-      - name: terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}
 
   apply:
@@ -121,30 +104,13 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+      - name: apply
+        uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
         with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-
-      - name: terraform apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}
 
-      - name: Schedule destroy
+      - name: schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: destroy
-          backend_bucket: ${{ env.BACKEND_BUCKET   }}
-          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          deployment_region: ${{ env.DEPLOYMENT_REGION }}
-          environment: ${{ env.ENVIRONMENT }}
-          wait: ${{ inputs.lifetime }}
+          delay: ${{ inputs.lifetime }}

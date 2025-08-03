@@ -50,19 +50,7 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+      - name: plan
+        uses: stormreply/storm-library-for-terraform/.github/actions/plan@main
         with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-
-      - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}

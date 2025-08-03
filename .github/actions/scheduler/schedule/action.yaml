@@ -3,19 +3,9 @@ name: Schedule action
 inputs:
   action:
     required: true
-  backend_bucket:
-    required: true
-  deployment_account:
-    required: true
-  deployment_name:
-    required: true
-  deployment_region:
-    required: true
-  environment:
-    required: false
   lifetime:
     required: false
-  wait:
+  delay:
     required: true
 
 runs:
@@ -25,10 +15,7 @@ runs:
     - name: Unschedule actions
       uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
       with:
-        backend_bucket: ${{ inputs.backend_bucket }}
-        deployment_account: ${{ inputs.deployment_account }}
-        deployment_name: ${{ inputs.deployment_name }}
-        deployment_region: ${{ inputs.deployment_region }}
+        action: ".*"
       continue-on-error: true
 
     - name: Schedule action
@@ -37,15 +24,15 @@ runs:
         # scheduler/schedule
         action=${{ inputs.action }}
 
-        deployment_account=${{ inputs.deployment_account }}
-        backend_bucket=${{ inputs.backend_bucket }}
-        deployment_name="${{ inputs.deployment_name }}"
-        deployment_region=${{ inputs.deployment_region }}
-        environment=${{ inputs.environment || github.actor }}
+        deployment_account=${{ env.DEPLOYMENT_ACCOUNT }}
+        backend_bucket=${{ env.BACKEND_BUCKET }}
+        deployment_name="${{ env.DEPLOYMENT_NAME }}"
+        deployment_region=${{ env.DEPLOYMENT_REGION }}
+        environment=${{ env.ENVIRONMENT || github.actor }}
         lifetime="${{ inputs.lifetime }}"
-        wait="${{ inputs.wait }}"
+        delay="${{ inputs.delay }}"
 
-        time=$(date -d "now + ${wait}" +"%Y%m%d-%H%M%S")
+        time=$(date -d "now + ${delay}" +"%Y%m%d-%H%M%S")
         timestamp="${time}-${action}-${deployment_account}-${deployment_region}-${deployment_name}"
 
         cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${timestamp}

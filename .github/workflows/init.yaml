@@ -40,9 +40,9 @@ jobs:
         id: set-env
         uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
         with:
-          yaml: |
-            access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          json: "${{ toJson(vars) }}"
 
       - name: get access token
         id: get-access-token
@@ -56,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # TODO:
       - name: set environment vars
         id: set-env
         uses: stormreply/storm-library-for-terraform/.github/actions/set/env@main
