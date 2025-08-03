@@ -3,6 +3,7 @@ name: Checkout Code
 inputs:
 
   init: # have we been called from the init workflow?
+    type: boolean
     required: false
     default: false
 
