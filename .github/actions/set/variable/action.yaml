@@ -3,8 +3,6 @@ name: Set repository variable
 inputs:
   repository:
     required: true
-  token:
-    required: true
   value:
     required: true
   variable:
@@ -16,7 +14,7 @@ runs:
     - name: Set repository variable
       shell: bash
       env:
-        TOKEN: ${{ inputs.token }}
+        TOKEN: ${{ env.TOKEN }}
         VARIABLE: ${{ inputs.variable }}
         VALUE: ${{ inputs.value }}
         REPO: ${{ inputs.repository }}

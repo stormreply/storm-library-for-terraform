@@ -1,70 +1,34 @@
 name: Init
 
 inputs:
-  access_domain:
-    required: true
-  access_role:
-    required: true
   access_token:
     required: true
-  backend_account:
-    required: true
-  backend_bucket:
-    required: true
-  backend_region:
-    required: true
-  deployment_account:
-    required: true
-  deployment_region:
-    required: true
-  oidc_principal:
-    required: true
   repository:
-    required: true
-  token:
     required: true
 
 runs:
   using: composite
   steps:
 
-    - name: set AWS backend credentials
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/credentials@main
+    - name: set backend credentials
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/set-backend-credentials@main
       with:
-        access_role: ${{ inputs.access_role }}
         access_token: ${{ inputs.access_token }}
-        backend_account: ${{ inputs.backend_account }}
-        backend_region: ${{ inputs.backend_region }}
 
-    - name: create AWS backend bucket
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/bucket@main
-      with:
-        backend_bucket: ${{ inputs.backend_bucket }}
-        backend_region: ${{ inputs.backend_region }}
+    - name: create backend bucket
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/create-backend-bucket@main
 
     - name: save AWS access vars in ${{github.repository}}.vars
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-access@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-aws-access-vars@main
       with:
-        access_domain: ${{ inputs.access_domain }}
-        access_role: ${{ inputs.access_role }}
-        backend_account: ${{ inputs.backend_account }}
-        backend_region: ${{ inputs.backend_region }}
-        oidc_principal: ${{ inputs.oidc_principal }}
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}
 
     - name: save AWS backend vars in ${{github.repository}}.vars
       uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-backend@main
       with:
-        backend_account: ${{ inputs.backend_account }}
-        backend_region: ${{ inputs.backend_region }}
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}
 
     - name: save AWS deployment vars in ${{github.repository}}.vars
       uses: stormreply/storm-library-for-terraform/.github/actions/set/vars/aws-deployment@main
       with:
-        deployment_account: ${{ inputs.deployment_account }}
-        deployment_region: ${{ inputs.deployment_region }}
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}

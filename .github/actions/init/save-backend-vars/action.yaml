@@ -1,13 +1,7 @@
-name: Set repo vars for AWS backend
+name: Save backend vars
 
 inputs:
-  backend_account:
-    required: true
-  backend_region:
-    required: true
   repository:
-    required: true
-  token:
     required: true
 
 runs:
@@ -19,7 +13,6 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
         value: ${{ inputs.backend_account }}
         variable: BACKEND_ACCOUNT
 
@@ -28,6 +21,5 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
         value: ${{ inputs.backend_region }}
         variable: BACKEND_REGION

@@ -53,7 +53,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # TODO:
       - name: set environment
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
@@ -70,40 +69,30 @@ jobs:
             deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
             environment: ${{ github.actor }}
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID }}
 
       - name: init
         uses: stormreply/storm-library-for-terraform/.github/actions/init@main
         with:
-          access_domain: ${{ env.ACCESS_DOMAIN }}
-          access_role: ${{ env.ACCESS_ROLE }}
           access_token: ${{ needs.sso.outputs.access_token }}
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_account: ${{ env.DEPLOYMENT_ACCOUNT }}
-          deployment_region: ${{ env.DEPLOYMENT_REGION }}
-          oidc_principal: ${{ env.OIDC_PRINCIPAL }}
           repository: ${{ github.repository }}
-          token: ${{ env.TOKEN }}
 
-      - name: checkout code
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
-        with:
-          init: true
+      # - name: checkout code
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+      #   with:
+      #     init: true
 
-      - name: Terraform plan
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
-          var_file: init.tfvars
+      # - name: Terraform plan
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
+      #   with:
+      #     backend_bucket: ${{ env.BACKEND_BUCKET }}
+      #     backend_region: ${{ env.BACKEND_REGION }}
+      #     state_file: ${{ env.STATE_FILE }}
+      #     var_file: init.tfvars
 
-      - name: Terraform apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
-          var_file: init.tfvars
+      # - name: Terraform apply
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
+      #   with:
+      #     backend_bucket: ${{ env.BACKEND_BUCKET }}
+      #     backend_region: ${{ env.BACKEND_REGION }}
+      #     state_file: ${{ env.STATE_FILE }}
+      #     var_file: init.tfvars

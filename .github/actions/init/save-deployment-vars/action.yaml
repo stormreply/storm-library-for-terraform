@@ -1,13 +1,7 @@
-name: Set repo vars for AWS deployment
+name: Save deployment vars
 
 inputs:
-  deployment_account:
-    required: true
-  deployment_region:
-    required: true
   repository:
-    required: true
-  token:
     required: true
 
 runs:
@@ -19,8 +13,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
-        value: ${{ inputs.deployment_account }}
+        value: ${{ env.DEPLOYMENT_ACCOUNT }}
         variable: DEPLOYMENT_ACCOUNT
 
     - name: Set deployment region
@@ -28,6 +21,5 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
-        value: ${{ inputs.deployment_region }}
+        value: ${{ env.DEPLOYMENT_REGION }}
         variable: DEPLOYMENT_REGION

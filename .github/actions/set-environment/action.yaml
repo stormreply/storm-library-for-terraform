@@ -31,7 +31,7 @@ runs:
     - name: set environment from inputs
       if: inputs.yaml != ''
       id: set-environment-from-inputs
-      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-vars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-inputs@main
       with:
         yaml: ${{ inputs.yaml }}
 

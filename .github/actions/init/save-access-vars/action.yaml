@@ -1,19 +1,7 @@
-name: Set repo vars for AWS access
+name: Save access vars
 
 inputs:
-  access_domain:
-    required: true
-  access_role:
-    required: true
-  backend_account:
-    required: true
-  backend_region:
-    required: true
-  oidc_principal:
-    required: true
   repository:
-    required: true
-  token:
     required: true
 
 runs:
@@ -24,22 +12,19 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}
-        value: ${{ inputs.access_domain }}
+        value: ${{ env.ACCESS_DOMAIN }}
         variable: ACCESS_DOMAIN
 
     - name: set AWS access role
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}
-        value: ${{ inputs.access_role }}
+        value: ${{ env.ACCESS_ROLE }}
         variable: ACCESS_ROLE
 
     - name: set AWS access principal
       uses: stormreply/storm-library-for-terraform/.github/actions/set/variable@main
       with:
         repository: ${{ github.repository }}
-        token: ${{ inputs.token }}
-        value: ${{ inputs.oidc_principal }}
+        value: ${{ env.OIDC_PRINCIPAL }}
         variable: OIDC_PRINCIPAL

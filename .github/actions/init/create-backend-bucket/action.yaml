@@ -1,0 +1,16 @@
+name: Create backend bucket
+
+runs:
+  using: composite
+  steps:
+
+    - name: create backend bucket
+      shell: bash
+      run: |
+        # init/create-backend-bucket
+        backend_bucket=${{ env.BACKEND_BUCKET }}
+        aws s3api create-bucket \
+          --bucket ${backend_bucket} \
+          --region ${{ env.BACKEND_REGION }} \
+          --create-bucket-configuration LocationConstraint=${{ env.BACKEND_REGION }} \
+        || true

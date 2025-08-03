@@ -54,6 +54,5 @@ runs:
         fi
 
         cat << EOF | tee -a $GITHUB_ENV
-        NAME=$name
         DEPLOYMENT_NAME=$name
         EOF
