@@ -49,7 +49,6 @@ jobs:
           json: "${{ toJson(vars) }}"
 
       - name: Set backend profile in AWS config
-        # we need to assume role in order to aws s3api
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
 
       - name: Schedule apply
@@ -79,6 +78,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
 
   plan:
+    if: inputs.delay == ''
     runs-on: ubuntu-latest
     steps:
 

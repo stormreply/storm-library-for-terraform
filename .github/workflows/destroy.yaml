@@ -36,6 +36,9 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
+      - name: Set backend profile in AWS config
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
+
       - name: Schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:

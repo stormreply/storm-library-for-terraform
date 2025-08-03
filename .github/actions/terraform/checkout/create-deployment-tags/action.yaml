@@ -47,5 +47,5 @@ runs:
         }
         EOF
 
-        echo "deployment.tf"
-        cat deployment.tf
+        # echo "deployment.tf"
+        # cat deployment.tf
