@@ -40,15 +40,15 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main
 
     - name: show environment vars
-      id: show-vars
+      id: show-environment-vars
       shell: bash
       run: |
-        # show-vars
+        # show-environment-vars
 
         pat="${{ inputs.private_access_token }}"
         tpk="${{ inputs.terraform_private_key }}"
 
-        cat << EOF | tee -a >> $GITHUB_STEP_SUMMARY
+        cat << EOF >> $GITHUB_STEP_SUMMARY
 
         |                               |                    |
         |-------------------------------|--------------------|
