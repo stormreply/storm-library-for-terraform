@@ -33,23 +33,23 @@ runs:
       id: set-backend-account
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
-        repository: ${{ inputs.repository }}
-        value: ${{ inputs.backend_account }}
+        repository: ${{ github.repository }}
+        value: ${{ env.BACKEND_ACCOUNT }}
         variable: BACKEND_ACCOUNT
 
     - name: Set backend region
       id: set-backend-region
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
-        repository: ${{ inputs.repository }}
-        value: ${{ inputs.backend_region }}
+        repository: ${{ github.repository }}
+        value: ${{ env.BACKEND_REGION }}
         variable: BACKEND_REGION
 
     - name: Set deployment account
       id: set-deployment-account
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
-        repository: ${{ inputs.repository }}
+        repository: ${{ github.repository }}
         value: ${{ env.DEPLOYMENT_ACCOUNT }}
         variable: DEPLOYMENT_ACCOUNT
 
@@ -57,6 +57,6 @@ runs:
       id: set-deployment-region
       uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
       with:
-        repository: ${{ inputs.repository }}
+        repository: ${{ github.repository }}
         value: ${{ env.DEPLOYMENT_REGION }}
         variable: DEPLOYMENT_REGION
