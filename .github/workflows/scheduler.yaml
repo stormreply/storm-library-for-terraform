@@ -25,7 +25,7 @@ jobs:
 
       - name: gh auth login
         # we need gh auth in order to run a gh workflow
-        run: echo "${{ steps.get-token.outputs.token }}" | gh auth login --with-token
+        run: echo "${{ env.TOKEN }}" | gh auth login --with-token
 
       - name: Set backend profile in AWS config
         # we need to assume role in order to aws s3api
