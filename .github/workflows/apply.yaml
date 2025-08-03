@@ -46,11 +46,7 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
       - name: Schedule apply
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
@@ -78,11 +74,7 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
       - name: scan
         uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
@@ -97,11 +89,7 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
       - name: checkout code
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
@@ -131,11 +119,7 @@ jobs:
         with:
           private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          yaml: |
-            backend_account: ${{ vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ vars.BACKEND_REGION }}
-            environment: ${{ github.actor }}
-            terraform_app_id: ${{ vars.TERRAFORM_APP_ID || 'NONE' }}
+          json: "${{ toJson(vars) }}"
 
       - name: checkout code
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
