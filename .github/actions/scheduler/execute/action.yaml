@@ -1,9 +1,5 @@
 name: Execute
 
-inputs:
-  backend_bucket:
-    required: true
-
 runs:
   using: composite
   steps:
@@ -26,7 +22,7 @@ runs:
           repo=${f%-*}
           environment=${f##$repo-}
 
-          aws s3 cp ${timestamp} s3://${{ inputs.backend_bucket }}/schedule/$file /tmp
+          aws s3 cp ${timestamp} s3://${{ env.BACKEND_BUCKET }}/schedule/$file /tmp
 
           cat << EOF
           EXECUTE

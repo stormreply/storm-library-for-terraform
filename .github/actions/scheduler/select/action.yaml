@@ -1,9 +1,5 @@
 name: Select
 
-inputs:
-  backend_bucket:
-    required: true
-
 runs:
   using: composite
   steps:
@@ -19,7 +15,7 @@ runs:
 
         timestamps=$(
           aws s3api list-objects-v2 \
-            --bucket ${{ inputs.backend_bucket }} \
+            --bucket ${{ env.BACKEND_BUCKET }} \
             --prefix schedule \
             --query 'Contents[].Key'
         )

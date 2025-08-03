@@ -33,8 +33,12 @@ runs:
       if: inputs.init == 'true'
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-init-tfvars@main
 
-    # TODO: check if can be moved to plan, apply, destroy
-    - name: Set AWS profiles
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles@main
+    - name: Set backend profile in AWS config
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
+      with:
+        use_oidc: ${{ inputs.init != 'true' }} # use oidc if we are not in the init workflow
+
+    - name: Set deployment profile in AWS config
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-deployment-profile@main
       with:
         use_oidc: ${{ inputs.init != 'true' }} # use oidc if we are not in the init workflow

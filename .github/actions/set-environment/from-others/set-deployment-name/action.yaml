@@ -3,24 +3,17 @@ name: Set deployment name
 runs:
   using: composite
   steps:
-    - name: set deployment name
-      id: set-deployment-name
+
+    - name: download catalog.yaml
+      uses: stormreply/storm-library-for-terraform/.github/actions/download@main
+      with:
+        file: catalog.yaml
+
+    - name: get catalog id
+      id: get-catalog-id
       shell: bash
       run: |
-        # set-environment/from-others/set-deployment-name
-
-        api="x-access-token:${{ env.TOKEN }}@api.github.com"
-        path="repos/stormreply/storm-library-for-terraform/contents"
-        file=catalog.yaml
-
-        output=$(
-          curl \
-            -o "${file}" \
-            -H "Accept: application/vnd.github.raw" \
-            "https://${api}/${path}/${file}" \
-          2> /dev/null
-        )
-
+        # set-environment/from-others/get-catalog-id
         status=$(
           cat catalog.yaml | jq '( .status // empty )' 2> /dev/null \
           || true
@@ -40,7 +33,14 @@ runs:
         [ "$catalog_id" = "null" ] \
           && echo "::error ::${repo} or its id are not known to the catalog" \
           && exit 1
-        echo "slt catalog id for $repo: $catalog_id"
+        echo "catalog_id=$catalog_id" | tee -a >> $GITHUB_OUTPUT
+
+    - name: set deployment name
+      id: set-deployment-name
+      shell: bash
+      run: |
+        # set-environment/from-others/set-deployment-name
+        catalog_id=$${{ steps.get-catalog-id.outputs.catalog_id }}
         catalog_reference="slt-${catalog_id}"
         rm catalog.yaml
 
