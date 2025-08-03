@@ -17,7 +17,7 @@ runs:
   using: composite
   steps:
 
-    - name: Create Github app token
+    - name: create github app token
       if: env.TERRAFORM_APP_ID != '' && env.TERRAFORM_APP_ID != 'NONE'
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
@@ -26,11 +26,11 @@ runs:
         private-key: ${{ inputs.terraform_private_key }}
         owner: ${{ github.repository_owner }}
 
-    - name: Get Token
-      id: get-token
+    - name: set Token
+      id: set-token
       shell: bash
       run: |
-        # get/token
+        # set-environment/from-others/set-token
         type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
         if [ -z "${token}" ] ; then
@@ -41,8 +41,7 @@ runs:
         if [ ${#token} -eq 0 ] ; then
           echo "::error title=No valid token::could not get a token"
           exit 1
-        else
-          cat << EOF | tee -a $GITHUB_ENV
-          TOKEN=$token
-          EOF
         fi
+        cat << EOF | tee -a $GITHUB_ENV
+        TOKEN=$token
+        EOF

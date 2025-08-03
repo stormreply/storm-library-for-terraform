@@ -12,6 +12,7 @@ runs:
     - name: set environment from secrets
       shell: bash
       run: |
+        # set-environment/from-secrets
         cat << EOF >> $GITHUB_ENV
           PRIVATE_ACCESS_TOKEN=${{ inputs.private_access_token }}
           TERRAFORM_PRIVATE_KEY=${{ inputs.terraform_private_key }}

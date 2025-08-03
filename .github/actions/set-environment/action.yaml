@@ -14,6 +14,10 @@ runs:
   using: composite
   steps:
 
+    - name: set environment from secrets
+      id: set-environment-from-secrets
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-secrets@main
+
     - name: set environment from vars
       id: set-environment-from-vars
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-vars@main

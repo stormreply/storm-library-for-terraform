@@ -10,17 +10,17 @@ runs:
   using: composite
   steps:
 
-    - name: get token
+    - name: set token
       if: inputs.private_access_token != '' || inputs.terraform_private_key != ''
-      id: get-token
+      id: set-token
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-token@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
         terraform_private_key: ${{ inputs.terraform_private_key }}
 
-    - name: get backend bucket
+    - name: set backend bucket
       if: env.BACKEND_ACCOUNT != ''
-      id: get-backend-bucket
+      id: set-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-backend-bucket@main
 
     - name: get deployment name
