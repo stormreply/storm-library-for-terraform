@@ -38,8 +38,6 @@ runs:
         DEPLOYMENT_REGION=${{ env.BACKEND_REGION }}
         # TEMPORARILY
 
-        DEPLOYMENT_NAME=${{ env.NAME }}
-
         cat << EOF >> $GITHUB_ENV
         BACKEND_ROLE=slt-0-storm-library-for-terraform-backend
         DEPLOYMENT_ACCOUNT=$DEPLOYMENT_ACCOUNT

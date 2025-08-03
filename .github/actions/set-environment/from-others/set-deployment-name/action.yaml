@@ -61,5 +61,3 @@ runs:
         cat << EOF | tee -a $GITHUB_ENV
         DEPLOYMENT_NAME=$name
         EOF
-
-        echo "DEPLOYMENT_NAME=$name" >> $GITHUB_ENV
