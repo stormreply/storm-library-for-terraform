@@ -19,7 +19,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-secrets@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
-        terraform_private_key: ${{ inputs.terraform_private_key }}
+        terraform_private_key: "${{ inputs.terraform_private_key }}"
 
     - name: set environment from vars
       id: set-environment-from-vars
