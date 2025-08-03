@@ -5,26 +5,18 @@ inputs:
     required: false
   terraform_private_key:
     required: false
-  yaml:
-    required: false
-  vars_json:
+  json:
     required: false
 
 runs:
   using: composite
   steps:
 
-    # - name: set env from input
-    #   id: set-env-from-input
-    #   uses: stormreply/storm-library-for-terraform/.github/actions/set/env/from-input@main
-    #   with:
-    #     yaml: ${{ inputs.yaml }}
-
     - name: get-environment
       id: get-environment
       uses: stormreply/storm-library-for-terraform/.github/actions/get/environment@main
       with:
-        vars_json: ${{ inputs.vars_json }}
+        json: ${{ inputs.json }}
 
     - name: set env from others
       id: set-env-from-others
