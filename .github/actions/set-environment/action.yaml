@@ -16,20 +16,20 @@ runs:
 
     - name: set environment from vars
       id: set-environment-from-vars
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/environment/from-vars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-vars@main
       with:
         json: ${{ inputs.json }}
 
     - name: set environment from inputs
       if: inputs.yaml != ''
       id: set-environment-from-inputs
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/environment/from-vars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-vars@main
       with:
         yaml: ${{ inputs.yaml }}
 
     - name: set environment from others
       id: set-environment-from-others
-      uses: stormreply/storm-library-for-terraform/.github/actions/set/environment/from-others@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main
       with:
         private_access_token: ${{ inputs.private_access_token }}
         terraform_private_key: ${{ inputs.terraform_private_key }}
