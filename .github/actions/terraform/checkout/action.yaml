@@ -13,42 +13,25 @@ runs:
   using: composite
   steps:
 
-    - name: Checkout repository
+    - name: checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ env.TOKEN }}
 
-    # NOTE: important to position *behind* checkout
-    - name: Git config rewrite URLs
-      shell: bash
-      run: |
-        # Git config rewrite URLs
-        TOKEN=${{ env.TOKEN }}
-        git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
-        # git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "git@github.com:"
+    - name: rewrite URLs
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/rewrite-urls@main
 
-        # TODO: show only in debug mode
-        # echo "global .gitconfig:"
-        # cat ~/.gitconfig
-        # echo "local .git/config:"
-        # cat .git/config
-      # TODO: move into action
-
-    - name: Download providers.tf
+    - name: download providers.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/download@main
       with:
-        token: ${{ env.TOKEN }}
         file: providers.tf
 
-    - name: set deployment-tags
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/deployment-tags@main
-      with:
-        deployment_name: ${{ env.DEPLOYMENT_NAME }}
-        environment: ${{ env.ENVIRONMENT }}
+    - name: create deployment-tags
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-deployment-tags@main
 
-    - name: set init.tfvars
+    - name: create init.tfvars
       if: inputs.init == 'true'
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/init-tfvars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-init-tfvars@main
 
     # TODO: check if can be moved to plan, apply, destroy
     - name: Set AWS profiles

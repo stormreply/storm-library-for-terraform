@@ -70,24 +70,28 @@ jobs:
             environment: ${{ github.actor }}
             oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
 
-      - name: init
-        uses: stormreply/storm-library-for-terraform/.github/actions/init@main
+      - name: set backend credentials
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/set-backend-credentials@main
         with:
           access_token: ${{ needs.sso.outputs.access_token }}
+
+      - name: create backend bucket
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/create-backend-bucket@main
+
+      - name: save variables in ${{github.repository}}.vars
+        uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variables@main
+        with:
           repository: ${{ github.repository }}
 
-      # - name: checkout code
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
-      #   with:
-      #     init: true
+      - name: checkout code
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
+        with:
+          init: true
 
-      # - name: Terraform plan
-      #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
-      #   with:
-      #     backend_bucket: ${{ env.BACKEND_BUCKET }}
-      #     backend_region: ${{ env.BACKEND_REGION }}
-      #     state_file: ${{ env.STATE_FILE }}
-      #     var_file: init.tfvars
+      - name: Terraform plan
+        uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
+        with:
+          var_file: init.tfvars
 
       # - name: Terraform apply
       #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main

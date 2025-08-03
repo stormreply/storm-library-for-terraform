@@ -1,15 +1,5 @@
 name: Terraform apply
 
-inputs:
-  backend_bucket:
-    required: true
-  backend_region:
-    required: true
-  state_file:
-    required: true
-  var_file:
-    required: true
-
 runs:
   using: composite
   steps:
@@ -26,10 +16,10 @@ runs:
       shell: bash
       run: |
         terraform init \
-          -backend-config="bucket=${{ inputs.backend_bucket }}" \
+          -backend-config="bucket=${{ env.BACKEND_BUCKET }}" \
           -backend-config="profile=backend" \
-          -backend-config="key=${{ github.repository }}/${{ inputs.state_file }}" \
-          -backend-config="region=${{ inputs.backend_region }}" \
+          -backend-config="key=${{ github.repository }}/${{ env.STATE_FILE }}" \
+          -backend-config="region=${{ env.BACKEND_REGION }}" \
           -backend-config="use_lockfile=true"
 
     - name: Terraform apply

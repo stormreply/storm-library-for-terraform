@@ -3,8 +3,6 @@ name: Download File
 inputs:
   file:
     required: true
-  token:
-    required: true
 
 runs:
   using: composite
@@ -15,7 +13,7 @@ runs:
       run: |
         # download ${{ inputs.file }}
 
-        api="x-access-token:${{ inputs.token }}@api.github.com"
+        api="x-access-token:${{ env.TOKEN }}@api.github.com"
         path="repos/stormreply/storm-library-for-terraform/contents"
         file=${{ inputs.file }}
 

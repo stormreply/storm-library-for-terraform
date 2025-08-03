@@ -1,4 +1,4 @@
-name: Set repository variable
+name: Save variable
 
 inputs:
   repository:

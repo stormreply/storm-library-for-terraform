@@ -14,7 +14,4 @@ runs:
       - name: terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main
         with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
           var_file: ${{ inputs.var_file }}

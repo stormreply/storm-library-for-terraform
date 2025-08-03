@@ -1,0 +1,62 @@
+name: Save variables
+
+inputs:
+  repository:
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: set AWS access domain
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ github.repository }}
+        value: ${{ env.ACCESS_DOMAIN }}
+        variable: ACCESS_DOMAIN
+
+    - name: set AWS access role
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ github.repository }}
+        value: ${{ env.ACCESS_ROLE }}
+        variable: ACCESS_ROLE
+
+    - name: set AWS access principal
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ github.repository }}
+        value: ${{ env.OIDC_PRINCIPAL }}
+        variable: OIDC_PRINCIPAL
+
+    - name: Set backend account
+      id: set-backend-account
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        value: ${{ inputs.backend_account }}
+        variable: BACKEND_ACCOUNT
+
+    - name: Set backend region
+      id: set-backend-region
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        value: ${{ inputs.backend_region }}
+        variable: BACKEND_REGION
+
+    - name: Set deployment account
+      id: set-deployment-account
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        value: ${{ env.DEPLOYMENT_ACCOUNT }}
+        variable: DEPLOYMENT_ACCOUNT
+
+    - name: Set deployment region
+      id: set-deployment-region
+      uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
+      with:
+        repository: ${{ inputs.repository }}
+        value: ${{ env.DEPLOYMENT_REGION }}
+        variable: DEPLOYMENT_REGION

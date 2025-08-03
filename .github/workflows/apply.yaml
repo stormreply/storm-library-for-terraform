@@ -106,8 +106,6 @@ jobs:
 
       - name: apply
         uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
-        with:
-          var_file: ${{ inputs.var_file }}
 
       - name: schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main

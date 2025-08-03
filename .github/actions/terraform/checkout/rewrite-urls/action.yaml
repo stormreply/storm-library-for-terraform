@@ -1,0 +1,19 @@
+name: Rewrite URLs
+
+runs:
+  using: composite
+  steps:
+
+    - name: rewrite URLs
+      shell: bash
+      run: |
+        # checkout/rewrite-urls
+        TOKEN=${{ env.TOKEN }}
+        git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
+        # git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "git@github.com:"
+
+        # TODO: show only in debug mode
+        # echo "global .gitconfig:"
+        # cat ~/.gitconfig
+        # echo "local .git/config:"
+        # cat .git/config

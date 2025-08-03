@@ -1,11 +1,5 @@
 name: Set deployment tags
 
-inputs:
-  deployment_name:
-    required: true
-  environment:
-    required: true
-
 runs:
   using: composite
   steps:
@@ -16,10 +10,10 @@ runs:
         # set/deployment-tags
         repository=${{ github.repository }}
         repo=${repository##*/}
-        deployment_name=${{ inputs.deployment_name }}
+        deployment_name=${{ env.DEPLOYMENT_NAME }}
 
-        [ -n "${{ inputs.environment }}" ] \
-        && environment="${{ inputs.environment }}" \
+        [ -n "${{ env.ENVIRONMENT }}" ] \
+        && environment="${{ env.ENVIRONMENT }}" \
         || environment="${{ github.actor }}"
 
         cat << EOF > deployment.tf
