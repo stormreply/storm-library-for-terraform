@@ -1,10 +1,10 @@
-name: Get deployment name
+name: Set deployment name
 
 runs:
   using: composite
   steps:
-    - name: Get deployment name
-      id: get-deployment-name
+    - name: set deployment name
+      id: set-deployment-name
       shell: bash
       run: |
         # set-environment/from-others/set-deployment-name
@@ -20,8 +20,6 @@ runs:
             "https://${api}/${path}/${file}" \
           2> /dev/null
         )
-
-        # TODO: split
 
         status=$(
           cat catalog.yaml | jq '( .status // empty )' 2> /dev/null \
@@ -54,7 +52,7 @@ runs:
           || environment="${{ github.actor }}"
           deployment_name="${deployment_name}-${environment}"
         fi
-
+        echo "deployment_name=$deployment_name"
         echo << EOF | tee -a $GITHUB_ENV
         DEPLOYMENT_NAME=$deployment_name
         EOF

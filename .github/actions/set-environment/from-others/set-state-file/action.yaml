@@ -1,0 +1,13 @@
+name: Set state file
+
+runs:
+  using: composite
+  steps:
+    - name: set state file
+      id: set-state-file
+      shell: bash
+      run: |
+        # set-environment/from-others/set-state-file
+        cat << EOF | tee -a $GITHUB_ENV
+        STATE_FILE="${{ env.DEPLOYMENT_NAME }}.tfstate"
+        EOF

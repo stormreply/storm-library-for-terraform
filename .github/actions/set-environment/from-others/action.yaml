@@ -20,9 +20,7 @@ runs:
 
     - name: set state file
       id: set-state-file
-      uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main
-      with:
-        deployment_name: ${{ steps.get-deployment-name.outputs.name }}
+      uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-state-file@main
 
     - name: set env from others
       id: set-environment-from-others
