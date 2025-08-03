@@ -37,9 +37,6 @@ runs:
     - name: set environment from others
       id: set-environment-from-others
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main
-      with:
-        private_access_token: ${{ inputs.private_access_token }}
-        terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: show environment vars
       id: show-vars

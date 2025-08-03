@@ -1,34 +1,25 @@
 name: Set environment from others
 
-inputs:
-  private_access_token:
-    required: false
-  terraform_private_key:
-    required: false
-
 runs:
   using: composite
   steps:
 
     - name: set token
-      if: inputs.private_access_token != '' || inputs.terraform_private_key != ''
+      if: env.PRIVATE_ACCESS_TOKEN != '' || env.TERRAFORM_PRIVATE_KEY != ''
       id: set-token
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-token@main
-      with:
-        private_access_token: ${{ inputs.private_access_token }}
-        terraform_private_key: ${{ inputs.terraform_private_key }}
 
     - name: set backend bucket
       if: env.BACKEND_ACCOUNT != ''
       id: set-backend-bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-backend-bucket@main
 
-    - name: get deployment name
-      id: get-deployment-name
+    - name: set deployment name
+      id: set-deployment-name
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-deployment-name@main
 
-    - name: get state file
-      id: get-state-file
+    - name: set state file
+      id: set-state-file
       uses: stormreply/storm-library-for-terraform/.github/actions/get/state-file@main
       with:
         deployment_name: ${{ steps.get-deployment-name.outputs.name }}

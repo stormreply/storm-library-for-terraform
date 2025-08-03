@@ -1,17 +1,4 @@
-name: Get token
-
-inputs:
-
-  private_access_token:
-    required: false
-  terraform_private_key:
-    required: false
-
-
-outputs:
-  token:
-    description: Token to use for GitHub calls
-    value: ${{ steps.get-token.outputs.token}}
+name: Set token
 
 runs:
   using: composite
@@ -23,7 +10,7 @@ runs:
       uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ env.TERRAFORM_APP_ID }}
-        private-key: ${{ inputs.terraform_private_key }}
+        private-key: ${{ env.TERRAFORM_PRIVATE_KEY }}
         owner: ${{ github.repository_owner }}
 
     - name: set Token
@@ -34,7 +21,7 @@ runs:
         type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
         if [ -z "${token}" ] ; then
-          token=${{ inputs.private_access_token }}
+          token=${{ env.PRIVATE_ACCESS_TOKEN }}
           type="Personal Access Token"
         fi
         echo "::notice ::using your $type as token"
