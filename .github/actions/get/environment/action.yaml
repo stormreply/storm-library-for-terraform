@@ -15,6 +15,7 @@ runs:
         # get/environment-from-vars
         echo "${{ inputs.vars_json }}" >> vars.json
         cat vars.json
+        cat vars.json | json5 -c
         # cat vars.json | jq -r 'to_entries | map("export \(.key | ascii_upcase)=\(.value)") | .[]' \
         # >> vars.json
         # cat vars.json | tee -a $GITHUB_ENV
