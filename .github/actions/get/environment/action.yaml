@@ -14,56 +14,5 @@ runs:
       run: |
         # get/environment-from-vars
         echo '${{ inputs.vars_json }}' \
-        | jq -r 'to_entries | map("export \(.key | ascii_upcase)=\(.value)") | .[]' \
+        | jq -r 'to_entries | map("\(.key)=\(.value)") | .[]' \
         | tee -a $GITHUB_ENV
-
-    # - name: set env from input
-    #   id: set-env-from-input
-    #   uses: stormreply/storm-library-for-terraform/.github/actions/set/env/from-input@main
-    #   with:
-    #     yaml: ${{ inputs.yaml }}
-
-    # - name: set env from others
-    #   id: set-env-from-others
-    #   uses: stormreply/storm-library-for-terraform/.github/actions/set/env/from-others@main
-    #   with:
-    #     private_access_token: ${{ inputs.private_access_token }}
-    #     terraform_private_key: ${{ inputs.terraform_private_key }}
-
-    # - name: show environment
-    #   id: show-environment
-    #   shell: bash
-    #   run: |
-    #     # show-environment
-
-    #     pat="${{ inputs.private_access_token }}"
-    #     tpk="${{ inputs.terraform_private_key }}"
-
-    #     cat << EOF | tee -a >> $GITHUB_STEP_SUMMARY
-
-    #     |                               |                    |
-    #     |-------------------------------|--------------------|
-    #     | **Parameter**                 |                    |
-    #     | access domain:                | $ACCESS_DOMAIN     |
-    #     | access role:                  | $ACCESS_ROLE       |
-    #     | backend account:              | $BACKEND_ACCOUNT   |
-    #     | backend region:               | $BACKEND_REGION    |
-    #     | deployment account:           | $BACKEND_ACCOUNT   |
-    #     | deployment region:            | $BACKEND_REGION    |
-    #     | environment:                  | $ENVIRONMENT       |
-    #     | oidc principal:               | $OIDC_PRINCIPAL    |
-    #     | terraform app id:             | $TERRAFORM_APP_ID  |
-    #     |                               |                    |
-    #     | **Computed**                  |                    |
-    #     | backend bucket:               | $BACKEND_BUCKET    |
-    #     | deployment name:              | $DEPLOYMENT_NAME   |
-    #     | state file:                   | $STATE_FILE        |
-    #     |                               |                    |
-    #     | **Tokens**                    |                    |
-    #     | private access token length:  | ${#pat}            |
-    #     | terraform private key length: | ${#tpk}            |
-    #     |                               |                    |
-    #     | **Used** token length:        | ${#TOKEN}          |
-
-
-    #     EOF
