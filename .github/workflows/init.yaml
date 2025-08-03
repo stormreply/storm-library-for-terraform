@@ -32,10 +32,6 @@ jobs:
       access_token: ${{ steps.get-access-token.outputs.access_token }}
     steps:
 
-      - name: Time
-        shell: bash
-        run: date
-
       - name: set environment
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
