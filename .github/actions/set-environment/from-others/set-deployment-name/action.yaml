@@ -54,5 +54,5 @@ runs:
         fi
         echo "name=$name"
         echo << EOF | tee -a $GITHUB_ENV
-        DEPLOYMENT_NAME=$name
+        NAME=$name
         EOF

@@ -22,6 +22,7 @@ runs:
         terraform_private_key: "${{ inputs.terraform_private_key }}"
 
     - name: set environment from vars
+      if: inputs.json != ''
       id: set-environment-from-vars
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-vars@main
       with:

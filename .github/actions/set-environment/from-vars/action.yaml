@@ -1,4 +1,4 @@
-name: Get environment
+name: Set environment from vars
 
 inputs:
   json:
@@ -8,11 +8,11 @@ runs:
   using: composite
   steps:
 
-    - name: get-environment-from-vars
-      id: get-environment-from-vars
+    - name: set-environment-from-vars
+      id: set-environment-from-vars
       shell: bash
       run: |
-        # get/environment-from-vars
+        # set-environment/from-vars
         echo '${{ inputs.json }}' \
         | jq -r 'to_entries | map("\(.key)=\(.value)") | .[]' \
         | tee -a $GITHUB_ENV

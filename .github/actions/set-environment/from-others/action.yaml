@@ -28,23 +28,22 @@ runs:
       run: |
         # set-environment/from-others
 
-        BACKEND_BUCKET="${{ steps.get-backend-bucket.outputs.backend_bucket}}"
-        DEPLOYMENT_NAME="${{ steps.get-deployment-name.outputs.name }}"
-        STATE_FILE="${{ steps.get-state-file.outputs.state_file }}"
-        TOKEN="${{ steps.get-token.outputs.token }}"
+        # BACKEND_BUCKET="${{ steps.get-backend-bucket.outputs.backend_bucket}}"
+        # DEPLOYMENT_NAME="${{ steps.get-deployment-name.outputs.name }}"
+        # STATE_FILE="${{ steps.get-state-file.outputs.state_file }}"
+        # TOKEN="${{ steps.get-token.outputs.token }}"
 
         # TEMPORARILY
         DEPLOYMENT_ACCOUNT=${{ env.BACKEND_ACCOUNT }}
         DEPLOYMENT_REGION=${{ env.BACKEND_REGION }}
         # TEMPORARILY
 
+        DEPLOYMENT_NAME=${{ env.NAME }}
+
         cat << EOF >> $GITHUB_ENV
-        BACKEND_BUCKET=$BACKEND_BUCKET
         BACKEND_ROLE=slt-0-storm-library-for-terraform-backend
         DEPLOYMENT_ACCOUNT=$DEPLOYMENT_ACCOUNT
         DEPLOYMENT_NAME=$DEPLOYMENT_NAME
         DEPLOYMENT_REGION=$DEPLOYMENT_REGION
         DEPLOYMENT_ROLE=slt-0-storm-library-for-terraform-deployment
-        STATE_FILE=$STATE_FILE
-        TOKEN=$TOKEN
         EOF
