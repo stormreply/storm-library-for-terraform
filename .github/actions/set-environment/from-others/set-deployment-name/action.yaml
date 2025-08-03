@@ -44,15 +44,15 @@ runs:
         catalog_reference="slt-${catalog_id}"
         rm catalog.yaml
 
-        deployment_name="${catalog_reference}-${repo}"
+        name="${catalog_reference}-${repo}"
 
         if [ "${catalog_id}" != "0" ] ; then
           [ -n "${{ env.ENVIRONMENT }}" ] \
           && environment="${{ env.ENVIRONMENT }}" \
           || environment="${{ github.actor }}"
-          deployment_name="${deployment_name}-${environment}"
+          name="${name}-${environment}"
         fi
-        echo "deployment_name=$deployment_name"
+        echo "name=$name"
         echo << EOF | tee -a $GITHUB_ENV
-        DEPLOYMENT_NAME=$deployment_name
+        DEPLOYMENT_NAME=$name
         EOF
