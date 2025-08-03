@@ -2,6 +2,7 @@ name: Set AWS profiles
 
 inputs:
   use_oidc:
+    type: boolean
     required: true
 
 runs:
