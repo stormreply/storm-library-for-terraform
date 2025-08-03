@@ -9,5 +9,5 @@ runs:
       run: |
         # set-environment/from-others/set-state-file
         cat << EOF | tee -a $GITHUB_ENV
-        STATE_FILE="${{ env.DEPLOYMENT_NAME }}.tfstate"
+        STATE_FILE=${{ env.DEPLOYMENT_NAME }}.tfstate
         EOF
