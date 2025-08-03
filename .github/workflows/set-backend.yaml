@@ -24,27 +24,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Time
-        shell: bash
-        run: date
-
       - name: set environment
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+          yaml: |
+            BACKEND_ACCOUNT: ${{ inputs.backend_account }}
+            BACKEND_REGION: ${{ inputs.backend_region }}
 
-      - name: set backend account
-        id: set-backend-account
+      - name: save backend account
+        id: save-backend-account
         uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
         with:
           repository: ${{ github.repository }}
           value: ${{ env.BACKEND_ACCOUNT }}
           variable: BACKEND_ACCOUNT
 
-      - name: set backend region
-        id: set-backend-region
+      - name: save backend region
+        id: save-backend-region
         uses: stormreply/storm-library-for-terraform/.github/actions/init/save-variable@main
         with:
           repository: ${{ github.repository }}

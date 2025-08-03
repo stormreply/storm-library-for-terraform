@@ -1,9 +1,5 @@
 name: Scan code
 
-inputs:
-  token:
-    required: true
-
 runs:
   using: composite
   steps:
