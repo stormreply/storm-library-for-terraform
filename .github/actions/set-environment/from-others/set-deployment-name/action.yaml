@@ -52,7 +52,7 @@ runs:
           || environment="${{ github.actor }}"
           name="${name}-${environment}"
         fi
-        echo "name=$name"
-        echo << EOF | tee -a $GITHUB_ENV
+
+        cat << EOF | tee -a $GITHUB_ENV
         NAME=$name
         EOF
