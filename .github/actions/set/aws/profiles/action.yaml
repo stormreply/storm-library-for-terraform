@@ -1,18 +1,6 @@
 name: Set AWS profiles
 
 inputs:
-  backend_account:
-    required: true
-  backend_region:
-    required: true
-  backend_role:
-    required: true
-  deployment_account:
-    required: true
-  deployment_region:
-    required: true
-  deployment_role:
-    required: true
   use_oidc:
     required: true
 
@@ -23,15 +11,11 @@ runs:
     - name: Set backend profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles/backend@main
       with:
-        backend_account: ${{ inputs.backend_account }}
-        backend_region: ${{ inputs.backend_region }}
         backend_role: slt-0-storm-library-for-terraform-backend
         use_oidc: ${{ inputs.use_oidc }}
 
     - name: Set deployment profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/profiles/deployment@main
       with:
-        deployment_account: ${{ inputs.deployment_account }}
-        deployment_region: ${{ inputs.deployment_region }}
         deployment_role: slt-0-storm-library-for-terraform-deployment
         use_oidc: ${{ inputs.use_oidc }}

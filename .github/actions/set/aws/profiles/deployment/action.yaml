@@ -1,12 +1,6 @@
 name: Set deployment profile in AWS config
 
 inputs:
-  deployment_account:
-    required: true
-  deployment_region:
-    required: true
-  deployment_role:
-    required: false
   use_oidc:
     required: false
     default: "true"
@@ -19,14 +13,14 @@ runs:
       if: inputs.use_oidc == 'true'
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: ${{ inputs.deployment_region }}
+        aws-region: ${{ env.DEPLOYMENT_REGION }}
         role-session-name: TerraformdeploymentSession
-        role-to-assume: arn:aws:iam::${{ inputs.deployment_account }}:role/${{ inputs.deployment_role }}
+        role-to-assume: arn:aws:iam::${{ env.DEPLOYMENT_ACCOUNT }}:role/${{ env.DEPLOYMENT_ROLE }}
 
     - name: Configure terraform deployment role
       shell: bash
       run: |
-        aws configure set profile.deployment.region ${{ inputs.deployment_region }}
+        aws configure set profile.deployment.region ${{ env.DEPLOYMENT_REGION }}
         aws configure set profile.deployment.aws_access_key_id $(echo ${AWS_ACCESS_KEY_ID})
         aws configure set profile.deployment.aws_secret_access_key $(echo ${AWS_SECRET_ACCESS_KEY})
         aws configure set profile.deployment.aws_session_token $(echo ${AWS_SESSION_TOKEN})

@@ -92,18 +92,10 @@ jobs:
       - name: checkout code
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
         with:
-          backend_account: ${{ env.BACKEND_ACCOUNT }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          deployment_name: ${{ env.DEPLOYMENT_NAME }}
-          environment: ${{ env.ENVIRONMENT }}
-          token: ${{ env.TOKEN }}
-          use_oidc: false # the oidc_principal has not yet been created up to here
+          init: true
 
-      - name: set init.tfvars
-        uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
-        with:
-          backend_bucket: ${{ env.backend_bucket }}
-          oidc_principal: ${{ env.oidc_principal }}
+      # - name: set init.tfvars
+      #   uses: stormreply/storm-library-for-terraform/.github/actions/set/init-tfvars@main
 
       - name: Terraform plan
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/plan@main

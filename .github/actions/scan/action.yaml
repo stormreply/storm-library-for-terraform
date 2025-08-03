@@ -10,12 +10,6 @@ runs:
 
     - name: checkout code
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
-      with:
-        backend_account: ${{ env.BACKEND_ACCOUNT }}
-        backend_region: ${{ env.BACKEND_REGION }}
-        deployment_name: ${{ env.DEPLOYMENT_NAME }}
-        environment: ${{ env.ENVIRONMENT }}
-        token: ${{ env.TOKEN }}
 
     - name: run pre-commit
       uses: stormreply/storm-library-for-terraform/.github/actions/scan/pre-commit@main

@@ -39,7 +39,7 @@ runs:
     - name: create AWS backend bucket
       uses: stormreply/storm-library-for-terraform/.github/actions/set/aws/backend/bucket@main
       with:
-        backend_bucket: ${{ inputs.BACKEND_BUCKET }}
+        backend_bucket: ${{ inputs.backend_bucket }}
         backend_region: ${{ inputs.backend_region }}
 
     - name: save AWS access vars in ${{github.repository}}.vars
