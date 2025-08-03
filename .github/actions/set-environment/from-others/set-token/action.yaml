@@ -21,7 +21,7 @@ runs:
         type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
         if [ -z "${token}" ] ; then
-          token=${{ env.PRIVATE_ACCESS_TOKEN }}
+          token=${{ env.PERSONAL_ACCESS_TOKEN }}
           type="Personal Access Token"
         fi
         echo "::notice ::using your $type as token"

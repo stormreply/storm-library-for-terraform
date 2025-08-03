@@ -5,7 +5,7 @@ runs:
   steps:
 
     - name: set token
-      if: env.PRIVATE_ACCESS_TOKEN != '' || env.TERRAFORM_PRIVATE_KEY != ''
+      if: env.PERSONAL_ACCESS_TOKEN != '' || env.TERRAFORM_PRIVATE_KEY != ''
       id: set-token
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others/set-token@main
 

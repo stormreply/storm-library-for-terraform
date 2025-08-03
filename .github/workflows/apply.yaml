@@ -44,7 +44,7 @@ jobs:
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
@@ -70,7 +70,7 @@ jobs:
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
@@ -86,7 +86,7 @@ jobs:
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
@@ -104,7 +104,7 @@ jobs:
         id: set-environment
         uses: stormreply/storm-library-for-terraform/.github/actions/set-environment@main
         with:
-          private_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
 
