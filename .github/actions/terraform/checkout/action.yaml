@@ -4,7 +4,7 @@ inputs:
 
   init: # have we been called from the init workflow?
     required: false
-    default: true
+    default: false
 
 # TODO: maybe move set-aws-profiles somewhere else
 
