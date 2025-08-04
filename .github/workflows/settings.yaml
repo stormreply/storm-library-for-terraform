@@ -1,4 +1,5 @@
-name: Show Config
+name: Settings
+
 
 on:
   workflow_dispatch:
