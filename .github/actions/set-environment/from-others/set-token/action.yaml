@@ -18,17 +18,27 @@ runs:
       shell: bash
       run: |
         # set-environment/from-others/set-token
+
         type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
+
         if [ -z "${token}" ] ; then
           token=${{ env.PERSONAL_ACCESS_TOKEN }}
           type="Personal Access Token"
         fi
-        echo "::notice ::using your $type as token"
+
+        if [ -z "${token}" ] ; then
+          token=${{ env.GITHUB_TOKEN }}
+          type="GITHUB_TOKEN"
+        fi
+
         if [ ${#token} -eq 0 ] ; then
           echo "::error title=No valid token::could not get a token"
           exit 1
         fi
+
+        echo "::notice ::using your $type as token"
+
         cat << EOF | tee -a $GITHUB_ENV
         TOKEN=$token
         EOF

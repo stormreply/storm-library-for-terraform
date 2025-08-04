@@ -1,0 +1,8 @@
+- test mit GITHUB_TOKEN
+- workflows in jedem repo: plan/apply/test/destroy, Settings, Configure, Change Backend, Change Deployment
+- jedes repo kann account konfigurieren in Configure
+- jedes repo kann sein backend ändern in Change Backend
+- jedes repo kann sein deployment ändern in Change Deployment
+- jeder workflow checkt auf Grundbedingungen und gibt diese aus
+- jeder workflow bricht frühzeitig ab
+- jeder workflow gibt klare anweisungen, was (noch) zu tun ist
