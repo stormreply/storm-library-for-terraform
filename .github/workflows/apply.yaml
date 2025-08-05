@@ -24,8 +24,6 @@ on:
         required: false
         default: ""
     secrets:
-      GITHUB_TOKEN:
-        required: false
       STORM_LIBRARY_FOR_TERRAFORM:
         required: false
       TERRAFORM_PRIVATE_KEY:
