@@ -5,7 +5,7 @@ runs:
   steps:
 
     - name: create github app token
-      if: env.TERRAFORM_APP_ID != '' && env.TERRAFORM_APP_ID != 'NONE'
+      if: env.TERRAFORM_APP_ID != '' && env.TERRAFORM_PRIVATE_KEY != ''
       id: create-github-app-token
       uses: actions/create-github-app-token@v1
       with:
