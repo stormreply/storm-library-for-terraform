@@ -4,21 +4,6 @@ runs:
   using: composite
   steps:
 
-    - name: Check if GitHub App is installed
-      id: check_app
-      shell: bash
-      run: |
-        response=$(curl -s -H "Authorization: token ${{ env.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }}/installations)
-
-        echo "$response" | jq '.' # nur zum Debuggen
-
-        # if echo "$response" | grep -q "your-app-name"; then
-        #   echo "installed=true" >> "$GITHUB_OUTPUT"
-        # else
-        #   echo "installed=false" >> "$GITHUB_OUTPUT"
-        # fi
-
     - name: create github app token
       if: env.TERRAFORM_APP_ID != '' && env.TERRAFORM_PRIVATE_KEY != ''
       id: create-github-app-token
@@ -42,10 +27,10 @@ runs:
           type="Personal Access Token"
         fi
 
-        if [ -z "${token}" ] ; then
+        # if [ -z "${token}" ] ; then
           token=${{ env.GITHUB_TOKEN }}
           type="GITHUB_TOKEN"
-        fi
+        # fi
 
         if [ ${#token} -eq 0 ] ; then
           echo "::error title=No valid token::could not get a token"
