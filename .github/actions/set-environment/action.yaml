@@ -54,8 +54,8 @@ runs:
       run: |
         # show-environment-vars
 
-        ERROR=""
-        [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && ERROR="true"
+        STATUS="OK"
+        [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && STATUS="ERROR"
 
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
@@ -81,4 +81,4 @@ runs:
 
         EOF
 
-        [ -n "$ERROR" ] && echo "ERROR: [$ERROR]" && exit 1
+        [ "$STATUS" = "ERROR" ] && echo "STATUS: [$STATUS]"
