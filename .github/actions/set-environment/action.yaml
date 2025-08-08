@@ -55,6 +55,9 @@ runs:
         # show-environment-vars
 
         STATUS="OK"
+        [ -z "$ACCESS_DOMAIN" ] && echo "::error ::access domain not set" && STATUS="ERROR"
+        [ -z "$ACCESS_ROLE" ] && echo "::error ::access role not set" && STATUS="ERROR"
+        [ -z "$BACKEND_ACCOUNT" ] && echo "::error ::backend account not set" && STATUS="ERROR"
         [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && STATUS="ERROR"
         echo "STATUS: [$STATUS]"
         cat << EOF >> $GITHUB_STEP_SUMMARY
@@ -80,3 +83,5 @@ runs:
         | **Token type**                | $TOKEN_TYPE        |
 
         EOF
+
+        [ "$STATUS" = "OK" ] && exit 0 || exit 1
