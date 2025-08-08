@@ -54,8 +54,7 @@ runs:
       run: |
         # show-environment-vars
 
-        pat="${{ inputs.personal_access_token }}"
-        tpk="${{ inputs.terraform_private_key }}"
+        [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && ERROR=true
 
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
@@ -77,11 +76,8 @@ runs:
         | deployment name:              | $DEPLOYMENT_NAME   |
         | state file:                   | $STATE_FILE        |
         |                               |                    |
-        | **Tokens**                    |                    |
-        | private access token length:  | ${#pat}            |
-        | terraform private key length: | ${#tpk}            |
-        |                               |                    |
-        | token type:                   | $TOKEN_TYPE        |
-
+        | **Token type**                | $TOKEN_TYPE        |
 
         EOF
+
+        [ -n "$ERROR" ] && exit 1
