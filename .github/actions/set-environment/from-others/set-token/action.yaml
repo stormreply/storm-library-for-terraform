@@ -27,10 +27,10 @@ runs:
           type="Personal Access Token"
         fi
 
-        # if [ -z "${token}" ] ; then
+        if [ -z "${token}" ] ; then
           token=${{ env.GITHUB_TOKEN }}
           type="GITHUB_TOKEN"
-        # fi
+        fi
 
         if [ ${#token} -eq 0 ] ; then
           echo "::error title=No valid token::could not get a token"
