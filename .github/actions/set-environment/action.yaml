@@ -56,7 +56,7 @@ runs:
 
         STATUS="OK"
         [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && STATUS="ERROR"
-
+        echo "STATUS: [$STATUS]"
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
         |                               |                    |
@@ -80,5 +80,3 @@ runs:
         | **Token type**                | $TOKEN_TYPE        |
 
         EOF
-
-        [ "$STATUS" = "ERROR" ] && echo "STATUS: [$STATUS]"
