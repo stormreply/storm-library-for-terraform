@@ -22,7 +22,7 @@ runs:
         type="Github App Token" # so far
         token="${{ steps.create-github-app-token.outputs.token }}"
 
-        if [ -n "${PERSONAL_ACCESS_TOKEN}" ] ; then
+        if [ -n "${{ env.PERSONAL_ACCESS_TOKEN }}" ] ; then
           token=${{ env.PERSONAL_ACCESS_TOKEN }}
           type="Personal Access Token"
         fi
