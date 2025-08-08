@@ -54,7 +54,8 @@ runs:
       run: |
         # show-environment-vars
 
-        [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && ERROR=true
+        ERROR=""
+        [ -z "$BACKEND_REGION" ] && echo "::error ::backend region not set" && ERROR="true"
 
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
