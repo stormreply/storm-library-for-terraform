@@ -81,4 +81,4 @@ runs:
 
         EOF
 
-        [ -n "$ERROR" ] && echo "ERROR: [$ERROR] && exit 1
+        [ -n "$ERROR" ] && echo "ERROR: [$ERROR]" && exit 1
