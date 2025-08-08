@@ -41,4 +41,5 @@ runs:
 
         cat << EOF | tee -a $GITHUB_ENV
         TOKEN=$token
+        TOKEN_TYPE=$type
         EOF

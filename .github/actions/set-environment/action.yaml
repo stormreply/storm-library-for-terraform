@@ -81,7 +81,7 @@ runs:
         | private access token length:  | ${#pat}            |
         | terraform private key length: | ${#tpk}            |
         |                               |                    |
-        | **Used** token length:        | ${#TOKEN}          |
+        | token type:                   | $TOKEN_TYPE        |
 
 
         EOF
