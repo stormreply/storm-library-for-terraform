@@ -40,8 +40,8 @@ runs:
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
           echo "$output"
-          ::error ::Status from set-variable call is $status.
-          ::error ::Your $TOKEN_TYPE likely does not have sufficient permissions.
+          echo "::error ::Status from set-variable call is $status."
+          echo "::error ::Your $TOKEN_TYPE likely does not have sufficient permissions."
           exit 1
         fi
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
