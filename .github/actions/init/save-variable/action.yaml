@@ -40,6 +40,10 @@ runs:
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
           echo "$output"
+          cat << EOF
+          ::error ::Status from set-variable call is $status.
+          Your ${{ env.TOKEN_TYPE }} likely does not have sufficient permissions.
+          EOF
           echo "::error ::Status from set-variable call is $status. Your ${{ env.TOKEN_TYPE }} likely does not have sufficient permissions."
           exit 1
         fi
