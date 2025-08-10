@@ -1,10 +1,14 @@
 name: Select
 
+outputs:
+  has_selected:
+    value:  ${{ steps.select.outputs.has_selected }}
+
 runs:
   using: composite
   steps:
 
-    - name: Select
+    - name: select
       shell: bash
       run: |
         # scheduler/select
