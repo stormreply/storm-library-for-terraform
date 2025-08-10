@@ -27,20 +27,20 @@ runs:
             https://api.github.com/repos/$REPO/actions/variables/$VARIABLE \
             -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
             -f \
-          | tee /tmp/patch.json 2> /dev/null \
+          2> /dev/null \
           || \
           curl -X POST \
             -H "Authorization: Bearer $TOKEN" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/$REPO/actions/variables \
             -d "{\"name\":\"$VARIABLE\", \"value\":\"$VALUE\"}" \
-          | tee /tmp/post.json 2> /dev/null
+          2> /dev/null
         )
         status=$(echo "$output" | jq '( .status // empty )')
         # status is "" or HTTP error code
         if [ -n "$status" ] ; then
           echo "$output"
-          echo "::error ::status from set variable call is $status"
+          echo "::error ::Status from set-variable call is $status. Your ${{ env.TOKEN_TYPE }} likely does not have sufficient permissions."
           exit 1
         fi
         echo "Set vars.${VARIABLE}=${VALUE} in $REPO"
