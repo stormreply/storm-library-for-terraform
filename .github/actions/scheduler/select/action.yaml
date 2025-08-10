@@ -48,7 +48,7 @@ runs:
             echo "SKIP   $file"
           fi
 
-          [ -f /tmp/selected ] && has_selected=true || has_selected=false
+          [ -f /tmp/selected ] && has_selected="true" || has_selected="false"
 
           echo "has_selected=$has_selected" | tee -a $GITHUB_OUTPUT
 
