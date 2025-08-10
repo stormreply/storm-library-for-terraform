@@ -55,5 +55,6 @@ runs:
           [ -f /tmp/selected ] && has_selected="true" || has_selected="false"
 
           echo "has_selected=$has_selected" >> $GITHUB_OUTPUT
+          echo "has_selected=$has_selected" >> $GITHUB_ENV
 
         done
