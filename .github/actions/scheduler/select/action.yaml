@@ -1,9 +1,5 @@
 name: Select
 
-outputs:
-  has_selected:
-    value:  ${{ steps.select.outputs.has_selected }}
-
 runs:
   using: composite
   steps:
@@ -15,7 +11,7 @@ runs:
 
         now=$(date -d now +"%s")
 
-        echo "CURRENT TIME:   $(date -d now +"%Y-%m-%d %H:%M:%S")"
+        echo "TIME   $(date -d now +"%Y%m%d-%H%M%S")"
 
         timestamps=$(
           aws s3api list-objects-v2 \
@@ -54,7 +50,7 @@ runs:
 
           [ -f /tmp/selected ] && has_selected="true" || has_selected="false"
 
-          echo "has_selected=$has_selected" >> $GITHUB_OUTPUT
+          # echo "has_selected=$has_selected" >> $GITHUB_OUTPUT
           echo "has_selected=$has_selected" >> $GITHUB_ENV
 
         done
