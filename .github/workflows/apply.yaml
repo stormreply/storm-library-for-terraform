@@ -46,10 +46,10 @@ jobs:
           json: "${{ toJson(vars) }}"
           # TODO: yaml: environment?
 
-      - name: Set backend profile in AWS config
+      - name: set backend profile in AWS config
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
 
-      - name: Schedule apply
+      - name: schedule apply
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
         with:
           action: apply
@@ -109,6 +109,12 @@ jobs:
 
       - name: apply
         uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
+
+      - name: unschedule apply
+        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
+        with:
+          action: apply
+        continue-on-error: true
 
       - name: schedule destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
