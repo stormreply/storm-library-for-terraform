@@ -3,6 +3,8 @@ name: Schedule action
 inputs:
   action:
     required: true
+  environment:
+    required: false
   lifetime:
     required: false
   delay:
@@ -32,7 +34,7 @@ runs:
         account_id=${{ env.DEPLOYMENT_ACCOUNT }}
         region=${{ env.DEPLOYMENT_REGION }}
         repo="${{ env.REPO }}"
-        environment=${{ env.ENVIRONMENT || github.actor }}
+        environment=${{ inputs.environment || env.ENVIRONMENT || github.actor }}
 
         lifetime="${{ inputs.lifetime }}"
         delay="${{ inputs.delay }}"
