@@ -44,7 +44,7 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
-          yaml:
+          yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
 
       - name: set backend profile in AWS config
@@ -69,7 +69,7 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
-          yaml:
+          yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
 
       - name: scan
@@ -88,6 +88,8 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          yaml: |
+            ENVIRONMENT: ${{ inputs.environment || github.actor }}
 
       - name: plan
         uses: stormreply/storm-library-for-terraform/.github/actions/plan@main
@@ -107,7 +109,7 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
-          yaml:
+          yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
 
       - name: apply
