@@ -1,9 +1,5 @@
 name: Apply
 
-inputs:
-  var_file:
-    required: false
-
 runs:
   using: composite
   steps:
@@ -13,8 +9,3 @@ runs:
 
       - name: terraform apply
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/apply@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
-          var_file: ${{ inputs.var_file }}

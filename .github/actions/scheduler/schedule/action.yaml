@@ -6,7 +6,8 @@ inputs:
   lifetime:
     required: false
   delay:
-    required: true
+    required: false
+    default: 0
 
 runs:
   using: composite

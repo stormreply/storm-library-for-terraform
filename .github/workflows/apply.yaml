@@ -109,6 +109,8 @@ jobs:
 
       - name: apply
         uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
+        with:
+          environment: ${{ inputs.environment || github.actor }}
 
       - name: unschedule apply
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
