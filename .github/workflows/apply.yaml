@@ -121,3 +121,4 @@ jobs:
         with:
           action: destroy
           delay: ${{ inputs.lifetime }}
+          environment: ${{ inputs.environment || github.actor }}
