@@ -13,30 +13,30 @@ runs:
 
         echo "TIME   $(date -d now +"%Y%m%d-%H%M%S")"
 
-        timestamps=$(
+        jobs=$(
           aws s3api list-objects-v2 \
             --bucket ${{ env.BACKEND_BUCKET }} \
             --prefix schedule \
             --query 'Contents[].Key'
         )
 
-        [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
+        [ "${jobs}" != "null" ] && jobs=$(echo "${jobs}" | jq -r ".[]") || jobs=""
 
         # object name must start with datestamp. if none does, continue (true)
-        timestamps=$(echo "$timestamps" | grep -E "/[0-9]{8}-") || true
+        jobs=$(echo "$jobs" | grep -E "/[0-9]{8}-") || true   # TODO: use better pattern
 
-        if [ -n "$timestamps" ] ; then
+        if [ -n "$jobs" ] ; then
           rm -f /tmp/selected 2>&1
           touch /tmp/selected
         else
-          echo "No timestamps found."
+          echo "no jobs to schedule."
         fi
 
-        for e in $timestamps ; do
+        for job in $jobs ; do
 
-          file=${e##*/} ; f=${file}
-          date=${f%%-*} ; f=${f##$date-}
-          time=${f%%-*} ; f=${f##$time-}
+          file=${job##*/} ; f=${file}
+          date=${f%%.*} ; f=${f##$date.}
+          time=${f%%.*} ; f=${f##$time.}
 
           time="${time:0:2}:${time:2:2}:${time:4:2}"
           when=$(date -d "${date} ${time}" +"%s")

@@ -9,25 +9,20 @@ runs:
       run: |
         # scheduler/execute
 
-        for e in $(cat /tmp/selected) ; do
+        for job in $(cat /tmp/selected) ; do
 
-          file=${e##*/} ; f=${file}
-          date=${f%%-*} ; f=${f##$date-}
-          time=${f%%-*} ; f=${f##$time-}
-          action=${f%%-*} ; f=${f##$action-}
-          account_id=${f%%-*} ; f=${f##$account_id-}
-          region=${f%-${f#*-*-*-}} ; f=${f##$region-}
-          slt=${f%%-*} ; f=${f##$slt-}
-          catalog_id=${f%%-*} ; f=${f##$catalog_id-}
-          repo=${f%-*}
-          environment=${f##$repo-}
+          file=${job##*/} ; f=${file}
+          date=${f%%.*} ; f=${f##$date.}
+          time=${f%%.*} ; f=${f##$time.}
+          action=${f%%.*} ; f=${f##$action.}
+          account_id=${f%%.*} ; f=${f##$account_id.}
+          region=${f%%.*} ; f=${f##$region.}
+          repo=${f%%.*} ; environment=${f##$deployment_name.}
 
-          printf "%-8s %-6s %-7s %-12s %-15s %s %s %s %s\n" \
-            "DATE" "TIME" "ACTION" "ACCOUNT_ID" "REGION" \
-            "SLT" "CATALOG_ID" "REPO" "ENVIRONMENT"
-          printf "%6s %6s %7s %12s %15s %s %s %s %s\n" \
-            "$date" "$time" "$action" "$account_id" "$region" \
-            "$slt" "$catalog_id" "$repo" "$environment"
+          printf "%-8s %-6s %-7s %-12s %-15s %-s %-s\n" \
+            "DATE" "TIME" "ACTION" "ACCOUNT_ID" "REGION" "REPO" "ENVIRONMENT"
+          printf "%-8s %-6s %-7s %-12s %-15s %-s %-s\n" \
+            "$date" "$time" "$action" "$account_id" "$region" "$repo" "$environment"
 
           aws s3 cp \
             s3://${{ env.BACKEND_BUCKET }}/schedule/$file \

@@ -22,24 +22,26 @@ runs:
       shell: bash
       run: |
         # scheduler/schedule
-        action=${{ inputs.action }}
-
-        deployment_account=${{ env.DEPLOYMENT_ACCOUNT }}
         backend_bucket=${{ env.BACKEND_BUCKET }}
-        deployment_name="${{ env.DEPLOYMENT_NAME }}"
-        deployment_region=${{ env.DEPLOYMENT_REGION }}
+
+        time=$(date -d "now + ${delay}" +"%Y%m%d_%H%M%S")
+        action=${{ inputs.action }}
+        account_id=${{ env.DEPLOYMENT_ACCOUNT }}
+        region=${{ env.DEPLOYMENT_REGION }}
+        repo="${{ env.REPO }}"
         environment=${{ env.ENVIRONMENT || github.actor }}
+
         lifetime="${{ inputs.lifetime }}"
         delay="${{ inputs.delay }}"
 
-        time=$(date -d "now + ${delay}" +"%Y%m%d-%H%M%S")
-        timestamp="${time}-${action}-${deployment_account}-${deployment_region}-${deployment_name}"
+        job="${time}.${action}.${account_id}.${region}.${repo}.${environment}"
 
-        cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${timestamp}
+        cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${job}
+        region: "$region"
         environment: "$environment"
         lifetime: "$lifetime"
         EOF
 
-        echo -n "SCHEDULE ${timestamp}... "
+        echo -n "SCHEDULE ${job}... "
         aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/ > /dev/null
         echo DONE

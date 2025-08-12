@@ -60,4 +60,6 @@ runs:
 
         cat << EOF | tee -a $GITHUB_ENV
         DEPLOYMENT_NAME=$name
+        REPOSITORY=$repository
+        REPO=$repo
         EOF

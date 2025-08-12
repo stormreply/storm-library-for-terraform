@@ -13,26 +13,27 @@ runs:
       run: |
         # scheduler/unschedule
 
-        action=${{ inputs.action }}
-
-        deployment_account=${{ env.DEPLOYMENT_ACCOUNT }}
         backend_bucket=${{ env.BACKEND_BUCKET }}
-        deployment_name=${{ env.DEPLOYMENT_NAME }}
-        deployment_region=${{ env.DEPLOYMENT_REGION }}
 
-        timestamps=$(
+        action=${{ inputs.action }}
+        account_id=${{ env.DEPLOYMENT_ACCOUNT }}
+        region=${{ env.DEPLOYMENT_REGION }}
+        repo=${{ env.REPO }}
+        environment=${{ env.ENVIRONMENT }}
+
+        jobs=$(
           aws s3api list-objects-v2 \
             --bucket ${backend_bucket} \
             --prefix schedule \
             --query 'Contents[].Key'
         )
 
-        [ "${timestamps}" != "null" ] && timestamps=$(echo "${timestamps}" | jq -r ".[]") || timestamps=""
+        [ "${jobs}" != "null" ] && jobs=$(echo "${jobs}" | jq -r ".[]") || jobs=""
 
-        pattern="${action}-${deployment_account}-${deployment_region}-${deployment_name}"
+        pattern="${action}.${account_id}.${region}.${repo}.${environment}"
 
-        if [ -n "$timestamps" ] ; then
-          for key in $timestamps ; do
+        if [ -n "$jobs" ] ; then
+          for key in $jobs ; do
             if echo "$key" | grep -E "$pattern" > /dev/null ; then
               echo -n "REMOVE $key... "
               aws s3 rm s3://${backend_bucket}/${key} > /dev/null
@@ -42,5 +43,5 @@ runs:
             fi
           done
         else
-          echo "NO timestamps"
+          echo "no jobs to unschedule."
         fi
