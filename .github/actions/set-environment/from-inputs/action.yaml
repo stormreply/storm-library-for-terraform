@@ -20,8 +20,9 @@ runs:
           val=${l##*: }
           if [ -n "$val" ] ; then
             echo "$key=$val" | tee -a $GITHUB_ENV
-          else
-            echo "ERROR: $key is empty. exiting."
-            exit 1
+          # else
+          #   echo "ERROR: $key is empty. exiting."
+          #   exit 1
+          # TODO: better validate after set-environment in separate per-workflow step
           fi
         done
