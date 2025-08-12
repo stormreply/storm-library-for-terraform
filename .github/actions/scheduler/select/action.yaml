@@ -22,8 +22,8 @@ runs:
 
         [ "${jobs}" != "null" ] && jobs=$(echo "${jobs}" | jq -r ".[]") || jobs=""
 
-        # object name must start with datestamp. if none does, continue (true)
-        jobs=$(echo "$jobs" | grep -E "/[0-9]{8}-") || true   # TODO: use better pattern
+        # object name must start with timestamp. if none does, continue (true)
+        jobs=$(echo "$jobs" | grep -E "/[0-9]{8}.[0-9]{6}") || true
 
         if [ -n "$jobs" ] ; then
           rm -f /tmp/selected 2>&1
