@@ -39,7 +39,6 @@ runs:
         job="${date}.${time}.${action}.${account_id}.${region}.${repo}.${environment}"
 
         cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${job}
-        region: "$region"
         environment: "$environment"
         lifetime: "$lifetime"
         EOF
