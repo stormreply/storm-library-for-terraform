@@ -43,5 +43,5 @@ runs:
         EOF
 
         echo -n "SCHEDULE ${job}... "
-        aws s3 cp ${timestamp} s3://${backend_bucket}/schedule/ > /dev/null
+        aws s3 cp "$job" s3://${backend_bucket}/schedule/ > /dev/null
         echo DONE
