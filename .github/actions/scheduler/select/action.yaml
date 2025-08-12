@@ -11,7 +11,7 @@ runs:
 
         now=$(date -d now +"%s")
 
-        echo "TIME   $(date -d now +"%Y%m%d-%H%M%S")"
+        echo "TIME   $(date -d now +"%Y%m%d.%H%M%S")"
 
         jobs=$(
           aws s3api list-objects-v2 \

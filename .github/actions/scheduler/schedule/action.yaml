@@ -23,8 +23,10 @@ runs:
       run: |
         # scheduler/schedule
         backend_bucket=${{ env.BACKEND_BUCKET }}
+        datetime=$(date -d "now + ${delay}" +"%Y%m%d%H%M%S")
 
-        time=$(date -d "now + ${delay}" +"%Y%m%d_%H%M%S")
+        date="${datetime:0:8}"
+        time="${datetime:8:6}"
         action=${{ inputs.action }}
         account_id=${{ env.DEPLOYMENT_ACCOUNT }}
         region=${{ env.DEPLOYMENT_REGION }}
@@ -34,7 +36,7 @@ runs:
         lifetime="${{ inputs.lifetime }}"
         delay="${{ inputs.delay }}"
 
-        job="${time}.${action}.${account_id}.${region}.${repo}.${environment}"
+        job="${date}.${time}.${action}.${account_id}.${region}.${repo}.${environment}"
 
         cat << EOF | grep -E -v ': "(null|)"' | yq -o=json >> ${job}
         region: "$region"
