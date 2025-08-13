@@ -35,6 +35,8 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          yaml: |
+            ENVIRONMENT: ${{ github.actor }}
 
       - name: scan
         uses: stormreply/storm-library-for-terraform/.github/actions/scan@main
@@ -51,6 +53,8 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          yaml: |
+            ENVIRONMENT: ${{ github.actor }}
 
       - name: plan
         uses: stormreply/storm-library-for-terraform/.github/actions/plan@main
@@ -70,6 +74,8 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          yaml: |
+            ENVIRONMENT: ${{ github.actor }}
 
       - name: apply
         uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
@@ -88,6 +94,8 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          yaml: |
+            ENVIRONMENT: ${{ github.actor }}
 
       - name: destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/destroy@main
