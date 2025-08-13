@@ -62,8 +62,8 @@ runs:
         echo "STATUS: [$STATUS]"
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
-        |-------------------------------|--------------------|
         | **Parameter**                 |                    |
+        |-------------------------------|--------------------|
         | access domain:                | $ACCESS_DOMAIN     |
         | access role:                  | $ACCESS_ROLE       |
         | backend account:              | $BACKEND_ACCOUNT   |
