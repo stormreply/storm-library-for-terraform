@@ -7,9 +7,5 @@ runs:
       - name: checkout code
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout@main
 
-      - name: Terraform destroy
+      - name: terraform destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/destroy@main
-        with:
-          backend_bucket: ${{ env.BACKEND_BUCKET }}
-          backend_region: ${{ env.BACKEND_REGION }}
-          state_file: ${{ env.STATE_FILE }}
