@@ -48,3 +48,10 @@ catalog:
     desciption: A private repo for testing the Storm Library for Terraform workflows with the default GITHUB TOKEN
     reference: https://github.com/stormreply/slt-test-github-token
     public: yes
+  cloudhsm-demo:
+    id: 7
+    authors: berndherding
+    published: 2025-08-17
+    description: A demo of an AWS CloudHSM cluster
+    reference: https://github.com/stormreply/cloudhsm-demo
+    public: yes
