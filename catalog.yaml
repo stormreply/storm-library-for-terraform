@@ -55,3 +55,10 @@ catalog:
     description: A demo of an AWS CloudHSM cluster
     reference: https://github.com/stormreply/cloudhsm-demo
     public: yes
+  log-analytics-demo:
+    id: 8
+    authors: berndherding
+    published: 2025-09-04
+    description: A log analytics demo including Data Streams, Firehose and an Apache Zeppelin notebook
+    reference: https://github.com/stormreply/log-analytics-demo
+    public: yes
