@@ -25,6 +25,10 @@ runs:
       shell: bash
       run: |
         # scheduler/schedule
+
+        delay="${{ inputs.delay }}"
+        lifetime="${{ inputs.lifetime }}"
+
         backend_bucket=${{ env.BACKEND_BUCKET }}
         datetime=$(date -d "now + ${delay}" +"%Y%m%d%H%M%S")
 
@@ -36,8 +40,6 @@ runs:
         repo="${{ env.REPO }}"
         environment=${{ inputs.environment || env.ENVIRONMENT || github.actor }}
 
-        lifetime="${{ inputs.lifetime }}"
-        delay="${{ inputs.delay }}"
 
         job="${date}.${time}.${action}.${account_id}.${region}.${repo}.${environment}"
 
