@@ -11,6 +11,7 @@ runs:
         repository=${{ github.repository }}
         repo=${repository##*/}
         deployment_name=${{ env.DEPLOYMENT_NAME }}
+        short_name=${{ env.SHORT_NAME }}
 
         [ -n "${{ env.ENVIRONMENT }}" ] \
         && environment="${{ env.ENVIRONMENT }}" \
@@ -34,6 +35,7 @@ runs:
             repo        = string # GitHub short repository name (without owner) of the deployment
             repository  = string # GitHub full repository name (including owner) of the deployment
             sha         = string # Git (full-length, 40 char) commit SHA of the deployment
+            short_name  = string # Short name of the deployment
             time        = string # Timestamp of the deployment
           })
           default = {
@@ -45,6 +47,7 @@ runs:
             repo        = "${repo}"
             repository  = "${{ github.repository }}"
             sha         = "${{ github.sha }}"
+            short_name  = "${short_name}"
             time        = "$(date)"
           }
         }

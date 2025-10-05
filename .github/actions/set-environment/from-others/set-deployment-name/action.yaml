@@ -44,6 +44,7 @@ runs:
         catalog_id=${{ steps.get-catalog-id.outputs.catalog_id }}
 
         catalog_reference="slt-${catalog_id}"
+        short_name="$catalog_reference"
         rm catalog.yaml
 
         repository=${{ github.repository }}
@@ -56,10 +57,12 @@ runs:
           && environment="${{ env.ENVIRONMENT }}" \
           || environment="${{ github.actor }}"
           name="${name}-${environment}"
+          short_name="${short_name}-${environment}"
         fi
 
         cat << EOF | tee -a $GITHUB_ENV
         DEPLOYMENT_NAME=$name
         REPOSITORY=$repository
         REPO=$repo
+        SHORT_NAME=$short_name
         EOF
