@@ -62,3 +62,10 @@ catalog:
     description: A log analytics demo including Data Streams, Firehose and an Apache Zeppelin notebook
     reference: https://github.com/stormreply/log-analytics-demo
     public: yes
+  global-accelerator-demo:
+    id: 9
+    authors: berndherding
+    published: 2025-10-05
+    description: A demo of AWS Global Accelerator
+    reference: https://github.com/stormreply/global-accelerator-demo
+    public: yes
