@@ -55,10 +55,10 @@ runs:
         # show-environment-vars
 
         STATUS="OK"
-        [ -z "$BACKEND_ACCOUNT"    ] && echo "::error ::backend account not set" && STATUS="ERROR"
-        [ -z "$BACKEND_REGION"     ] && echo "::error ::backend region not set" && STATUS="ERROR"
-        [ -z "$DEPLOYMENT_ACCOUNT" ] && echo "::error ::deployment account not set" && STATUS="ERROR"
-        [ -z "$DEPLOYMENT_REGION"  ] && echo "::error ::deployment region not set" && STATUS="ERROR"
+        [ -z "$BACKEND_ACCOUNT"    ] && echo "::error ::github variable BACKEND_ACCOUNT not set" && STATUS="ERROR"
+        [ -z "$BACKEND_REGION"     ] && echo "::error ::github variable BACKEND_REGION not set" && STATUS="ERROR"
+        [ -z "$DEPLOYMENT_ACCOUNT" ] && echo "::error ::github variable DEPLOYMENT_ACCOUNT not set" && STATUS="ERROR"
+        [ -z "$DEPLOYMENT_REGION"  ] && echo "::error ::github variable DEPLOYMENT_REGION not set" && STATUS="ERROR"
         echo "STATUS: [$STATUS]"
         cat << EOF >> $GITHUB_STEP_SUMMARY
 
