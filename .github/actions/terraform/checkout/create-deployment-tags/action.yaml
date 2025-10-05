@@ -19,9 +19,11 @@ runs:
 
         cat << EOF > deployment.tf
         locals {
+          module_name = basename(abspath(path.module))
           deployment = merge(
             var.deployment,
-            var.deployment.name == "" ? { name = basename(abspath(path.module)) } : {}
+            var.deployment.name == "" ? { name = local.module_name } : {},
+            var.deployment.short_name == "" ? { short_name = local.module_name } : {}
           )
         }
 
