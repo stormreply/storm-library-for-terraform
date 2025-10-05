@@ -17,6 +17,13 @@ runs:
         || environment="${{ github.actor }}"
 
         cat << EOF > deployment.tf
+        locals {
+          deployment = merge(
+            var.deployment,
+            var.deployment.name == "" ? { name = basename(abspath(path.module)) } : {}
+          )
+        }
+
         variable "deployment" {
           type = object({
             actor       = string # Github actor (deployer) of the deployment
