@@ -1,0 +1,15 @@
+name: Create backend
+
+runs:
+  using: composite
+  steps:
+
+    - name: create backend.tfvars
+      shell: bash
+      run: |
+        # checkout/create-backend
+        cat << EOF > backend.tf
+        terraform {
+          backend "s3" {}
+        }
+        EOF
