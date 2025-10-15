@@ -1,0 +1,38 @@
+name: Create metadata
+
+runs:
+  using: composite
+  steps:
+
+    - name: create metadata
+      shell: bash
+      run: |
+        # checkout/create-metadata
+        catalog_id=${{ env.CATALOG_ID }}
+        deployment_name=${{ env.DEPLOYMENT_NAME }}
+        repository=${{ github.repository }}
+        repo=${repository##*/}
+        short_name=${{ env.SHORT_NAME }}
+
+        [ -n "${{ env.ENVIRONMENT }}" ] \
+        && environment="${{ env.ENVIRONMENT }}" \
+        || environment="${{ github.actor }}"
+
+        cat << EOF > _metadata.tfvars
+        _metadata = {
+          actor       = "${{ github.actor }}"
+          catalog_id  = "${catalog_id}"
+          environment = "${environment}"
+          name        = "${deployment_name}"
+          ref         = "${{ github.ref }}"
+          ref_name    = "${{ github.ref_name }}"
+          repo        = "${repo}"
+          repository  = "${{ github.repository }}"
+          sha         = "${{ github.sha }}"
+          short_name  = "${short_name}"
+          time        = "$(date)"
+        }
+        EOF
+
+        echo "_metadata.tf"
+        cat _metadata.tf
