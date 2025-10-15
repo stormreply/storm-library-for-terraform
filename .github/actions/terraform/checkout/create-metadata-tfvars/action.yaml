@@ -1,22 +1,24 @@
-name: Create metadata
+name: Create _metadata.tfvars
 
 runs:
   using: composite
   steps:
 
-    - name: create metadata
+    - name: create _metadata.tfvars
       shell: bash
       run: |
-        # checkout/create-metadata
+        # checkout/create-metadata-tfvars
         catalog_id=${{ env.CATALOG_ID }}
         deployment_name=${{ env.DEPLOYMENT_NAME }}
         repository=${{ github.repository }}
         repo=${repository##*/}
         short_name=${{ env.SHORT_NAME }}
 
-        [ -n "${{ env.ENVIRONMENT }}" ] \
-        && environment="${{ env.ENVIRONMENT }}" \
-        || environment="${{ github.actor }}"
+        # [ -n "${{ env.ENVIRONMENT }}" ] \
+        # && environment="${{ env.ENVIRONMENT }}" \
+        # || environment="${{ github.actor }}"
+
+        environment=${${{ env.ENVIRONMENT }}:-${{ github.actor }}}
 
         cat << EOF > _metadata.tfvars
         _metadata = {
@@ -34,5 +36,5 @@ runs:
         }
         EOF
 
-        echo "_metadata.tf"
-        cat _metadata.tf
+        echo "_metadata.tfvars"
+        cat _metadata.tfvars
