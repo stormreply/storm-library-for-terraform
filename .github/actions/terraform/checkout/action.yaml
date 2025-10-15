@@ -21,10 +21,11 @@ runs:
     - name: rewrite URLs
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/rewrite-urls@main
 
-    - name: download providers.tf
-      uses: stormreply/storm-library-for-terraform/.github/actions/download@main
-      with:
-        file: providers.tf
+    # TODO: rethink
+    # - name: download providers.tf
+    #   uses: stormreply/storm-library-for-terraform/.github/actions/download@main
+    #   with:
+    #     file: providers.tf
 
     - name: create deployment-tags
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-deployment-tags@main
