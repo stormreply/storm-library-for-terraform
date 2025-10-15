@@ -32,6 +32,9 @@ runs:
     - name: create backend.tf
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-backend@main
 
+    - name: create metadata.tfvars
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-metadata-tfvars@main
+
     - name: create init.tfvars
       if: inputs.init == 'true'
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-init-tfvars@main
