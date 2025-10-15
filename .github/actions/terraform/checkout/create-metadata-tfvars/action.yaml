@@ -8,15 +8,12 @@ runs:
       shell: bash
       run: |
         # checkout/create-metadata-tfvars
+
         catalog_id=${{ env.CATALOG_ID }}
         deployment_name=${{ env.DEPLOYMENT_NAME }}
         repository=${{ github.repository }}
         repo=${repository##*/}
         short_name=${{ env.SHORT_NAME }}
-
-        # [ -n "${{ env.ENVIRONMENT }}" ] \
-        # && environment="${{ env.ENVIRONMENT }}" \
-        # || environment="${{ github.actor }}"
 
         environment=${${{ env.ENVIRONMENT }}:-${{ github.actor }}}
 
@@ -24,8 +21,8 @@ runs:
         _metadata = {
           actor       = "${{ github.actor }}"
           catalog_id  = "${catalog_id}"
+          deployment  = "${deployment_name}"
           environment = "${environment}"
-          name        = "${deployment_name}"
           ref         = "${{ github.ref }}"
           ref_name    = "${{ github.ref_name }}"
           repo        = "${repo}"
