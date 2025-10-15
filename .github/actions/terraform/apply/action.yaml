@@ -37,3 +37,16 @@ runs:
           -input=false \
           -auto-approve \
           tfplan
+
+        artifact=$(terraform output -raw artifact)
+        if [ -n "${artifact}" ] ; then
+          echo "ARTIFACT: $artifact"
+          echo "ARTIFACT=${artifact}" >> $GITHUB_ENV
+        fi
+
+    - name: Upload artifact
+      if: env.ARTIFACT != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT }}
+        path: ${{ env.ARTIFACT }}
