@@ -33,14 +33,14 @@ runs:
         export AWS_PROFILE=deployment
         echo "AWS_PROFILE=deployment" >> $GITHUB_ENV
 
-        [ -f _metadata.tfvars ] && var_file=-var-file=_metadata.tfvars"
-        [ -n "${{ inputs.var_file }}" ] && var_file="$var_file -var-file=${{ inputs.var_file }}"
+        [ -f _metadata.tfvars ] && var_files="-var-file=_metadata.tfvars"
+        [ -n "${{ inputs.var_file }}" ] && var_files="$var_file -var-file=${{ inputs.var_file }}"
 
         terraform version
         terraform plan \
           -input=false \
           -out=tfplan \
-          $var_file \
+          $var_files \
         && terraform show tfplan
 
     - name: Upload tfplan
