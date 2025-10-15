@@ -29,6 +29,9 @@ runs:
     - name: create deployment-tags
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-deployment-tags@main
 
+    - name: create backend.tf
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-backend@main
+
     - name: create init.tfvars
       if: inputs.init == 'true'
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-init-tfvars@main
