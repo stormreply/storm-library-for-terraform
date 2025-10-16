@@ -38,7 +38,7 @@ runs:
           -auto-approve \
           tfplan
 
-        artifact=$(terraform output -raw artifact > /dev/null 2>&1)
+        artifact=$(terraform output -raw artifact > /dev/null 2>&1) || true
         if [ -n "${artifact}" ] ; then
           echo "ARTIFACT: $artifact"
           echo "ARTIFACT=${artifact}" >> $GITHUB_ENV
