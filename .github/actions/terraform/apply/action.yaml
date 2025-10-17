@@ -25,6 +25,7 @@ runs:
     - name: Terraform apply
       shell: bash
       run: |
+        # terraform apply
         unset AWS_SECRET_ACCESS_KEY
         unset AWS_SESSION_TOKEN
         unset AWS_ACCESS_KEY_ID
@@ -38,7 +39,11 @@ runs:
           -auto-approve \
           tfplan
 
-        artifact=$(terraform output -raw artifact > /dev/null 2>&1) || true
+    - name: Check for artifact
+      shell: bash
+      run: |
+        # check for artifact
+        artifact=$(terraform output -raw artifact 2> /dev/null) || true
         if [ -n "${artifact}" ] ; then
           echo "ARTIFACT: $artifact"
           echo "ARTIFACT=${artifact}" >> $GITHUB_ENV
