@@ -43,11 +43,13 @@ runs:
       shell: bash
       run: |
         # check for artifact
-        artifact=$(terraform output -raw artifact 2> /dev/null) || true
-        if [ -n "${artifact}" ] ; then
-          echo "ARTIFACT: $artifact"
+        set +e
+        artifact=$(terraform output -raw artifact 2> /dev/null)
+        if [ $? -eq 0 ] ; then
+          echo "ARTIFACT: [$artifact]"
           echo "ARTIFACT=${artifact}" >> $GITHUB_ENV
         fi
+        set -e
 
     - name: Upload artifact
       if: env.ARTIFACT != ''
