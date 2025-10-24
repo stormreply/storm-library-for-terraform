@@ -114,6 +114,7 @@ jobs:
 
       - name: apply
         uses: stormreply/storm-library-for-terraform/.github/actions/apply@main
+        continue-on-error: true
 
       - name: unschedule apply
         uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
