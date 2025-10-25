@@ -11,6 +11,8 @@ inputs:
     required: false
   yaml:
     required: false
+  show:
+    required: false
 
 runs:
   using: composite
@@ -49,6 +51,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main
 
     - name: show environment vars
+      if: inputs.show == true
       id: show-environment-vars
       shell: bash
       run: |
