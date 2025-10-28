@@ -83,4 +83,9 @@ catalog:
     description: A demo of AWS codepipeline, using github, codebuild and codedeploy
     reference: https://github.com/stormreply/codepipeline-demo
     public: yes
-
+  mrap-with-crr-demo:
+    id: 12
+    authors: berndherding
+    published: 2025-10-28
+    description: A demo about S3 Multi-Region Access Points with Cross-Region Replication
+    public: no
