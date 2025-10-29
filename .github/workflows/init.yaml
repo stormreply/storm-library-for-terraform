@@ -59,14 +59,14 @@ jobs:
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: ${{ toJson(vars) }}
           yaml: |
-            access_domain: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
-            access_role: ${{ inputs.access_role || vars.ACCESS_ROLE }}
-            backend_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            backend_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-            deployment_account: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
-            deployment_region: ${{ inputs.backend_region || vars.BACKEND_REGION }}
-            environment: ${{ github.actor }}
-            oidc_principal: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
+            ACCESS_DOMAIN: ${{ inputs.access_domain || vars.ACCESS_DOMAIN }}
+            ACCESS_ROLE: ${{ inputs.access_role || vars.ACCESS_ROLE }}
+            BACKEND_ACCOUNT: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            BACKEND_REGION: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            DEPLOYMENT_ACCOUNT: ${{ inputs.backend_account || vars.BACKEND_ACCOUNT }}
+            DEPLOYMENT_REGION: ${{ inputs.backend_region || vars.BACKEND_REGION }}
+            ENVIRONMENT: ${{ github.actor }}
+            OIDC_PRINCIPAL: ${{ inputs.oidc_principal || vars.OIDC_PRINCIPAL || github.repository_owner }}
 
       - name: set backend credentials
         uses: stormreply/storm-library-for-terraform/.github/actions/init/set-backend-credentials@main
