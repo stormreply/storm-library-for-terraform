@@ -51,7 +51,7 @@ runs:
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main
 
     - name: show environment vars
-      if: inputs.show == 'true'
+      if: inputs.show != ''
       id: show-environment-vars
       shell: bash
       run: |

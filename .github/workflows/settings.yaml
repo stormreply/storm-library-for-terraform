@@ -24,3 +24,4 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ github.actor }}
+          show: settings

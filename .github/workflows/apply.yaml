@@ -46,6 +46,7 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
+          show: apply
 
       - name: set backend profile in AWS config
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
@@ -71,6 +72,7 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
+          show: apply
 
       - name: scan
         uses: stormreply/storm-library-for-terraform/.github/actions/scan@main

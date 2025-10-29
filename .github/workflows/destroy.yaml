@@ -38,6 +38,7 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
+          show: destroy
 
       - name: Set backend profile in AWS config
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
@@ -63,6 +64,7 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
+          show: destroy
 
       - name: destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/destroy@main

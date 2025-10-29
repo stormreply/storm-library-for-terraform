@@ -33,7 +33,7 @@ jobs:
           json: "${{ toJson(vars) }}"
           yaml: |
             ENVIRONMENT: ${{ github.actor }}
-          show: true
+          show: plan
 
       - name: scan
         uses: stormreply/storm-library-for-terraform/.github/actions/scan@main

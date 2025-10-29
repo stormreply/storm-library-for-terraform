@@ -40,6 +40,7 @@ jobs:
           personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
           terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
           json: "${{ toJson(vars) }}"
+          show: init
 
       - name: get access token
         id: get-access-token
