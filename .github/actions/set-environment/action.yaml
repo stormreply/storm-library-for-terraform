@@ -44,8 +44,6 @@ runs:
       with:
         yaml: ${{ inputs.yaml }}
 
-    # TODO: implement "from SLT", retrieving vars from slt repo and saving them immediately
-
     - name: set environment from others
       id: set-environment-from-others
       uses: stormreply/storm-library-for-terraform/.github/actions/set-environment/from-others@main

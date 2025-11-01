@@ -18,8 +18,8 @@ runs:
       with:
         token: ${{ env.TOKEN }}
 
-    - name: rewrite URLs
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/rewrite-urls@main
+    - name: rewrite github URL (add x-access-token)
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/rewrite-github-url@main
 
     # TODO: rethink
     # - name: download providers.tf
@@ -27,18 +27,18 @@ runs:
     #   with:
     #     file: providers.tf
 
-    - name: create deployment-tags
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-deployment-tags@main
+    # - name: create deployment-tags
+    #   uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/inject-deployment@main
 
-    - name: create backend.tf
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-backend@main
+    - name: inject backend.tf
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/inject-backend@main
 
-    - name: create metadata.tfvars
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-metadata-tfvars@main
+    - name: inject metadata.tfvars
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/inject-metadata@main
 
-    - name: create init.tfvars
+    - name: inject init.tfvars
       if: inputs.init == 'true'
-      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/create-init-tfvars@main
+      uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/inject-init-tfvars@main
 
     - name: Set backend profile in AWS config
       uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
