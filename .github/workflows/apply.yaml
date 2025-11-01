@@ -52,7 +52,7 @@ jobs:
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
 
       - name: schedule apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
         with:
           action: apply
           lifetime: ${{ inputs.lifetime }}
@@ -119,13 +119,13 @@ jobs:
         continue-on-error: true
 
       - name: unschedule apply
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
         with:
           action: apply
         continue-on-error: true
 
       - name: schedule destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
+        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
         with:
           action: destroy
           delay: ${{ inputs.lifetime }}

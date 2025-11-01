@@ -8,10 +8,10 @@ runs:
   using: composite
   steps:
 
-    - name: Unschedule actions
+    - name: unschedule actions
       shell: bash
       run: |
-        # scheduler/unschedule
+        # unschedule
 
         backend_bucket=${{ env.BACKEND_BUCKET }}
 

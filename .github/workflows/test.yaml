@@ -101,8 +101,8 @@ jobs:
       - name: destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/destroy@main
 
-      - name: Unschedule actions
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
+      - name: unschedule actions
+        uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
         with:
           action: ".*"
         continue-on-error: true

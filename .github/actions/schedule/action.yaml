@@ -15,16 +15,16 @@ runs:
   using: composite
   steps:
 
-    - name: Unschedule actions
-      uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
+    - name: unschedule actions
+      uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
       with:
         action: ".*"
       continue-on-error: true
 
-    - name: Schedule action
+    - name: schedule action
       shell: bash
       run: |
-        # scheduler/schedule
+        # schedule
 
         delay="${{ inputs.delay }}"
         lifetime="${{ inputs.lifetime }}"

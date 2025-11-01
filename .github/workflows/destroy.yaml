@@ -40,11 +40,11 @@ jobs:
             ENVIRONMENT: ${{ inputs.environment || github.actor }}
           show: destroy
 
-      - name: Set backend profile in AWS config
+      - name: set backend profile in AWS config
         uses: stormreply/storm-library-for-terraform/.github/actions/terraform/checkout/set-backend-profile@main
 
-      - name: Schedule destroy
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/schedule@main
+      - name: schedule destroy
+        uses: stormreply/storm-library-for-terraform/.github/actions/schedule@main
         with:
           action: destroy
           delay: ${{ inputs.delay }}
@@ -69,8 +69,8 @@ jobs:
       - name: destroy
         uses: stormreply/storm-library-for-terraform/.github/actions/destroy@main
 
-      - name: Unschedule actions
-        uses: stormreply/storm-library-for-terraform/.github/actions/scheduler/unschedule@main
+      - name: unschedule actions
+        uses: stormreply/storm-library-for-terraform/.github/actions/unschedule@main
         with:
           action: ".*"
         # continue-on-error: true
