@@ -11,33 +11,8 @@ on:
 
 jobs:
 
-  run:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: set environment
-        id: set-environment
-        uses: stormreply/slt-workflows/.github/actions/set-environment@main
-        with:
-          # github_token: ${{ secrets.GITHUB_TOKEN}} # TODO: remove; GITHUB_TOKEN can't save to vars
-          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          json: "${{ toJson(vars) }}"
-          show: scheduler
-
-      - name: gh auth login
-        # we need gh auth in order to run a gh workflow
-        run: echo "${{ env.TOKEN }}" | gh auth login --with-token
-
-      - name: Set backend profile in AWS config
-        # we need to assume role in order to aws s3api
-        uses: stormreply/slt-workflows/.github/actions/terraform/checkout/set-backend-profile@main
-
-      - name: Select
-        id: select
-        uses: stormreply/slt-workflows/.github/actions/scheduler/select@main
-
-      - name: Execute
-        id: execute
-        if: env.has_selected == 'true'
-        uses: stormreply/slt-workflows/.github/actions/scheduler/execute@main
+  scheduler:
+    uses: stormreply/slt-workflows/.github/workflows/scheduler.yaml@main
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+      TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
