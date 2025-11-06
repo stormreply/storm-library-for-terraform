@@ -5,72 +5,15 @@ permissions:
   id-token: write
 
 on:
-  workflow_call:
-    inputs:
-      delay:
-        type: string
-        required: false
-        default: ""
-      environment:
-        type: string
-        required: false
-        default: ""
-    secrets:
-      STORM_LIBRARY_FOR_TERRAFORM:
-        required: false
-      TERRAFORM_PRIVATE_KEY:
-        required: false
+
+  workflow_dispatch:
 
 jobs:
-
-  schedule:
-    if: inputs.delay != ''
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: set environment
-        id: set-environment
-        uses: stormreply/slt-workflows/.github/actions/set-environment@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          json: "${{ toJson(vars) }}"
-          yaml: |
-            ENVIRONMENT: ${{ inputs.environment || github.actor }}
-          show: destroy
-
-      - name: set backend profile in AWS config
-        uses: stormreply/slt-workflows/.github/actions/terraform/checkout/set-backend-profile@main
-
-      - name: schedule destroy
-        uses: stormreply/slt-workflows/.github/actions/schedule@main
-        with:
-          action: destroy
-          delay: ${{ inputs.delay }}
-
   destroy:
-    if: inputs.delay == ''
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: set environment
-        id: set-environment
-        uses: stormreply/slt-workflows/.github/actions/set-environment@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-          personal_access_token: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-          terraform_private_key: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
-          json: "${{ toJson(vars) }}"
-          yaml: |
-            ENVIRONMENT: ${{ inputs.environment || github.actor }}
-          show: destroy
-
-      - name: destroy
-        uses: stormreply/slt-workflows/.github/actions/destroy@main
-
-      - name: unschedule actions
-        uses: stormreply/slt-workflows/.github/actions/unschedule@main
-        with:
-          action: ".*"
-        # continue-on-error: true
+    uses: stormreply/slt-workflows/.github/workflows/destroy.yaml@main
+    with:
+      environment: ${{ inputs.environment }}
+      delay: ${{ inputs.delay }}
+    secrets:
+      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
+      TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
