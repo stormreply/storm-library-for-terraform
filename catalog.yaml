@@ -6,7 +6,7 @@ catalog:
     description: The central workflow controller repository for the Storm Library for Terraform
     reference: https://github.com/stormreply/storm-library-for-terraform
     public: yes
-  terraform-build-controller:
+  ssm-managed-instance:
     id: 1
     authors: berndherding
     published: 2025-03-18
