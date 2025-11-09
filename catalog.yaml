@@ -11,7 +11,7 @@ catalog:
     authors: berndherding
     published: 2025-03-18
     description: An EC2 instance with configurable user data to be used as a build controller
-    reference: https://github.com/stormreply/terraform-build-controller
+    reference: https://github.com/stormreply/ssm-managed-instance
     public: yes
   sakila-mysql-rds:
     id: 2
