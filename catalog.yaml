@@ -89,3 +89,9 @@ catalog:
     published: 2025-10-28
     description: A demo about S3 Multi-Region Access Points with Cross-Region Replication
     public: no
+  verified-access-demo:
+    id: 13
+    authors: berndherding
+    published: 2025-11-22
+    description: A demo showing AWS Verified Access using google as IDP via oauth2
+    public: no
