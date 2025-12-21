@@ -31,21 +31,21 @@ catalog:
     id: 4
     authors: berndherding
     published: 2025-06-26
-    desciption: A quick demo showing an AWS Client VPN setup with two associated VPCs
+    description: A quick demo showing an AWS Client VPN setup with two associated VPCs
     reference: https://github.com/stormreply/client-vpn-demo
     public: yes
   slt-test-app-token:
     id: 5
     authors: berndherding
     published: 2025-07-10
-    desciption: A private repo for testing the Storm Library for Terraform workflows with an organisation's app token
+    description: A private repo for testing the Storm Library for Terraform workflows with an organisation's app token
     reference: https://github.com/stormreply/slt-test-app-token
     public: yes
   slt-test-github-token:
     id: 6
     authors: berndherding
     published: 2025-08-08
-    desciption: A private repo for testing the Storm Library for Terraform workflows with the default GITHUB TOKEN
+    description: A private repo for testing the Storm Library for Terraform workflows with the default GITHUB TOKEN
     reference: https://github.com/stormreply/slt-test-github-token
     public: yes
   cloudhsm-demo:
