@@ -30,8 +30,8 @@ More about the catalog
 The Scheduler is based on the
 [GitHub Scheduler](https://docs.github.com/de/actions/reference/workflows-and-actions/workflow-syntax#onschedule)
 and checks for scheduled terraform apply or destroy
-jobs every 4 hours. Jobs are managed as S3 objects containing a timestamp and metadata both in their
-name and in their data. The scheduler is also part of this repository.
+jobs every 4 hours by default. Jobs are managed as S3 objects containing a timestamp and metadata
+both in their name and in their data. The scheduler is also part of this repository.
 
 More about the scheduler
 
@@ -58,8 +58,10 @@ The SLT "member" repositories are designed to contain examples, demos and showca
 could also contain best patterns or reusable modules; there is no strict rule about their essence
 apart from that users must be able to plan, apply, test and destroy them from the common set of
 GitHub workflows. Every member repository tries to implement best practices and enforce them to
-some extent by using pre-commit hooks, however this approach may sometimes reach its limits for
-the sake of the example, demo or showcase.
+some extent by using
+[pre-commit](https://github.com/pre-commit/pre-commit)
+hooks, however this approach may sometimes reach its limits for the sake of the example, demo
+ or showcase.
 
 More about the member repositories
 
