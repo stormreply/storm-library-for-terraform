@@ -1,5 +1,5 @@
 resource "aws_iam_role" "terraform_backend_role" {
-  name               = "${local._tag_name}-backend${local.actor_suffix}"
+  name               = "${local._tag_name}-backend"
   assume_role_policy = data.aws_iam_policy_document.github_oidc_trust_policy.json
 }
 
