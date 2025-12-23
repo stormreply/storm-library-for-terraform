@@ -16,6 +16,7 @@ on:
       backend_region:
         description: "Terraform Backend Region"
         type: string
+      # TODO: is this necessary at all? isn't it just the owner of the repository?
       oidc_principal:
         description: "GitHub OIDC Principal"
         type: string
