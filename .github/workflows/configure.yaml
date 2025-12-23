@@ -16,10 +16,6 @@ on:
       backend_region:
         description: "Terraform Backend Region"
         type: string
-      # TODO: is this necessary at all? isn't it just the owner of the repository?
-      oidc_principal:
-        description: "GitHub OIDC Principal"
-        type: string
 
 permissions:
   actions: write
@@ -34,7 +30,6 @@ jobs:
       access_role: ${{ inputs.access_role }}
       backend_account: ${{ inputs.backend_account }}
       backend_region: ${{ inputs.backend_region }}
-      oidc_principal: ${{ inputs.oidc_principal }}
     secrets:
       STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
       TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
