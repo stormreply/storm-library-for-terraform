@@ -71,7 +71,34 @@ More about the member repositories
 
 ## Installation
 
+### Preconditions
 
+- GitHub account or organization
+- AWS account
+- (atm) Identity Center
+
+### Create a GitHub Token
+
+For saving configuration state and for the scheduler to be able to execute workflows in your SLT
+member repositories, the SLT | Storm Library for Terraform needs a GitHub token. This can either
+be a GitHub App Token or a Personal Access Token.
+
+The minimum set of permissions for the token is
+
+- Actions: read and write
+- Contents: read-only
+- Metadata: read-only
+- Variables: read and write
+
+### Clone Storm Library for Terraform
+
+### Configure Storm Library for Terraform
+
+### Clone the Demo Repository
+
+### Link the Demo Repository
+
+### Deploy the Demo
 
 ## Contribute
 
