@@ -5,19 +5,19 @@ on:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
       access_domain:
-        description: "Access domain"
+        description: "AWS Access Domain"
         type: string
       access_role:
-        description: "Access role"
+        description: "AWS Access Role"
         type: string
       backend_account:
-        description: "Backend account"
+        description: "Terraform Backend Account"
         type: string
       backend_region:
-        description: "Backend region"
+        description: "Terraform Backend Region"
         type: string
       oidc_principal:
-        description: "OIDC principal"
+        description: "GitHub OIDC Principal"
         type: string
 
 permissions:
