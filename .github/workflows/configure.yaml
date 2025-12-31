@@ -11,10 +11,10 @@ on:
         description: "AWS Access Role"
         type: string
       backend_account:
-        description: "Terraform Backend Account"
+        description: "AWS Account"
         type: string
       backend_region:
-        description: "Terraform Backend Region"
+        description: "AWS Region"
         type: string
 
 permissions:
