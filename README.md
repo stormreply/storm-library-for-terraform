@@ -80,14 +80,14 @@ More about the member repositories
    - An AWS account accessible via AWS Identity Center (aws login coming soon!)
    - AdministratorAccess or similar permission set granted to you in the AWS account
 
-1. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Storm Library for Terraform on GitHub**
+2. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Storm Library for Terraform on GitHub**
 
    During the fork process, you are being informed that the repository is containing
    workflows
 
-1. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Demo Repository on GitHub**
+3. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Demo Repository on GitHub**
 
-1. **Create a GitHub Token**
+4. **Create a GitHub Token**
 
    For saving configuration state and for the scheduler to be able to execute workflows in your SLT
    member repositories, the SLT | Storm Library for Terraform needs a GitHub token. This can either
@@ -109,10 +109,10 @@ More about the member repositories
 
     After creation, the token will be shown to you just once. Copy it to a temporary place.
 
-1. **Configure the token for use with the Storm Library for Terraform**
+5. **Configure the token for use with the Storm Library for Terraform**
 
-   1. In your forked storm-library-for-terraform GitHub repository, go to _Settings_
-   1. On the left-hand side, in the _Security_ section, expand _Secrets and variables_, then
+   5. In your forked storm-library-for-terraform GitHub repository, go to _Settings_
+   5. On the left-hand side, in the _Security_ section, expand _Secrets and variables_, then
       click _Actions_
    1. In the _Actions secrets and variables_ view in the center, navigate to the _Secrets_ tab
    1. In the _Repository secrets_ section, click _New repository secret_
