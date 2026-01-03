@@ -114,10 +114,15 @@ More about the member repositories
    5.1 In your forked storm-library-for-terraform GitHub repository, go to
        _Settings_
 
+
    5.2 On the left-hand side, in the _Security_ section, expand _Secrets and
        variables_, then click _Actions_
 
-   1. In the _Actions secrets and variables_ view in the center, navigate to the _Secrets_ tab
+
+   5.3 In the _Actions secrets and variables_ view in the center, navigate to the
+       _Secrets_ tab
+
+
    1. In the _Repository secrets_ section, click _New repository secret_
    1. In the _Actions secrets / New secret_ form
       - use _STORM\_LIBRARY\_FOR\_TERRAFORM_ as the _Name_
