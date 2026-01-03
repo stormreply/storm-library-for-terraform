@@ -138,8 +138,8 @@ More about the member repositories
    - In the panel that opens now:
      - _Use workflow from_ Branch: main
      - As _AWS Access Domain_, enter the id or alias of your AWS Identity Center.
-       Example: if your AWS Identity Center URL is _mad.awsapps.com_, your AWS
-       Access Domain would be _mad_
+       Example: if your AWS Identity Center URL is _muchentuchen.awsapps.com_,
+       your AWS Access Domain would be _muchentuchen_.
      - As _AWS Access Role_, enter AdministratorAccess or some similar permission
        set granted to you in the AWS account
      - As _AWS Account_, enter the 12-digit account id of the AWS account where
