@@ -80,7 +80,7 @@ More about the member repositories
    - An AWS account accessible via AWS Identity Center (aws login coming soon!)
    - AdministratorAccess or similar permission set granted to you in the AWS account
 
-1. **[Fork the Storm Library for Terraform]
+1. **[Fork the Storm Library for Terraform]\
    (https://github.com/stormreply/storm-library-for-terraform/fork)
    on GitHub**
 
