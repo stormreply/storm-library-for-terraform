@@ -138,6 +138,7 @@ More about the member repositories
    - In the panel that opens now:
      - _Use workflow from_ Branch: main
      - As _AWS Access Domain_, enter the id or alias of your AWS Identity Center.
+
        Example: if your AWS Identity Center URL is _mad.awsapps.com_, your AWS
        Access Domain would be _mad_
      - As _AWS Access Role_, enter AdministratorAccess or some similar permission
@@ -146,6 +147,7 @@ More about the member repositories
        you intend to install your Terraform S3 backend and deploy SLT demos
      - As _AWS Region_, enter the region where you want the Terraform S3 backend
        bucket installed.
+
        Example: _eu-central-1_
    - Click on _Run workflow_. After a few seconds, reload the page. You will see
      the "Configure" workflow being listed as _In progress_ in the list of workflow
