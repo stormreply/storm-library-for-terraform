@@ -111,29 +111,17 @@ More about the member repositories
 
 5. **Configure the token for use with the Storm Library for Terraform**
 
-   5.1 In your forked storm-library-for-terraform GitHub repository, go to
-       _Settings_
-
-
-   5.2 On the left-hand side, in the _Security_ section, expand _Secrets and
-       variables_, then click _Actions_
-
-
-   5.3 In the _Actions secrets and variables_ view in the center, navigate to the
-       _Secrets_ tab
-
-
-   5.4 In the _Repository secrets_ section, click _New repository secret_
-
-
-   5.5 In the _Actions secrets / New secret_ form
-
-   - use _STORM\_LIBRARY\_FOR\_TERRAFORM_ as the _Name_
-   - copy-paste your token from its temporary place into the _Secret_ field
-
-
-   5.6 Click _Add secret_
-
+   - In your forked storm-library-for-terraform GitHub repository, go to
+     _Settings_
+   - On the left-hand side, in the _Security_ section, expand _Secrets and
+     variables_, then click _Actions_
+   - In the _Actions secrets and variables_ view in the center, navigate to
+     the _Secrets_ tab
+   - In the _Repository secrets_ section, click _New repository secret_
+   - In the _Actions secrets / New secret_ form
+     - use _STORM\_LIBRARY\_FOR\_TERRAFORM_ as the _Name_
+     - copy-paste your token from its temporary place into the _Secret_ field
+   - Click _Add secret_
 
    You are now using the token you created with the Storm Library for Terraform
 
