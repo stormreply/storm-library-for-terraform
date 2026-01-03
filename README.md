@@ -82,9 +82,7 @@ More about the member repositories
 
 1. **[
    Fork the Storm Library for Terraform
-   ](
-   https://github.com/stormreply/storm-library-for-terraform/fork
-   ) on GitHub**
+](https://github.com/stormreply/storm-library-for-terraform/fork) on GitHub**
 
 1. **Create a GitHub token**
 
