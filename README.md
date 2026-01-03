@@ -80,7 +80,8 @@ More about the member repositories
    - An AWS account accessible via AWS Identity Center (aws login coming soon!)
    - AdministratorAccess or similar permission set granted to you in the AWS account
 
-1. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Storm Library for Terraform on GitHub**
+1. **[Fork](https://github.com/stormreply/storm-library-for-terraform/fork)
+   the Storm Library for Terraform on GitHub**
 
 1. **Create a GitHub token**
 
@@ -183,7 +184,7 @@ More about the member repositories
      _slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend_.
      This role is used for creating AWS resources.
 
-1. **Fork and configure a member repository**
+1. **Deploy a member repository**
 
    - [Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the member Repository on GitHub**, e.g.
    [slt-member-example](https://github.com/stormreply/slt-member-example/fork)
@@ -198,16 +199,16 @@ More about the member repositories
      - in _Value_, enter the account id of your AWS Account that you defined
        in the _Configure_ action of your forked _storm\-library\-for\-terraform_
    - Click _Add variable_
-   - Create a second variable with
-     _Name_: _BACKEND\_REGION_
-     _Value_: The AWS Region that you defined in the _Configure_ action of your
+   - Add a second variable with
+     - _Name_: _BACKEND\_REGION_
+     - _Value_: The AWS Region that you defined in the _Configure_ action of your
      forked _storm\-library\-for\-terraform_
+   - In your repository's top bar tab row, click in _Actions_
    - If you click on _Actions_ for the first time, you will be shown a message
      that workflows are not (yet) enabled for this repository. Enable them by
      clicking on the highlighted button.
-
-
-1. **Deploy the Demo**
+   - On the left-hand side, under _Actions_, choose and click the _Test_
+     workflow
 
 ## Contribute
 
