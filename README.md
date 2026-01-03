@@ -80,14 +80,9 @@ More about the member repositories
    - An AWS account accessible via AWS Identity Center (aws login coming soon!)
    - AdministratorAccess or similar permission set granted to you in the AWS account
 
-2. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Storm Library for Terraform on GitHub**
+1. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Storm Library for Terraform on GitHub**
 
-   During the fork process, you are being informed that the repository is containing
-   workflows
-
-3. **[Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the Demo Repository on GitHub**
-
-4. **Create a GitHub Token**
+1. **Create a GitHub token**
 
    For saving configuration state and for the scheduler to be able to execute workflows in your SLT
    member repositories, the SLT | Storm Library for Terraform needs a GitHub token. This can either
@@ -109,7 +104,7 @@ More about the member repositories
 
     After creation, the token will be shown to you just once. Copy it to a temporary place.
 
-5. **Configure the token for use with the Storm Library for Terraform**
+1. **Configure the token for use with the Storm Library for Terraform**
 
    - In your forked storm-library-for-terraform GitHub repository, go to
      _Settings_
@@ -130,7 +125,11 @@ More about the member repositories
    Follow these steps to configure your setup of the Storm Library for Terraform:
 
    - In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_
-   - On the left-hand side, under _Actions_, choose and click the _Configure_ workflow
+   - If you click on _Actions_ for the first time, you will be shown a message
+     that workflows are not (yet) enabled for this repository. Enable them by
+     clicking on the highlighted button.
+   - On the left-hand side, under _Actions_, choose and click the _Configure_
+     workflow
    - On the right-hand side, click _Run workflow_. Note: if you don't see the
      _Run workflow_ button, you are most likely logged into GitHub with some
      other identity than the owner of the forked repository. Switch your GitHub
@@ -173,7 +172,8 @@ More about the member repositories
    or organization's name is _muchentuchen_. The _Configure_ workflow will then
    create three resources:
 
-   - An S3 bucket named _storm\-library\-for\-terraform\-muchentuchen\-123456789012_.
+   - An S3 bucket named
+     _storm\-library\-for\-terraform\-muchentuchen\-123456789012_.
      This bucket will store state files of your SLT demo deployments and job files
      for the SLT scheduler.
    - An IAM role in your account called
@@ -183,7 +183,29 @@ More about the member repositories
      _slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend_.
      This role is used for creating AWS resources.
 
-1. **Configure the Demo Repository**
+1. **Fork and configure a member repository**
+
+   - [Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the member Repository on GitHub**, e.g.
+   [slt-member-example](https://github.com/stormreply/slt-member-example/fork)
+   - In your forked repository on GitHub, click _Settings_
+   - On the left-hand side, in the _Security_ section, expand _Secrets and
+     variables_, then click _Actions_
+   - In the _Actions secrets and variables_ view in the center, navigate to
+     the _Variables_ tab
+   - In the _Repository variables_ section, click _New repository variables_
+   - In the _Actions variables / New variable_ form
+     - enter _BACKEND\_ACCOUNT_ as the _Name_
+     - in _Value_, enter the account id of your AWS Account that you defined
+       in the _Configure_ action of your forked _storm\-library\-for\-terraform_
+   - Click _Add variable_
+   - Create a second variable with
+     _Name_: _BACKEND\_REGION_
+     _Value_: The AWS Region that you defined in the _Configure_ action of your
+     forked _storm\-library\-for\-terraform_
+   - If you click on _Actions_ for the first time, you will be shown a message
+     that workflows are not (yet) enabled for this repository. Enable them by
+     clicking on the highlighted button.
+
 
 1. **Deploy the Demo**
 
