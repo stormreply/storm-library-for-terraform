@@ -27,12 +27,12 @@ catalog:
     description: A quick demo showing an AWS Client VPN setup with two associated VPCs
     reference: https://github.com/stormreply/client-vpn-demo
     public: yes
-  slt-test-github-token:
-    id: 6
+  slt-member-example:
+    id: 5
     authors: berndherding
-    published: 2025-08-08
-    description: A private repo for testing the Storm Library for Terraform workflows with the default GITHUB TOKEN
-    reference: https://github.com/stormreply/slt-test-github-token
+    published: 2025-07-10
+    description: An example "member" repository of the SLT | Storm Library for Terraform
+    reference: https://github.com/stormreply/slt-member-example
     public: yes
   cloudhsm-demo:
     id: 7
