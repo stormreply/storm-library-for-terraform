@@ -10,22 +10,15 @@ catalog:
     id: 1
     authors: berndherding
     published: 2025-03-18
-    description: An EC2 instance with configurable user data to be used as a build controller
+    description: An ec2 instance with AmazonSSMManagedInstanceCore policy included in its profile
     reference: https://github.com/stormreply/ssm-managed-instance
     public: yes
   sakila-mysql-rds:
     id: 2
     authors: berndherding
     published: 2025-03-18
-    description: A MySQL RDS containing the sakila database
+    description: An implementation of the MySQL Sakile Sample Database on AWS RDS
     reference: https://github.com/stormreply/sakila-mysql-rds
-    public: yes
-  lake-formation-demo:
-    id: 3
-    authors: berndherding
-    published: 2025-04-22
-    description: A quick demo showing AWS Lake Formation using row/column permissions on an s3table
-    reference: https://github.com/stormreply/lake-formation-demo
     public: yes
   client-vpn-demo:
     id: 4
@@ -33,13 +26,6 @@ catalog:
     published: 2025-06-26
     description: A quick demo showing an AWS Client VPN setup with two associated VPCs
     reference: https://github.com/stormreply/client-vpn-demo
-    public: yes
-  slt-test-app-token:
-    id: 5
-    authors: berndherding
-    published: 2025-07-10
-    description: A private repo for testing the Storm Library for Terraform workflows with an organisation's app token
-    reference: https://github.com/stormreply/slt-test-app-token
     public: yes
   slt-test-github-token:
     id: 6
