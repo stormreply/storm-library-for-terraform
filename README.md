@@ -199,7 +199,7 @@ More about the member repositories
      - in _Value_, enter the account id of your AWS Account that you defined
        in the _Configure_ action of your forked _storm\-library\-for\-terraform_
    - Click _Add variable_
-   - Add a second variable with
+   - Add a second variable; set
      - _Name_: _BACKEND\_REGION_
      - _Value_: The AWS Region that you defined in the _Configure_ action of your
      forked _storm\-library\-for\-terraform_
