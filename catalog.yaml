@@ -38,7 +38,7 @@ catalog:
     id: 7
     authors: berndherding
     published: 2025-08-17
-    description: A demo of an AWS CloudHSM cluster
+    description: An AWS CloudHSM cluster demo with KMS Custom Key Store integration<
     reference: https://github.com/stormreply/cloudhsm-demo
     public: yes
   log-analytics-demo:
@@ -59,7 +59,9 @@ catalog:
     id: 10
     authors: berndherding
     published: 2025-10-14
-    description: A demo simulating a site-to-site VPN between on-prem and AWS, using a StrongSwan instance as CGW
+    description: |
+      A demo simulating a site-to-site VPN between on-prem and AWS,
+      using a StrongSwan instance as Customer Gateway
     reference: https://github.com/stormreply/site-to-site-vpn-demo
     public: yes
   codepipeline-demo:
