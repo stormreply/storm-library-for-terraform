@@ -1,18 +1,18 @@
 # SLT | Storm Library for Terraform
 
-The SLT | Storm Library for Terraform is a collection of Terraform modules for Amazon Web Services.
+The Storm Library for Terraform is a collection of Terraform modules for Amazon Web Services.
 The focus of these modules, maintained in separate GitHub™ repositories, is on **building examples,**
 **demos and showcases on AWS**. The audience of the library is learners and presenters alike - people
 that want to know or show how a certain service, pattern or solution looks like, or "feels".
 
-In order to be able to try out these examples, demos and showcases quickly, the SLT | Storm Library
+In order to be able to try out these examples, demos and showcases quickly, the Storm Library
 for Terraform additionally provides a set of GitHub workflows which allow for terraform plan, apply
 and destroy them in an AWS environment. Optionally, a simple scheduler can be activated to destroy
 modules after a given time automatically or to deploy them with a delay, if necessary.
 
 ## Building parts
 
-The SLT | Storm Library for Terraform is made up of four building parts:
+The Storm Library for Terraform is made up of four building parts:
 
 ### The Catalog ###
 
@@ -86,7 +86,7 @@ More about the member repositories
 1. **Create a GitHub token**
 
    For saving configuration state and for the scheduler to be able to execute workflows in your SLT
-   member repositories, the SLT | Storm Library for Terraform needs a GitHub token. This can either
+   member repositories, the Storm Library for Terraform needs a GitHub token. This can either
    be a GitHub App Token or a Personal Access Token.
 
    For
@@ -224,7 +224,7 @@ More about the member repositories
      workflow runs.
 
    The _Test_ workflow will take a few minutes to execute. If _Test_ passes with
-   green lights all over, you successfully installed the SLT | Storm Library for
+   green lights all over, you successfully installed the Storm Library for
    Terraform!
 
 ## Contribute
