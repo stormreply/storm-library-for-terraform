@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
-      configure:
-        description: Terraform Backend, Deployment or Both
+      configuration_target:
+        description: Configuration Target
         type: choice
         default: Both
         options:
@@ -28,6 +28,6 @@ jobs:
     uses: stormreply/slt-workflows/.github/workflows/configure-2.yaml@main
     with:
       account_id: ${{ inputs.account_id }}
-      configure: ${{ inputs.configure }}
+      configuration_target: ${{ inputs.configure }}
       region: ${{ inputs.region }}
       role: ${{ inputs.role }}
