@@ -26,4 +26,3 @@ jobs:
       account_id: ${{ inputs.account_id }}
       configuration_target: ${{ inputs.configure }}
       region: ${{ inputs.region }}
-      role: ${{ inputs.role }}
