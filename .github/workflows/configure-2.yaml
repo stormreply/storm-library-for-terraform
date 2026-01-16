@@ -9,17 +9,17 @@ on:
         type: choice
         default: Both
         options:
-        - Backend
-        - Deployment
-        - Both
+        - Terraform Backend and Deployment
+        - Terraform Deployment
+        - Terraform Backend
       account_id:
-        description: "AWS Account Id"
+        description: AWS Account Id
         type: string
       region:
-        description: "AWS Region"
+        description: AWS Region
         type: string
       role:
-        description: "AWS Role"
+        description: AWS Role
         type: string
 
 
