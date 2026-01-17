@@ -21,7 +21,7 @@ on:
 
 jobs:
   configure:
-    uses: stormreply/slt-workflows/.github/workflows/configure-2.yaml@main
+    uses: stormreply/slt-workflows/.github/workflows/configure-with-access-keys.yaml@main
     with:
       configuration_target: ${{ inputs.configure }}
       account_id: ${{ inputs.account_id }}
