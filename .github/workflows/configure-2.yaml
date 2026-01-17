@@ -18,13 +18,13 @@ on:
       region:
         description: AWS Region
         type: string
-    secrets:
-      AWS_ACCESS_KEY_ID:
-        required: true
-        description: AWS Access Key ID for bootstrap authentication
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-        description: AWS Secret Access Key for bootstrap authentication
+    # secrets:
+    #   AWS_ACCESS_KEY_ID:
+    #     required: true
+    #     description: AWS Access Key ID for bootstrap authentication
+    #   AWS_SECRET_ACCESS_KEY:
+    #     required: true
+    #     description: AWS Secret Access Key for bootstrap authentication
 
 jobs:
   configure:
@@ -33,5 +33,6 @@ jobs:
       configuration_target: ${{ inputs.configure }}
       account_id: ${{ inputs.account_id }}
       region: ${{ inputs.region }}
-      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
