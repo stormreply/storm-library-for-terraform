@@ -39,6 +39,3 @@ jobs:
       account_id: ${{ inputs.account_id }}
       region: ${{ inputs.region }}
       sso: true
-    secrets:
-      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-      TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
