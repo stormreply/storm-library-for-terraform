@@ -4,14 +4,6 @@ on:
   workflow_dispatch:
     # checkov:skip=CKV_GHA_7: "GitHub Actions workflow_dispatch inputs MUST be empty"
     inputs:
-      configuration_target:
-        description: Configuration Target
-        type: choice
-        default: Both
-        options:
-        - Terraform Deployment and Backend
-        - Terraform Deployment
-        - Terraform Backend
       access_domain:
         description: "AWS Access Domain"
         type: string
