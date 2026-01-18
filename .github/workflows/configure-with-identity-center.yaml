@@ -32,12 +32,13 @@ permissions:
 jobs:
 
   configure:
-    uses: stormreply/slt-workflows/.github/workflows/configure-with-identity-center.yaml@main
+    uses: stormreply/slt-workflows/.github/workflows/configure-v2.yaml@main
     with:
       access_domain: ${{ inputs.access_domain }}
       permission_set: ${{ inputs.permission_set }}
       account_id: ${{ inputs.account_id }}
       region: ${{ inputs.region }}
+      sso: true
     secrets:
       STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
       TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
