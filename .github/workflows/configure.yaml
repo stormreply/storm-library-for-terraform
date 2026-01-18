@@ -7,29 +7,23 @@ on:
       access_domain:
         description: "AWS Access Domain"
         type: string
-      access_role:
-        description: "AWS Access Role"
+      permission_set:
+        description: "AWS Permissions Set"
         type: string
-      backend_account:
-        description: "AWS Account"
+      account_id:
+        description: "AWS Account Id"
         type: string
-      backend_region:
+      region:
         description: "AWS Region"
         type: string
-
-permissions:
-  actions: write
-  contents: read
 
 jobs:
 
   configure:
-    uses: stormreply/slt-workflows/.github/workflows/configure.yaml@main
+    uses: stormreply/slt-workflows/.github/workflows/configure-v2.yaml@main
     with:
       access_domain: ${{ inputs.access_domain }}
-      access_role: ${{ inputs.access_role }}
-      backend_account: ${{ inputs.backend_account }}
-      backend_region: ${{ inputs.backend_region }}
-    secrets:
-      STORM_LIBRARY_FOR_TERRAFORM: ${{ secrets.STORM_LIBRARY_FOR_TERRAFORM }}
-      TERRAFORM_PRIVATE_KEY: ${{ secrets.TERRAFORM_PRIVATE_KEY }}
+      permission_set: ${{ inputs.permission_set }}
+      account_id: ${{ inputs.account_id }}
+      region: ${{ inputs.region }}
+      sso: true

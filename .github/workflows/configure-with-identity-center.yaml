@@ -8,7 +8,7 @@ on:
         description: "AWS Access Domain"
         type: string
       permission_set:
-        description: "AWS Permission Set"
+        description: "AWS Permissions Set"
         type: string
       account_id:
         description: "AWS Account Id"
@@ -16,10 +16,6 @@ on:
       region:
         description: "AWS Region"
         type: string
-
-permissions:
-  actions: write
-  contents: read
 
 jobs:
 

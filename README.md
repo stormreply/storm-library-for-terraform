@@ -140,9 +140,9 @@ More about the member repositories
      - As _AWS Access Domain_, enter the id or alias of your AWS Identity Center.
        Example: if your AWS Identity Center URL is _muchentuchen.awsapps.com_,
        your AWS Access Domain would be _muchentuchen_.
-     - As _AWS Access Role_, enter AdministratorAccess or some similar permission
+     - As _AWS Permission Set_, enter AdministratorAccess or some similar permission
        set granted to you in the AWS account
-     - As _AWS Account_, enter the 12-digit account id of the AWS account where
+     - As _AWS Account Id_, enter the 12-digit account id of the AWS account where
        you intend to install your Terraform S3 backend and deploy SLT demos
      - As _AWS Region_, enter the region where you want the Terraform S3 backend
        bucket installed.
