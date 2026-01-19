@@ -134,11 +134,11 @@
     transition from <i>sso</i> to <i>build</i>
     </li>
     </ol>
+    <br>
 
-
-Now let's assume your AWS account id is<i>123456789012</i> and your GitHub user
-or organization's name is<i>muchentuchen</i>. The<i>Configure</i> workflow will then
-create three resources:
+    Now let's assume your AWS account id is<i>123456789012</i> and your GitHub user
+    or organization's name is<i>muchentuchen</i>. The<i>Configure</i> workflow will then
+    create three resources:
 
    - An S3 bucket named
      <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
