@@ -107,8 +107,8 @@
     the <i>Configure</i> workflow being listed as <i>In progress</i> in the list of workflow
     runs.
     </li>
-    <li> Click on the <i>Configure</i> workflow link. This will take you to the <i>configure_
-    jobs overview. Both in the center view and on the left-hand side, you will
+    <li> Click on the <i>Configure</i> workflow link. This will take you to the <i>configure
+    jobs</i> overview. Both in the center view and on the left-hand side, you will
     notice jobs appear and being executed successively: <i>init</i>,<i>sso</i>,<i>build</i>.
     </li>
     <li> Click on the <i>sso</i> job as soon as it turns into a clickable link. You will
