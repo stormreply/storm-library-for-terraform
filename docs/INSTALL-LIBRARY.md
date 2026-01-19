@@ -83,7 +83,7 @@
     identity in that case.
     </li>
     <li> In the panel that opens now:
-
+    <br>
     <ul>
     <li><i>Use workflow from</i> Branch: main
     </li>
@@ -109,7 +109,8 @@
     </li>
     <li> Click on the <i>Configure</i> workflow link. This will take you to the <i>configure
     jobs</i> overview. Both in the center view and on the left-hand side, you will
-    notice jobs appear and being executed successively: <i>init</i>,<i>sso</i>,<i>build</i>.
+    notice jobs appear and being executed successively: <i>init</i>, <i>sso</i>,
+    <i>build</i>.
     </li>
     <li> Click on the <i>sso</i> job as soon as it turns into a clickable link. You will
     notice multiple steps of the <i>sso</i> job being executed one after another.
