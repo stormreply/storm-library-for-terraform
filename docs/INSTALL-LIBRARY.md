@@ -36,7 +36,7 @@
 
 1. **Configure the token for use with the Storm Library for Terraform**
 
-    <ol>
+    <ol type="1">
     <li>In your forked storm-library-for-terraform GitHub repository, go to _Settings_</li>
     <li>On the left-hand side, in the _Security_ section, expand _Secrets and variables_,
     then click _Actions_</li>
