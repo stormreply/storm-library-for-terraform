@@ -45,7 +45,7 @@
     <li>In the _Repository secrets_ section, click _New repository secret_</li>
     <li>In the _Actions secrets / New secret_ form
     <ul>
-    <li>use _STORM\_LIBRARY\_FOR\_TERRAFORM_ as the _Name_</li>
+    <li>use <i>STORM_LIBRARY_FOR_TERRAFORM</i> as the _Name_</li>
     <li>copy-paste your token from its temporary place into the _Secret_ field</li>
     </ul>
     </li>
