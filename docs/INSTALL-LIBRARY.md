@@ -60,17 +60,17 @@
     Follow these steps to configure your setup of the Storm Library for Terraform:
 
     <ol type="1">
-    1. In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_
-    1. If you click on _Actions_ for the first time, you will be shown a message
-     that workflows are not (yet) enabled for this repository. Enable them by
-     clicking on the highlighted button.
-    1. On the left-hand side, under _Actions_, choose and click the _Configure_
-     workflow
-    1. On the right-hand side, click _Run workflow_. Note: if you don't see the
-       _Run workflow_ button, you are most likely logged into GitHub with some
-       other identity than the owner of the forked repository. Switch your GitHub
-       identity in that case.
-    1. In the panel that opens now:
+    <li> In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_</li>
+    <li> If you click on _Actions_ for the first time, you will be shown a message
+    that workflows are not (yet) enabled for this repository. Enable them by
+    clicking on the highlighted button.</li>
+    <li> On the left-hand side, under _Actions_, choose and click the _Configure_
+    workflow</li>
+    <li> On the right-hand side, click _Run workflow_. Note: if you don't see the
+    _Run workflow_ button, you are most likely logged into GitHub with some
+    other identity than the owner of the forked repository. Switch your GitHub
+    identity in that case.</li>
+    <li> In the panel that opens now:
 
        - _Use workflow from_ Branch: main
        - As _AWS Access Domain_, enter the id or alias of your AWS Identity Center.
@@ -83,27 +83,28 @@
        - As _AWS Region_, enter the region where you want the Terraform S3 backend
          bucket installed.
          Example: _eu-central-1_
-    1. Click on _Run workflow_. After a few seconds, reload the page. You will see
-       the _Configure_ workflow being listed as _In progress_ in the list of workflow
-       runs.
-    1. Click on the _Configure_ workflow link. This will take you to the _configure_
-       jobs overview. Both in the center view and on the left-hand side, you will
-       notice jobs appear and being executed successively: _init_, _sso_, _build_.
-    1. Click on the _sso_ job as soon as it turns into a clickable link. You will
-       notice multiple steps of the _sso_ job being executed one after another.
-    1. If not yet visible, expand the _get access token_ step. Check for a line
-       saying "Click the link below:"
-    1. Click the link below. A new browser tab will open.
-    1. If you do not have an active session with AWS Identity Center, you will be
-       forced to log in first
-    1. If you do have an active session with AWS Identity Center, you will be
-       informed that authorization has been requested for your AWS account and
-       resources. Confirm and proceed.
-    1. On the next browser page you will be asked if you want to allow access to
-       your data. Allow the access. You will see yet another page informing you
-       that the request has been appoved. You can safely close that browser page.
-    1. In the GitHub workflow window where you came from, you will see the workflow
-       transition from _sso_ to _build_
+    </li>
+    <li> Click on _Run workflow_. After a few seconds, reload the page. You will see
+    the _Configure_ workflow being listed as _In progress_ in the list of workflow
+    runs.</li>
+    <li> Click on the _Configure_ workflow link. This will take you to the _configure_
+    jobs overview. Both in the center view and on the left-hand side, you will
+    notice jobs appear and being executed successively: _init_, _sso_, _build_.</li>
+    <li> Click on the _sso_ job as soon as it turns into a clickable link. You will
+    notice multiple steps of the _sso_ job being executed one after another.</li>
+    <li> If not yet visible, expand the _get access token_ step. Check for a line
+    saying "Click the link below:"</li>
+    <li> Click the link below. A new browser tab will open.</li>
+    <li> If you do not have an active session with AWS Identity Center, you will be</li>
+    forced to log in first
+    <li> If you do have an active session with AWS Identity Center, you will be
+    informed that authorization has been requested for your AWS account and
+    resources. Confirm and proceed.</li>
+    <li> On the next browser page you will be asked if you want to allow access to
+    your data. Allow the access. You will see yet another page informing you
+    that the request has been appoved. You can safely close that browser page.</li>
+    <li> In the GitHub workflow window where you came from, you will see the workflow
+    transition from _sso_ to _build_</li>
     </ol>
    Now let's assume your AWS account id is _123456789012_ and your GitHub user
    or organization's name is _muchentuchen_. The _Configure_ workflow will then
