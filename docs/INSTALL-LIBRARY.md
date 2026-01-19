@@ -48,12 +48,14 @@
     <li>In the <i>Repository secrets</i> section, click <i>New repository secret</i>
     </li>
     <li>In the <i>Actions secrets / New secret</i> form
+    <br><br>
     <ul>
     <li>use <i>STORM_LIBRARY_FOR_TERRAFORM</i> as the <i>Name</i>
     </li>
     <li>copy-paste your token from its temporary place into the <i>Secret</i> field
     </li>
     </ul>
+    <br>
     </li>
     <li>Click<i>Add secret</i>
     </li>
@@ -83,7 +85,7 @@
     identity in that case.
     </li>
     <li> In the panel that opens now:
-    <br>
+    <br><br>
     <ul>
     <li><i>Use workflow from</i> Branch: main
     </li>
