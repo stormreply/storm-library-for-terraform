@@ -83,7 +83,7 @@
     identity in that case.
     </li>
     <li> In the panel that opens now:
-    <br><br>
+    <br>
     <ul>
     <li><i>Use workflow from</i> Branch: main
     </li>
