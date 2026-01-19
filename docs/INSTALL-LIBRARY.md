@@ -52,12 +52,13 @@
 
 1. **Configure the Storm Library for Terraform**
 
-   Follow these steps to configure your setup of the Storm Library for Terraform:
+    Follow these steps to configure your setup of the Storm Library for Terraform:
 
-    \1. In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_
+    1. In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_
     2. If you click on _Actions_ for the first time, you will be shown a message
      that workflows are not (yet) enabled for this repository. Enable them by
      clicking on the highlighted button.
+
    - On the left-hand side, under _Actions_, choose and click the _Configure_
      workflow
    - On the right-hand side, click _Run workflow_. Note: if you don't see the
