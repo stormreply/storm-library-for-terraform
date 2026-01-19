@@ -67,20 +67,20 @@
     <li> On the left-hand side, under<i>Actions</i>, choose and click the<i>Configure_
     workflow</li>
     <li> On the right-hand side, click<i>Run workflow</i>. Note: if you don't see the
-   <i>Run workflow_ button, you are most likely logged into GitHub with some
+    <i>Run workflow_ button, you are most likely logged into GitHub with some
     other identity than the owner of the forked repository. Switch your GitHub
     identity in that case.</li>
     <li> In the panel that opens now:
     <ul>
-    <i>Use workflow from_ Branch: main
-    <li>As<i>AWS Access Domain</i>, enter the id or alias of your AWS Identity Center.
+    <li><i>Use workflow from_ Branch: main</li>
+    <li>As <i>AWS Access Domain</i>, enter the id or alias of your AWS Identity Center.
     Example: if your AWS Identity Center URL is<i>muchentuchen.awsapps.com</i>,
     your AWS Access Domain would be<i>muchentuchen</i>.</li>
-    <li>As<i>AWS Permission Set</i>, enter AdministratorAccess or some similar permission
+    <li>As <i>AWS Permission Set</i>, enter AdministratorAccess or some similar permission
     set granted to you in the AWS account</li>
-    <li>As<i>AWS Account Id</i>, enter the 12-digit account id of the AWS account where
+    <li>As <i>AWS Account Id</i>, enter the 12-digit account id of the AWS account where
     you intend to install your Terraform S3 backend and deploy SLT demos</li>
-    <li>As<i>AWS Region</i>, enter the region where you want the Terraform S3 backend
+    <li>As <i>AWS Region</i>, enter the region where you want the Terraform S3 backend
     bucket installed</li>
     Example:<i>eu-central-1</i>
     </li>
@@ -109,19 +109,20 @@
     transition from<i>sso_ to<i>build</i></li>
     </ol>
 
+
    Now let's assume your AWS account id is<i>123456789012_ and your GitHub user
    or organization's name is<i>muchentuchen</i>. The<i>Configure_ workflow will then
    create three resources:
 
    - An S3 bucket named
-    <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
+     <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
      exists. This bucket will store state files of your SLT demo deployments and
      job files for the SLT scheduler.
    - An OIDC provider for GitHub, if not already exists. This lets GitHub actions
      execute Terraform in AWS environment.
    - An IAM role in your account called
-    <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
+     <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
      This role is used for accessing the S3 bucket mentioned before.
    - An IAM role in your account called
-    <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
+     <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
      This role is used for creating AWS resources.
