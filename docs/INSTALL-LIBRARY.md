@@ -37,19 +37,19 @@
 1. **Configure the token for use with the Storm Library for Terraform**
 
     <ol type="1">
-    <li>In your forked storm-library-for-terraform GitHub repository, go to _Settings_</li>
-    <li>On the left-hand side, in the _Security_ section, expand _Secrets and variables_,
-    then click _Actions_</li>
-    <li>In the _Actions secrets and variables_ view in the center, navigate to the
-    _Secrets_ tab</li>
-    <li>In the _Repository secrets_ section, click _New repository secret_</li>
-    <li>In the _Actions secrets / New secret_ form
+    <li>In your forked storm-library-for-terraform GitHub repository, go to <i>Settings</i></li>
+    <li>On the left-hand side, in the<i>Security_ section, expand<i>Secrets and variables</i>,
+    then click<i>Actions</i></li>
+    <li>In the<i>Actions secrets and variables_ view in the center, navigate to the
+   <i>Secrets_ tab</li>
+    <li>In the<i>Repository secrets_ section, click<i>New repository secret</i></li>
+    <li>In the<i>Actions secrets / New secret_ form
     <ul>
     <li>use <i>STORM_LIBRARY_FOR_TERRAFORM</i> as the <i>Name</i></li>
-    <li>copy-paste your token from its temporary place into the <i>>Secret</i> field</li>
+    <li>copy-paste your token from its temporary place into the <i>Secret</i> field</li>
     </ul>
     </li>
-    <li>Click _Add secret_</li>
+    <li>Click<i>Add secret</i></li>
     </ol>
 
 
@@ -60,39 +60,41 @@
     Follow these steps to configure your setup of the Storm Library for Terraform:
 
     <ol type="1">
-    <li> In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_</li>
-    <li> If you click on _Actions_ for the first time, you will be shown a message
+    <li> In your forked<i>storm-library-for-terraform_ GitHub repository, go to<i>Actions</i></li>
+    <li> If you click on<i>Actions_ for the first time, you will be shown a message
     that workflows are not (yet) enabled for this repository. Enable them by
     clicking on the highlighted button.</li>
-    <li> On the left-hand side, under _Actions_, choose and click the _Configure_
+    <li> On the left-hand side, under<i>Actions</i>, choose and click the<i>Configure_
     workflow</li>
-    <li> On the right-hand side, click _Run workflow_. Note: if you don't see the
-    _Run workflow_ button, you are most likely logged into GitHub with some
+    <li> On the right-hand side, click<i>Run workflow</i>. Note: if you don't see the
+   <i>Run workflow_ button, you are most likely logged into GitHub with some
     other identity than the owner of the forked repository. Switch your GitHub
     identity in that case.</li>
     <li> In the panel that opens now:
-
-       - _Use workflow from_ Branch: main
-       - As _AWS Access Domain_, enter the id or alias of your AWS Identity Center.
-         Example: if your AWS Identity Center URL is _muchentuchen.awsapps.com_,
-         your AWS Access Domain would be _muchentuchen_.
-       - As _AWS Permission Set_, enter AdministratorAccess or some similar permission
-         set granted to you in the AWS account
-       - As _AWS Account Id_, enter the 12-digit account id of the AWS account where
-         you intend to install your Terraform S3 backend and deploy SLT demos
-       - As _AWS Region_, enter the region where you want the Terraform S3 backend
-         bucket installed.
-         Example: _eu-central-1_
+    <ul>
+    <i>Use workflow from_ Branch: main
+    <li>As<i>AWS Access Domain</i>, enter the id or alias of your AWS Identity Center.
+    Example: if your AWS Identity Center URL is<i>muchentuchen.awsapps.com</i>,
+    your AWS Access Domain would be<i>muchentuchen</i>.</li>
+    <li>As<i>AWS Permission Set</i>, enter AdministratorAccess or some similar permission
+    set granted to you in the AWS account</li>
+    <li>As<i>AWS Account Id</i>, enter the 12-digit account id of the AWS account where
+    you intend to install your Terraform S3 backend and deploy SLT demos</li>
+    <li>As<i>AWS Region</i>, enter the region where you want the Terraform S3 backend
+    bucket installed</li>
+    Example:<i>eu-central-1</i>
     </li>
-    <li> Click on _Run workflow_. After a few seconds, reload the page. You will see
-    the _Configure_ workflow being listed as _In progress_ in the list of workflow
+    </ul>
+    </li>
+    <li> Click on<i>Run workflow</i>. After a few seconds, reload the page. You will see
+    the<i>Configure_ workflow being listed as<i>In progress_ in the list of workflow
     runs.</li>
-    <li> Click on the _Configure_ workflow link. This will take you to the _configure_
+    <li> Click on the<i>Configure_ workflow link. This will take you to the<i>configure_
     jobs overview. Both in the center view and on the left-hand side, you will
-    notice jobs appear and being executed successively: _init_, _sso_, _build_.</li>
-    <li> Click on the _sso_ job as soon as it turns into a clickable link. You will
-    notice multiple steps of the _sso_ job being executed one after another.</li>
-    <li> If not yet visible, expand the _get access token_ step. Check for a line
+    notice jobs appear and being executed successively:<i>init</i>,<i>sso</i>,<i>build</i>.</li>
+    <li> Click on the<i>sso_ job as soon as it turns into a clickable link. You will
+    notice multiple steps of the<i>sso_ job being executed one after another.</li>
+    <li> If not yet visible, expand the<i>get access token_ step. Check for a line
     saying "Click the link below:"</li>
     <li> Click the link below. A new browser tab will open.</li>
     <li> If you do not have an active session with AWS Identity Center, you will be</li>
@@ -104,21 +106,22 @@
     your data. Allow the access. You will see yet another page informing you
     that the request has been appoved. You can safely close that browser page.</li>
     <li> In the GitHub workflow window where you came from, you will see the workflow
-    transition from _sso_ to _build_</li>
+    transition from<i>sso_ to<i>build</i></li>
     </ol>
-   Now let's assume your AWS account id is _123456789012_ and your GitHub user
-   or organization's name is _muchentuchen_. The _Configure_ workflow will then
+
+   Now let's assume your AWS account id is<i>123456789012_ and your GitHub user
+   or organization's name is<i>muchentuchen</i>. The<i>Configure_ workflow will then
    create three resources:
 
    - An S3 bucket named
-     _storm\-library\-for\-terraform\-muchentuchen\-123456789012_, if not already
+    <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
      exists. This bucket will store state files of your SLT demo deployments and
      job files for the SLT scheduler.
    - An OIDC provider for GitHub, if not already exists. This lets GitHub actions
      execute Terraform in AWS environment.
    - An IAM role in your account called
-     _slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend_.
+    <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
      This role is used for accessing the S3 bucket mentioned before.
    - An IAM role in your account called
-     _slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend_.
+    <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
      This role is used for creating AWS resources.
