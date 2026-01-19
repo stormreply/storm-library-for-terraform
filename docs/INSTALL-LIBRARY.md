@@ -83,6 +83,7 @@
     identity in that case.
     </li>
     <li> In the panel that opens now:
+
     <ul>
     <li><i>Use workflow from</i> Branch: main
     </li>
@@ -135,9 +136,9 @@
     </ol>
 
 
-   Now let's assume your AWS account id is<i>123456789012</i> and your GitHub user
-   or organization's name is<i>muchentuchen</i>. The<i>Configure</i> workflow will then
-   create three resources:
+Now let's assume your AWS account id is<i>123456789012</i> and your GitHub user
+or organization's name is<i>muchentuchen</i>. The<i>Configure</i> workflow will then
+create three resources:
 
    - An S3 bucket named
      <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
