@@ -102,6 +102,7 @@
     Example: <i>eu-central-1</i>
     </li>
     </ul>
+    <br>
     </li>
     <li> Click on <i>Run workflow</i>. After a few seconds, reload the page. You will see
     the <i>Configure</i> workflow being listed as <i>In progress</i> in the list of workflow
