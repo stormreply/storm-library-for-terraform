@@ -45,8 +45,8 @@
     <li>In the _Repository secrets_ section, click _New repository secret_</li>
     <li>In the _Actions secrets / New secret_ form
     <ul>
-    <li>use <i>STORM_LIBRARY_FOR_TERRAFORM</i> as the _Name_</li>
-    <li>copy-paste your token from its temporary place into the _Secret_ field</li>
+    <li>use <i>STORM_LIBRARY_FOR_TERRAFORM</i> as the <i>Name</i></li>
+    <li>copy-paste your token from its temporary place into the <i>>Secret</i> field</li>
     </ul>
     </li>
     <li>Click _Add secret_</li>
@@ -59,6 +59,7 @@
 
     Follow these steps to configure your setup of the Storm Library for Terraform:
 
+    <ol type="1">
     1. In your forked _storm-library-for-terraform_ GitHub repository, go to _Actions_
     1. If you click on _Actions_ for the first time, you will be shown a message
      that workflows are not (yet) enabled for this repository. Enable them by
@@ -103,7 +104,7 @@
        that the request has been appoved. You can safely close that browser page.
     1. In the GitHub workflow window where you came from, you will see the workflow
        transition from _sso_ to _build_
-
+    </ol>
    Now let's assume your AWS account id is _123456789012_ and your GitHub user
    or organization's name is _muchentuchen_. The _Configure_ workflow will then
    create three resources:
