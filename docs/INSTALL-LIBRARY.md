@@ -115,7 +115,7 @@
     notice jobs appear and being executed successively: <i>init</i>, <i>sso</i>,
     <i>build</i>.
     </li>
-    <li> Click on the <i>sso</i> job as soon as it turns into a clickable link. You will
+    <li> Click on the <i>configure/sso</i> job as soon as it turns into a clickable link. You will
     notice multiple steps of the <i>sso</i> job being executed one after another.
     </li>
     <li> If not yet visible, expand the <i>get access token</i> step. Check for a line
