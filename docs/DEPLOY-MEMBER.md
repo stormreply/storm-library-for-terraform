@@ -29,9 +29,9 @@
      - _Test_: executes _Plan_, _Apply_ and _Destroy_ one after the other
   1. Click on the _Apply_ workflow
   1. On the right-hand side, click _Run workflow_. Note: if you don't see the
-     _Run workflow_ button, you are most likely logged into GitHub with some
-     other identity than the owner of the forked repository. Switch your GitHub
-     identity in that case.
+     _Run workflow_ button, you are most likely not logged into GitHub as the
+     owner of the forked repository but with some other identity. Switch your
+     GitHub identity in that case.
   1. In the panel that opens now, _Use workflow from_ Branch: main, then click
      on _Run workflow_ on that panel. Ignore the other input options for the
      moment. After a few seconds, reload the page. You will see the _Apply_
