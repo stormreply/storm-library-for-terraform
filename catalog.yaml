@@ -76,10 +76,19 @@ catalog:
     authors: berndherding
     published: 2025-10-28
     description: A demo about S3 Multi-Region Access Points with Cross-Region Replication
+    reference: https://github.com/stormreply/mrap-with-crr-demo
     public: no
   verified-access-demo:
     id: 13
     authors: berndherding
     published: 2025-11-22
     description: A demo showing AWS Verified Access using google as IDP via oauth2
+    reference: https://github.com/stormreply/verified-access-demo
     public: no
+  iam-roles-anywhere-demo:
+    id: 14
+    authors: berndherding
+    published: 2026-01-27
+    description: A demo showing usage of IAM Roles Anywhere
+    reference: https://github.com/berndherding/iam-roles-anywhere-demo
+    public: yes
