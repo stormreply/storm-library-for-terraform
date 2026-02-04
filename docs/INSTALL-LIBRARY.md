@@ -141,7 +141,7 @@
     Now let's assume your AWS account id is <i>123456789012</i> and your GitHub user or
     organization's name is <i>muchentuchen</i>. The <i>Configure with Identity Center</i>
     workflow will then create four resources:
-
+    <br>
     - An S3 bucket named
       <i>storm\-library\-for\-terraform\-muchentuchen\-123456789012</i>, if not already
       exists. This bucket will store state files of your SLT demo deployments and
