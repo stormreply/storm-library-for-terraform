@@ -154,7 +154,7 @@
     - An IAM role in your account called
       <i>slt\-0\-storm\-library\-for\-terraform\-muchentuchen\-backend</i>.
       This role is used for creating AWS resources.
-
+    <br>
     After a minute or two, the _Configure with Identity Center_ should have turned green
     all over. Congratulations! You have mastered the first challenge!
 
@@ -167,7 +167,7 @@
     </li>
     <li>Enable the <i>Scheduler</i> workflow.
     </li>
-
+    <br>
     The scheduler will now maintain an internal schedule and destroy your deployments
     automatically after their _lifetime_, a configuration item that you can pass with
     each deployment, set to 1 hour by default.
