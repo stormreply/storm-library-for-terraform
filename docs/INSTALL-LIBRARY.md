@@ -137,7 +137,7 @@
     <li> In the GitHub workflow window where you came from, you will see the workflow
     transition from <i>sso</i> to <i>build</i>
     </li>
-
+    <br>
     Now let's assume your AWS account id is <i>123456789012</i> and your GitHub user or
     organization's name is <i>muchentuchen</i>. The <i>Configure with Identity Center</i>
     workflow will then create four resources:
@@ -156,10 +156,8 @@
       This role is used for creating AWS resources.
     <br>
     After a minute or two, the _Configure with Identity Center_ should have turned green
-    all over. Congratulations! You have mastered the first challenge!
-
-    Before you proceed with deploying your first member repository, we need to do one
-    last thing.
+    all over. Congratulations! You have mastered the first challenge! Before you proceed
+    with deploying your first member repository, we need to do one last thing.
 
     <li>Go back to the <i>Actions</i> overview of your fork of the Storm Library for
     Terraform in the GiHub UI. On the left-hand side, you will notice the <i>Scheduler</i>
