@@ -80,7 +80,7 @@ More about the member repositories
 ## Terraform Docs
 
 <details>
-<summary>Klicke zum Anzeigen</summary>
+<summary>Click to show</summary>
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

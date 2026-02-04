@@ -23,7 +23,7 @@ permissions:
 
 jobs:
   configure:
-    uses: stormreply/slt-workflows/.github/workflows/configure-v2.yaml@main
+    uses: stormreply/slt-workflows/.github/workflows/configure.yaml@main
     with:
       access_domain: ${{ inputs.access_domain }}
       permission_set: ${{ inputs.permission_set }}
