@@ -6,15 +6,22 @@ catalog:
     description: The central workflow controller repository for the Storm Library for Terraform
     reference: https://github.com/stormreply/storm-library-for-terraform
     public: yes
-  ssm-managed-instance:
+  slt-member-example:
     id: 1
+    authors: berndherding
+    published: 2025-07-10
+    description: An example "member" repository of the SLT | Storm Library for Terraform
+    reference: https://github.com/stormreply/slt-member-example
+    public: yes
+  ssm-managed-instance:
+    id: 2
     authors: berndherding
     published: 2025-03-18
     description: An ec2 instance with AmazonSSMManagedInstanceCore policy included in its profile
     reference: https://github.com/stormreply/ssm-managed-instance
     public: yes
   sakila-mysql-rds:
-    id: 2
+    id: 3
     authors: berndherding
     published: 2025-03-18
     description: An implementation of the MySQL Sakile Sample Database on AWS RDS
@@ -27,36 +34,29 @@ catalog:
     description: A quick demo showing an AWS Client VPN setup with two associated VPCs
     reference: https://github.com/stormreply/client-vpn-demo
     public: yes
-  slt-member-example:
-    id: 5
-    authors: berndherding
-    published: 2025-07-10
-    description: An example "member" repository of the SLT | Storm Library for Terraform
-    reference: https://github.com/stormreply/slt-member-example
-    public: yes
   cloudhsm-demo:
-    id: 7
+    id: 5
     authors: berndherding
     published: 2025-08-17
     description: An AWS CloudHSM cluster demo with KMS Custom Key Store integration<
     reference: https://github.com/stormreply/cloudhsm-demo
     public: yes
   log-analytics-demo:
-    id: 8
+    id: 6
     authors: berndherding
     published: 2025-09-04
     description: A log analytics demo including Data Streams, Firehose and an Apache Zeppelin notebook
     reference: https://github.com/stormreply/log-analytics-demo
     public: yes
   global-accelerator-demo:
-    id: 9
+    id: 7
     authors: berndherding
     published: 2025-10-05
     description: A demo of AWS Global Accelerator
     reference: https://github.com/stormreply/global-accelerator-demo
     public: yes
   site-to-site-vpn-demo:
-    id: 10
+    id: 8
     authors: berndherding
     published: 2025-10-14
     description: |
@@ -65,28 +65,28 @@ catalog:
     reference: https://github.com/stormreply/site-to-site-vpn-demo
     public: yes
   codepipeline-demo:
-    id: 11
+    id: 9
     authors: berndherding
     published: 2025-10-18
     description: A demo of AWS codepipeline, using github, codebuild and codedeploy
     reference: https://github.com/stormreply/codepipeline-demo
     public: yes
   mrap-with-crr-demo:
-    id: 12
+    id: 10
     authors: berndherding
     published: 2025-10-28
     description: A demo about S3 Multi-Region Access Points with Cross-Region Replication
     reference: https://github.com/stormreply/mrap-with-crr-demo
     public: no
   verified-access-demo:
-    id: 13
+    id: 11
     authors: berndherding
     published: 2025-11-22
     description: A demo showing AWS Verified Access using google as IDP via oauth2
     reference: https://github.com/stormreply/verified-access-demo
     public: no
   iam-roles-anywhere-demo:
-    id: 14
+    id: 12
     authors: berndherding
     published: 2026-01-27
     description: A demo showing usage of IAM Roles Anywhere
