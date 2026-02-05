@@ -71,11 +71,8 @@ More about the member repositories
 
 ## Installation
 
-[Install the Storm Library for Terraform](docs/INSTALL-LIBRARY.md)
-
-## Deploy a member repository
-
-[Deploy a member repository](docs/DEPLOY-MEMBER.md)
+- [Install the Storm Library for Terraform](docs/INSTALL-LIBRARY.md)
+- [Deploy a member repository](docs/DEPLOY-MEMBER.md)
 
 ## Terraform Docs
 
