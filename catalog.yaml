@@ -24,7 +24,7 @@ catalog:
     id: 3
     authors: berndherding
     published: 2025-03-18
-    description: An implementation of the MySQL Sakile Sample Database on AWS RDS
+    description: An implementation of the MySQL Sakila Sample Database on AWS RDS
     reference: https://github.com/stormreply/sakila-mysql-rds
     public: yes
   client-vpn-demo:
