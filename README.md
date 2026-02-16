@@ -113,7 +113,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input__metadata"></a> [\_metadata](#input\_\_metadata) | n/a | <pre>object({<br/>    actor      = string # Github actor (deployer) of the deployment<br/>    catalog_id = string # SLT catalog id of this module<br/>    deployment = string # slt-<catalod_id>-<repo>-<actor><br/>    ref        = string # Git reference of the deployment<br/>    ref_name   = string # Git ref_name (branch) of the deployment<br/>    repo       = string # GitHub short repository name (without owner) of the deployment<br/>    repository = string # GitHub full repository name (including owner) of the deployment<br/>    sha        = string # Git (full-length, 40 char) commit SHA of the deployment<br/>    short_name = string # slt-<catalog_id>-<actor><br/>    time       = string # Timestamp of the deployment<br/>  })</pre> | <pre>{<br/>  "actor": "",<br/>  "catalog_id": "",<br/>  "deployment": "",<br/>  "ref": "",<br/>  "ref_name": "",<br/>  "repo": "",<br/>  "repository": "",<br/>  "sha": "",<br/>  "short_name": "",<br/>  "time": ""<br/>}</pre> | no |
+| <a name="input__metadata"></a> [\_metadata](#input\_\_metadata) | Select metadata passed from GitHub Workflows | <pre>object({<br/>    actor      = string # Github actor (deployer) of the deployment<br/>    catalog_id = string # SLT catalog id of this module<br/>    deployment = string # slt-<catalod_id>-<repo>-<actor><br/>    ref        = string # Git reference of the deployment<br/>    ref_name   = string # Git ref_name (branch) of the deployment<br/>    repo       = string # GitHub short repository name (without owner) of the deployment<br/>    repository = string # GitHub full repository name (including owner) of the deployment<br/>    sha        = string # Git (full-length, 40 char) commit SHA of the deployment<br/>    short_name = string # slt-<catalog_id>-<actor><br/>    time       = string # Timestamp of the deployment<br/>  })</pre> | <pre>{<br/>  "actor": "",<br/>  "catalog_id": "",<br/>  "deployment": "",<br/>  "ref": "",<br/>  "ref_name": "",<br/>  "repo": "",<br/>  "repository": "",<br/>  "sha": "",<br/>  "short_name": "",<br/>  "time": ""<br/>}</pre> | no |
 | <a name="input_backend_bucket"></a> [backend\_bucket](#input\_backend\_bucket) | Central backend bucket of the Storm Library for Terraform (SLT)™ | `string` | n/a | yes |
 | <a name="input_oidc_principal"></a> [oidc\_principal](#input\_oidc\_principal) | Github owner (org or user) of repositories permitted to deploy to AWS | `string` | n/a | yes |
 
@@ -121,9 +121,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output__default_tags"></a> [\_default\_tags](#output\_\_default\_tags) | n/a |
-| <a name="output__metadata"></a> [\_metadata](#output\_\_metadata) | n/a |
-| <a name="output__name_tag"></a> [\_name\_tag](#output\_\_name\_tag) | n/a |
+| <a name="output__default_tags"></a> [\_default\_tags](#output\_\_default\_tags) | Default tags to be used in Terraform provider, cf. providers.tf |
+| <a name="output__metadata"></a> [\_metadata](#output\_\_metadata) | Select metadata passed from GitHub Workflows |
+| <a name="output__name_tag"></a> [\_name\_tag](#output\_\_name\_tag) | Name to be used as name property of your resources. If you happen to have multiple<br/>resources of the same type, append your <I>-purpose</I> to the name tag. |
 <!-- END_TF_DOCS -->
 
 </details>
