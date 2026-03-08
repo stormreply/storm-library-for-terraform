@@ -92,3 +92,16 @@ catalog:
     description: A demo showing usage of IAM Roles Anywhere
     reference: https://github.com/berndherding/iam-roles-anywhere-demo
     public: yes
+  managed-microsoft-ad:
+    id: 13
+    authors: berndherding
+    published: 2026-03-08
+    description: A managed Microsoft AD
+    reference: https://github.com/extremeshepherding/managed-microsoft-ad
+    public: no
+  client-vpn-ad-demo:
+    id: 14
+    authors: berndherding
+    published: 2026-03-08
+    reference: https://github.com/extremeshepherding/client-vpn-ad-demo
+    public: no
