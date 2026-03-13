@@ -1,7 +1,7 @@
 
 <table>
-<tr>
-  <th>SLT Member Repository</th>
+<tr align="left" valign="top">
+  <th width="30%">SLT Member Repository</th>
   <th>Description</th>
   <th>Authors</th>
   <th>Architecture</th>
