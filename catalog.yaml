@@ -38,7 +38,7 @@ catalog:
     id: 5
     authors: berndherding
     published: 2025-08-17
-    description: An AWS CloudHSM cluster demo with KMS Custom Key Store integration<
+    description: An AWS CloudHSM cluster demo with KMS Custom Key Store integration
     reference: https://github.com/stormreply/cloudhsm-demo
     public: yes
   log-analytics-demo:

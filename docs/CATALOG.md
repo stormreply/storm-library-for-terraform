@@ -32,7 +32,7 @@
 </tr>
 <tr align="left" valign="top">
   <td><a href="https://github.com/stormreply/cloudhsm-demo"><b>cloudhsm-demo</b></a></td>
-  <td>An AWS CloudHSM cluster demo with KMS Custom Key Store integration</td>
+  <td>An AWS CloudHSM cluster demo with KMS Custom Key Store integration<</td>
   <td>berndherding</td>
   <td><img src="https://github.com/stormreply/cloudhsm-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
