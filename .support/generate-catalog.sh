@@ -38,7 +38,7 @@ for name, meta in entries:
     img_url = f"{ref}/blob/main/assets/architecture.drawio.svg"
 
     lines.append("<tr align=\"left\" valign=\"top\">")
-    lines.append(f"  <td><a href=\"{ref}\"><b>{name}</b></a><br/>by<br/>{authors}</td>")
+    lines.append(f"  <td><a href=\"{ref}\"><b>{name}</b></a><br/><br/>by<br/>{authors}</td>")
     lines.append(f"  <td>{desc}</td>")
     lines.append(f"  <td><img src=\"{img_url}\" width=\"200\"/></td>")
     lines.append("</tr>")
