@@ -12,4 +12,5 @@ awk '
     {print}
 ' README.new > README.md
 
+git add README.md
 rm README.new
