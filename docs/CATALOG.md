@@ -1,7 +1,7 @@
 
 <table>
 <tr align="left" valign="top">
-  <th width="30%">SLT Member Repository</th>
+  <th width="25%">SLT Member Repository</th>
   <th>Description</th>
   <th>Authors</th>
   <th>Architecture</th>
@@ -13,7 +13,7 @@
   <td><img src="https://github.com/stormreply/slt-member-example/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
 <tr align="left" valign="top">
-  <td>ssm-managed-instance</td>
+  <td><a href="https://github.com/stormreply/ssm-managed-instance">ssm-managed-instance</a></td>
   <td>An ec2 instance with AmazonSSMManagedInstanceCore policy included in its profile</td>
   <td>berndherding</td>
   <td><img src="https://github.com/stormreply/ssm-managed-instance/blob/main/assets/architecture.drawio.svg" width="200"/></td>
