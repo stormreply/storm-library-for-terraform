@@ -75,4 +75,10 @@
   <td>A demo showing an AWS Client VPN setup with two associated VPCs, with users from AD having access only to their designated VPC.</td>
   <td><img src="https://github.com/extremeshepherding/client-vpn-ad-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
+<tr align="left" valign="top">
+  <td><a href="https://github.com/extremeshepherding/file-sgw-demo"><b>file-sgw-demo</b></a><br/><br/>by<br/>berndherding</td>
+  <td>A Storage Gateway file gateway demo using client vpn in order
+      to mount a storage gateway NFS share to your local computer.</td>
+  <td><img src="https://github.com/extremeshepherding/file-swg-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
+</tr>
 </table>

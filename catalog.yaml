@@ -112,3 +112,12 @@ catalog:
       with users from AD having access only to their designated VPC.
     reference: https://github.com/extremeshepherding/client-vpn-ad-demo
     public: no
+  file-sgw-demo:
+    id: 15
+    authors: berndherding
+    published: 2026-03-24
+    description: |
+      A Storage Gateway file gateway demo using client vpn in order
+      to mount a storage gateway NFS share to your local computer
+    reference: https://github.com/extremeshepherding/file-sgw-demo
+    public: no
