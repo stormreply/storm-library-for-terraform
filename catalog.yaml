@@ -118,6 +118,6 @@ catalog:
     published: 2026-03-24
     description: |
       A Storage Gateway file gateway demo using client vpn in order
-      to mount a storage gateway NFS share to your local computer
+      to mount a storage gateway NFS share to your local computer.
     reference: https://github.com/extremeshepherding/file-sgw-demo
     public: no
