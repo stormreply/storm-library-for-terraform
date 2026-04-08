@@ -121,3 +121,11 @@ catalog:
       to mount a storage gateway NFS share to your local computer.
     reference: https://github.com/extremeshepherding/file-sgw-demo
     public: no
+  migration-hub-demo:
+    id: 16
+    authors: berndherding
+    description: |
+      A demo about AWS Migration Hub using fake data as it would be provided
+      from AWS Discovery Service
+    reference: https://github.com/extremeshepherding/migratin-hub-demo
+    public: no
