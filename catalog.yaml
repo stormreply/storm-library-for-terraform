@@ -135,3 +135,11 @@ catalog:
     description: A demo containing some IAM example use cases
     reference: https://github.com/extremeshepherding/iam-examples-demo
     public: no
+  s3files-demo:
+    id: 18
+    authors: tgrund-reply
+    description: |
+      Automated IaC benchmark comparing AWS S3 Files vs EFS performance
+      across EC2 instance types. Results published to S3 static website.
+    reference: https://github.com/stormreply/s3files-demo
+    public: no
