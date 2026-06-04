@@ -98,19 +98,19 @@
 </tr>
 <tr align="left" valign="top">
   <td>16</td>
-  <td><a href="https://github.com/extremeshepherding/migration-hub-demo"><b>file-sgw-demo</b></a><br/><br/>by<br/>berndherding</td>
+  <td><a href="https://github.com/extremeshepherding/migration-hub-demo"><b>migration-hub-demo</b></a><br/><br/>by<br/>berndherding</td>
   <td>A demo about AWS Migration Hub using fake data as it would be provided from AWS Discovery Service.</td>
   <td><img src="https://github.com/extremeshepherding/migration-hub-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
 <tr align="left" valign="top">
   <td>17</td>
-  <td><a href="https://github.com/extremeshepherding/iam-examples-demo"><b>file-sgw-demo</b></a><br/><br/>by<br/>berndherding</td>
+  <td><a href="https://github.com/extremeshepherding/iam-examples-demo"><b>iam-examples-demo</b></a><br/><br/>by<br/>berndherding</td>
   <td>A demo containing some IAM example use cases.</td>
   <td><img src="https://github.com/extremeshepherding/iam-examples-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
 <tr align="left" valign="top">
   <td>18</td>
-  <td><a href="https://github.com/stormreply/s3files-demo"><b>file-sgw-demo</b></a><br/><br/>by<br/>tgrund</td>
+  <td><a href="https://github.com/stormreply/s3files-demo"><b>s3files-demo</b></a><br/><br/>by<br/>tgrund</td>
   <td>Automated IaC benchmark comparing AWS S3 Files vs EFS performance across EC2 instance types. Results published to S3 static website.</td>
   <td><img src="https://github.com/stormreply/s3files-demo/blob/main/assets/architecture.drawio.svg" width="200"/></td>
 </tr>
