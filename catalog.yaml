@@ -126,13 +126,13 @@ catalog:
     authors: berndherding
     description: |
       A demo about AWS Migration Hub using fake data as it would be provided
-      from AWS Discovery Service
-    reference: https://github.com/extremeshepherding/migratin-hub-demo
+      from AWS Discovery Service.
+    reference: https://github.com/extremeshepherding/migration-hub-demo
     public: no
   iam-examples-demo:
     id: 17
     authors: berndherding
-    description: A demo containing some IAM example use cases
+    description: A demo containing some IAM example use cases.
     reference: https://github.com/extremeshepherding/iam-examples-demo
     public: no
   s3files-demo:
