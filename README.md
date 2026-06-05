@@ -67,7 +67,7 @@ More about the member repositories
 
 ### Dependencies within the SLT
 
-![Building Parts](assets/slt-building-parts.svg)
+![Architecture](assets/architecture.drawio.svg)
 
 ## Installation
 
