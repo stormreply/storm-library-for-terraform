@@ -20,26 +20,40 @@ entries = sorted(
     key=lambda x: x[1].get("id", 0)
 )
 
+def flatten(lst):
+    for item in lst:
+        if isinstance(item, str):
+            yield item
+        else:
+            yield from flatten(item)
+
+# ['a', 'b', 'c', 'd', 'e']
 lines = []
 lines.append("")
 lines.append("<table>")
 lines.append("<tr align=\"left\" valign=\"top\">")
+lines.append("  <th>Catalog Nr.</th>")
 lines.append("  <th width=\"25%\">SLT Member Repository</th>")
 lines.append("  <th>Description</th>")
 lines.append("  <th>Architecture</th>")
 lines.append("</tr>")
 
 for name, meta in entries:
+    id = meta.get("id", "")
     ref = meta.get("reference", "")
     desc = meta.get("description", "")
     if isinstance(desc, str):
         desc = " ".join(desc.split())
-    authors = meta.get("authors", "")
+    authors = flatten([meta.get("authors", "")])
+    authors = ", ".join(
+        [f"<a href=\"https://github.com/{author}\">{author}</a>" for author in authors]
+    )
     img_url = f"{ref}/blob/main/assets/architecture.drawio.svg"
 
     lines.append("<tr align=\"left\" valign=\"top\">")
-    lines.append(f"  <td><a href=\"{ref}\"><b>{name}</b></a><br/><br/>by<br/>{authors}</td>")
-    lines.append(f"  <td>{desc}</td>")
+    lines.append(f"  <td>{id}</td>")
+    lines.append(f"  <td><a href=\"{ref}\"><b>{name}</b></a></td>")
+    lines.append(f"  <td>{desc}<br/><br/>by {authors}</td>")
     lines.append(f"  <td><img src=\"{img_url}\" width=\"200\"/></td>")
     lines.append("</tr>")
 
