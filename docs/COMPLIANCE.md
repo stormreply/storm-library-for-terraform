@@ -18,6 +18,7 @@ following set of rules:
 1. After the very first `# `-heading in the `README.md`, there must be a
    badge block like in the reference `README.md`
 1. There must be no `n/a` values between the markers `<!-- BEGIN_TF_DOCS -->`
-   and `<!-- END_TF_DOCS -->` in the `README.md`
+   and `<!-- END_TF_DOCS -->` in the `README.md`, apart from the `Modules`
+   section within.
 1. The `.gitignore` must contain all entries that are in the reference
    `.gitignore`, but may contain more.
