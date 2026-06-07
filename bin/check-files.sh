@@ -95,7 +95,7 @@ vecho() { $VERBOSE && echo -e "$@" || true; }
 pass()    { vecho "  ${GREEN}[PASS]${NC}    $1";              CHECKS=$((CHECKS + 1)); }
 fail()    { vecho "  ${RED}[FAIL]${NC}    $1${2:+  ($2)}";    CHECKS=$((CHECKS + 1)); }
 hint()    { vecho "  ${CYAN}[HINT]${NC}    $1${2:+  ($2)}";   CHECKS=$((CHECKS + 1)); }
-deleted() { vecho "  ${RED}[DELETED]${NC} $1${2:+  ($2)}";    CHECKS=$((CHECKS + 1)); }
+deleted() { vecho "  ${RED}[DELETED]${NC} $1${2:+  ($2)}";    CHECKS=$((CHECKS + 1)); MD_DELETED+=("$1"); }
 copied()  { vecho "  ${RED}[COPY]${NC}    $1  ($2)";          CHECKS=$((CHECKS + 1)); MD_COPIED+=("$1"); }
 synced()  { vecho "  ${RED}[SYNC]${NC}    $1  ($2)";          CHECKS=$((CHECKS + 1)); MD_OVERWRITTEN+=("$1"); }
 
