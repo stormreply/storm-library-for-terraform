@@ -20,5 +20,7 @@ following set of rules:
 1. There must be no `n/a` values between the markers `<!-- BEGIN_TF_DOCS -->`
    and `<!-- END_TF_DOCS -->` in the `README.md`, apart from the `Modules`
    section within.
+1. As an exception from the rule before, an `n/a` value in the `Providers`
+   section for the `provider_terraform` is fine.
 1. The `.gitignore` must contain all entries that are in the reference
    `.gitignore`, but may contain more.
