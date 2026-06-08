@@ -97,8 +97,6 @@ def write_step_summary(report: str) -> int:
                 f.write("\n")
                 f.write(report)
                 f.write("\n")
-            else:
-                f.write("No compliance issues found.\n")
     return 1 if has_issues else 0
 
 
@@ -191,12 +189,10 @@ def main() -> int:
         {repo_listing}
     """
 
-    step_summary = ""
     report = call_bedrock(model_id, region, system_prompt, user_prompt)
     print(report)
-    step_summary = report if not report == "No issues found." else ""
 
-    return write_step_summary(step_summary)
+    return write_step_summary(report)
 
 
 if __name__ == "__main__":
