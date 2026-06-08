@@ -17,6 +17,7 @@ configuration as environment variables:
 from __future__ import annotations
 
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -135,11 +136,11 @@ def main() -> int:
         return 2
 
     compliance_text = compliance_path.read_text(encoding="utf-8")
-    # print(compliance_text)
+    number_rules = len(re.findall(r"^\s*1.", compliance_text, re.MULTILINE))
 
     repo_root = Path(".") # Path.cwd()
     files = collect_repo_files(repo_root) + collect_repo_files(slt_repo_template_path)
-    print(f"Collecting {len(files)} files for compliance check.", file=sys.stderr)
+    print(f"Checking {number_rules} rules on {len(files)} files for compliance.", file=sys.stderr)
 
     repo_listing = build_repo_listing(files)
 
@@ -168,11 +169,11 @@ def main() -> int:
         3. If compliance issues have been found, return the list as outlined
            above as a markdown document in a single string.
 
-        4. If no issues have been found at all, return an empty string ("").
+        4. If no issues have been found at all, return "No issues found.".
 
-        5. If issues have been found, begin your response immediately with the
-           list of issues — no preamble, no introduction, no considerations,
-           no commentary of any kind.
+        5. Begin your response immediately with the list or with
+           "No issues found." — no preamble, no introduction, no
+           considerations, no commentary of any kind.
 
         6. Whenever you need to compare a file to a reference file, that
            reference file will be found under the same path, starting from
@@ -190,15 +191,12 @@ def main() -> int:
         {repo_listing}
     """
 
-    # print(repo_listing)
-    # print(system_prompt)
-    # print(user_prompt)
-
+    step_summary = ""
     report = call_bedrock(model_id, region, system_prompt, user_prompt)
-
     print(report)
+    step_summary = report if not report == "No issues found." else ""
 
-    return write_step_summary(report)
+    return write_step_summary(step_summary)
 
 
 if __name__ == "__main__":
