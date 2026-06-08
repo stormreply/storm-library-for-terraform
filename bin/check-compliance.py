@@ -168,11 +168,11 @@ def main() -> int:
         3. If compliance issues have been found, return the list as outlined
            above as a markdown document in a single string.
 
-        4. If no issues have been found at all, return "No issues found.".
+        4. If no issues have been found at all, return an empty string ("").
 
-        5. Begin your response immediately with the list or with
-           "No issues found." — no preamble, no introduction, no
-           considerations, no commentary of any kind.
+        5. If issues have been found, begin your response immediately with the
+           list of issues — no preamble, no introduction, no considerations,
+           no commentary of any kind.
 
         6. Whenever you need to compare a file to a reference file, that
            reference file will be found under the same path, starting from
