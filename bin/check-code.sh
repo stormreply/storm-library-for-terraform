@@ -6,7 +6,7 @@ docker run \
     -e "TOKEN=$TOKEN" \
     -v $(pwd):/lint \
     -w /lint \
-    ghcr.io/antonbabenko/pre-commit-terraform:v1.105.0 -c '
+    ghcr.io/antonbabenko/pre-commit-terraform:v1.108.0 -c '
       git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"
       # git config --list --show-origin
       terraform --version
