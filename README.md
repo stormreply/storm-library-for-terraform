@@ -1,8 +1,10 @@
 # Storm Library for Terraform
 
+### Building examples, demos and showcases on AWS
+
 The Storm Library for Terraform is a collection of Terraform modules for Amazon Web
 Services. The focus of these modules, maintained in separate GitHub™ repositories,
-is on **building examples, demos and showcases on AWS**. The audience of the library
+is on building examples, demos and showcases on AWS. The audience of the library
 is learners and presenters alike - people that want to know or show how a certain
 service, pattern or solution looks like, or "feels".
 
